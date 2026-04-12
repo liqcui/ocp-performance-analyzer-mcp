@@ -3,8 +3,24 @@
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![MCP Protocol](https://img.shields.io/badge/MCP-Protocol-orange)](https://modelcontextprotocol.io)
+[![Demo](https://img.shields.io/badge/Demo-Online-brightgreen)](https://liqcui.github.io/ocp-performance-analyzer-mcp/)
 
 A comprehensive, AI-powered performance analysis and monitoring platform for OpenShift/Kubernetes clusters. This project provides Model Context Protocol (MCP) servers for analyzing etcd, network, and OVN-Kubernetes components with deep performance insights, automated root cause analysis, and actionable recommendations.
+
+## 🎬 Live Demo
+
+**[Try the Interactive Demo →](https://liqcui.github.io/ocp-performance-analyzer-mcp/)**
+
+Experience the full capabilities of OCP Performance Analyzer MCP with our online demo:
+- 🤖 AI-powered chat interface with 9 realistic scenarios
+- 📊 Complete system architecture visualization
+- 🔍 Real-world performance analysis examples
+- 📖 Comprehensive documentation and guides
+
+**Quick Links:**
+- [Interactive Demo](https://liqcui.github.io/ocp-performance-analyzer-mcp/) - Full AI chat simulation
+- [Documentation Demo](https://liqcui.github.io/ocp-performance-analyzer-mcp/demo.html) - Project overview
+- [Demo Guide](DEMO.md) - How to use the demos
 
 ## Table of Contents
 
