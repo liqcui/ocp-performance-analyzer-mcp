@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCP Performance Analyzer MCP - 交互式演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .demo-container {
+            display: flex;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        /* 左侧边栏 */
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #ddd;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .quick-actions {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .quick-actions h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .action-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .status-panel {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .status-dot.connected {
+            background: #2ecc71;
+            box-shadow: 0 0 5px #2ecc71;
+        }
+
+        .status-dot.disconnected {
+            background: #e74c3c;
+        }
+
+        .status-dot.checking {
+            background: #f39c12;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* 主内容区 */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 20px 30px;
+            background: white;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h2 {
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: 300;
+        }
+
+        .header-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border: none;
+            background: #ecf0f1;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        /* 聊天容器 */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 15px 20px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .message.ai {
+            background: #f8f9fa;
+            color: #2c3e50;
+            align-self: flex-start;
+            border: 1px solid #e9ecef;
+            max-width: 90%;
+        }
+
+        .tool-result-section {
+            background: #e8f4f8;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .tool-result-header {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .response-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 12px;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .response-table th,
+        .response-table td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .response-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .response-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .metric-good {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .metric-warning {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .metric-critical {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .ai-analysis-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 18px;
+            padding: 15px 20px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #95a5a6;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* 架构视图 */
+        .architecture-view {
+            display: none;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .architecture-view.active {
+            display: block;
+        }
+
+        .arch-diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .arch-diagram pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.75em;
+            line-height: 1.3;
+            color: #2c3e50;
+            overflow-x: auto;
+        }
+
+        .component-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .component-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        /* 演示内容 */
+        .demo-content {
+            display: none;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .demo-content.active {
+            display: block;
+        }
+
+        .demo-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .demo-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        .highlight-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+        }
+
+        .welcome-message h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- 左侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>🚀 OCP ETCD Analyzer</h1>
+                <p>AI驱动的性能分析平台</p>
+            </div>
+
+            <div class="quick-actions">
+                <h3>📊 快速操作</h3>
+                <button class="action-button" onclick="sendDemoMessage('cluster-overview')">
+                    🏛️ 集群概览
+                </button>
+                <button class="action-button" onclick="sendDemoMessage('general-info')">
+                    🖥️ ETCD常规信息
+                </button>
+                <button class="action-button" onclick="sendDemoMessage('node-usage')">
+                    📈 节点资源使用
+                </button>
+                <button class="action-button" onclick="sendDemoMessage('wal-fsync')">
+                    🔄 WAL Fsync性能
+                </button>
+                <button class="action-button" onclick="sendDemoMessage('backend-commit')">
+                    🔗 Backend Commit
+                </button>
+                <button class="action-button" onclick="sendDemoMessage('disk-io')">
+                    💾 磁盘I/O分析
+                </button>
+                <button class="action-button" onclick="sendDemoMessage('network-io')">
+                    🌐 网络I/O分析
+                </button>
+                <button class="action-button" onclick="sendDemoMessage('deep-dive')">
+                    🔍 深度性能分析
+                </button>
+                <button class="action-button" onclick="sendDemoMessage('full-report')">
+                    📊 完整性能报告
+                </button>
+            </div>
+
+            <div class="status-panel">
+                <div class="status-item">
+                    <div class="status-dot connected"></div>
+                    <span>MCP服务器已连接 (演示模式)</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot connected"></div>
+                    <span>集群健康 (15个工具可用)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <div class="header">
+                <h2>性能分析演示界面</h2>
+                <div class="header-tabs">
+                    <button class="tab-btn active" onclick="switchTab('chat')">💬 AI聊天</button>
+                    <button class="tab-btn" onclick="switchTab('architecture')">🏗️ 架构</button>
+                    <button class="tab-btn" onclick="switchTab('demo')">🎬 演示</button>
+                </div>
+            </div>
+
+            <!-- AI聊天视图 -->
+            <div class="chat-container" id="chat-view">
+                <div class="messages" id="messages">
+                    <div class="welcome-message">
+                        <h3>👋 欢迎使用 OpenShift ETCD 性能分析助手</h3>
+                        <p>我可以帮助您分析OpenShift集群性能、检查系统健康状况，并提供基于AI的深度洞察。</p>
+                        <p style="margin-top: 10px; font-size: 0.9em;">点击左侧快速操作按钮开始演示</p>
+                    </div>
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 架构视图 -->
+            <div class="architecture-view" id="architecture-view">
+                <div class="arch-diagram">
+                    <h2 style="margin-bottom: 20px;">🏗️ 系统架构设计</h2>
+                    <pre>
+┌─────────────────────────────────────────────────────────────┐
+│                    客户端层 (Client Layer)                   │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
+│  │  Web UI  │  │ CLI工具  │  │ REST API │  │ MCP客户端 │   │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘   │
+└───────┼─────────────┼─────────────┼─────────────┼──────────┘
+        └─────────────┼─────────────┼─────────────┘
+                      │             │
+┌─────────────────────┼─────────────┼──────────────────────────┐
+│            AI代理层 (FastAPI + LangGraph)                    │
+│  ┌────────────────────────────────────────────────────────┐ │
+│  │  🤖 Chat Agent  (对话式交互)                            │ │
+│  │  📊 Report Agent (自动报告生成)                         │ │
+│  │  💾 Storage Agent (数据持久化)                          │ │
+│  │  • 流式响应 (SSE)  • 工具编排  • 上下文记忆            │ │
+│  └────────────────────────────────────────────────────────┘ │
+└─────────────────────┬─────────────┬──────────────────────────┘
+                      │ MCP协议通信 │
+┌─────────────────────┼─────────────┼──────────────────────────┐
+│              MCP服务器层 (FastMCP Framework)                 │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │  ETCD Analyzer Server (Port 8001)                       ││
+│  │  • 15个分析工具                                         ││
+│  │  • 集群状态  • WAL Fsync  • Backend Commit             ││
+│  │  • 磁盘I/O   • 网络I/O    • 深度分析                   ││
+│  └─────────────────────────────────────────────────────────┘│
+└─────────────────────┬─────────────┬──────────────────────────┘
+                      │             │
+┌─────────────────────┼─────────────┼──────────────────────────┐
+│                工具层 (Tools & Collectors)                   │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐       │
+│  │Prometheus│ │PromQL查询│ │指标收集器│ │数据转换  │       │
+│  │  集成    │ │  执行    │ │  (51+)   │ │  (ELT)   │       │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────┘       │
+└─────────────────────┬─────────────┬──────────────────────────┘
+                      │             │
+┌─────────────────────┼─────────────┼──────────────────────────┐
+│              分析层 (Analysis & Storage)                     │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐       │
+│  │瓶颈检测  │ │性能分析  │ │DuckDB存储│ │HTML报告  │       │
+│  │  引擎    │ │  算法    │ │  (时序)  │ │  生成    │       │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────┘       │
+└──────────────────────────────────────────────────────────────┘
+                      │
+┌─────────────────────┼──────────────────────────────────────────┐
+│          OpenShift/Kubernetes 集群基础设施                    │
+│  • ETCD集群 (3-5节点)   • Prometheus/Thanos监控              │
+│  • Master节点           • Kubernetes API服务器                │
+│  • OVN-Kubernetes网络   • 容器运行时                          │
+└──────────────────────────────────────────────────────────────┘
+                    </pre>
+                </div>
+
+                <div class="component-card">
+                    <h3>🔧 关键组件说明</h3>
+                    <p><strong>1. MCP服务器 (FastMCP)</strong> - 基于Model Context Protocol的服务器，暴露15+分析工具供AI代理调用</p>
+                    <p><strong>2. AI代理 (LangGraph)</strong> - 智能代理使用OpenAI/兼容LLM，实现对话式分析和自动化报告生成</p>
+                    <p><strong>3. 工具收集器</strong> - 通过PromQL查询Prometheus，收集51+ETCD性能指标</p>
+                    <p><strong>4. ELT管道</strong> - 将原始JSON数据转换为结构化HTML表格，便于展示和分析</p>
+                    <p><strong>5. DuckDB存储</strong> - 时序数据库存储历史性能数据，支持趋势分析</p>
+                </div>
+            </div>
+
+            <!-- 演示视图 -->
+            <div class="demo-content" id="demo-view">
+                <div class="demo-section">
+                    <h3>🎯 核心功能演示</h3>
+
+                    <h4 style="margin-top: 20px;">1️⃣ 实时性能监控</h4>
+                    <div class="highlight-box">
+                        <strong>功能:</strong> 通过Prometheus实时采集ETCD集群性能指标<br>
+                        <strong>覆盖指标:</strong> 51个ETCD核心指标，涵盖磁盘、网络、CPU、内存等<br>
+                        <strong>更新频率:</strong> 2分钟采样窗口，实时流式响应
+                    </div>
+
+                    <h4 style="margin-top: 20px;">2️⃣ AI对话式分析</h4>
+                    <div class="code-block">
+# 用户查询示例
+用户: "分析过去1小时ETCD的WAL fsync性能"
+
+# AI执行流程
+1. 调用工具: get_etcd_disk_wal_fsync(duration="1h")
+2. 收集指标: P50/P90/P99延迟分布
+3. 分析数据: 对比阈值 (目标: P99 < 10ms)
+4. 生成建议: 如果超标，提供优化方案
+
+# 返回结果
+📊 数据结果:
+  - WAL Fsync P99: 8.2ms ✓ (优秀)
+  - WAL Fsync P90: 5.1ms
+  - WAL Fsync P50: 2.3ms
+
+🤖 AI分析:
+  WAL fsync性能优秀，P99延迟8.2ms远低于10ms阈值。
+  磁盘写入性能稳定，无需优化。
+                    </div>
+
+                    <h4 style="margin-top: 20px;">3️⃣ 自动瓶颈检测</h4>
+                    <div class="highlight-box">
+                        <strong>检测维度:</strong><br>
+                        • CPU使用率 (阈值: 警告70%, 严重85%)<br>
+                        • 内存使用率 (阈值: 警告70%, 严重85%)<br>
+                        • WAL Fsync延迟 (目标: P99 < 10ms)<br>
+                        • Backend Commit延迟 (目标: P99 < 25ms)<br>
+                        • 磁盘I/O Wait (目标: < 10%)<br>
+                        • 网络延迟 (目标: Peer < 50ms)
+                    </div>
+
+                    <h4 style="margin-top: 20px;">4️⃣ 完整性能报告</h4>
+                    <div class="code-block">
+# 报告内容结构
+┌─────────────────────────────────────┐
+│  📋 ETCD性能分析报告                 │
+│  时间范围: 2026-04-12 14:00 - 15:00 │
+├─────────────────────────────────────┤
+│  1. 执行摘要                         │
+│     • 集群状态: 健康 ✓               │
+│     • 发现问题: 1个警告              │
+│     • 优先级: 中等                   │
+├─────────────────────────────────────┤
+│  2. 关键指标                         │
+│     ✓ WAL Fsync P99: 8.2ms          │
+│     ⚠ Backend Commit P99: 32.5ms    │
+│     ✓ CPU使用率: 45%                 │
+│     ✓ 内存使用率: 58%                │
+│     ✗ 磁盘I/O Wait: 15%              │
+├─────────────────────────────────────┤
+│  3. 瓶颈分析                         │
+│     🔴 磁盘I/O瓶颈                   │
+│        - I/O Wait 15%过高            │
+│        - 影响Backend Commit性能      │
+├─────────────────────────────────────┤
+│  4. 优化建议                         │
+│     1. 使用更快的SSD (NVMe)         │
+│     2. 调整I/O调度器为deadline       │
+│     3. 检查磁盘竞争进程              │
+└─────────────────────────────────────┘
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>🔍 工具列表 (15个)</h3>
+                    <table class="response-table">
+                        <thead>
+                            <tr>
+                                <th>工具名称</th>
+                                <th>功能描述</th>
+                                <th>返回数据</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>get_server_health</strong></td>
+                                <td>服务器健康检查</td>
+                                <td>状态、时间戳</td>
+                            </tr>
+                            <tr>
+                                <td><strong>get_etcd_cluster_status</strong></td>
+                                <td>ETCD集群状态</td>
+                                <td>成员列表、健康状态</td>
+                            </tr>
+                            <tr>
+                                <td><strong>get_ocp_cluster_info</strong></td>
+                                <td>OpenShift集群信息</td>
+                                <td>版本、节点数、资源</td>
+                            </tr>
+                            <tr>
+                                <td><strong>get_etcd_general_info</strong></td>
+                                <td>ETCD常规指标</td>
+                                <td>CPU、内存、DB大小</td>
+                            </tr>
+                            <tr>
+                                <td><strong>get_etcd_disk_wal_fsync</strong></td>
+                                <td>WAL Fsync性能</td>
+                                <td>P50/P90/P99延迟</td>
+                            </tr>
+                            <tr>
+                                <td><strong>get_etcd_disk_backend_commit</strong></td>
+                                <td>Backend Commit性能</td>
+                                <td>P50/P90/P99延迟</td>
+                            </tr>
+                            <tr>
+                                <td><strong>get_node_disk_io</strong></td>
+                                <td>节点磁盘I/O</td>
+                                <td>IOPS、吞吐量、延迟</td>
+                            </tr>
+                            <tr>
+                                <td><strong>get_etcd_network_io</strong></td>
+                                <td>网络I/O指标</td>
+                                <td>带宽、包速率</td>
+                            </tr>
+                            <tr>
+                                <td><strong>get_etcd_performance_deep_drive</strong></td>
+                                <td>深度性能分析</td>
+                                <td>多维度综合分析</td>
+                            </tr>
+                            <tr>
+                                <td><strong>get_etcd_bottleneck_analysis</strong></td>
+                                <td>瓶颈检测</td>
+                                <td>瓶颈识别和建议</td>
+                            </tr>
+                            <tr>
+                                <td><strong>generate_etcd_performance_report</strong></td>
+                                <td>生成性能报告</td>
+                                <td>完整HTML报告</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 演示数据
+        const demoMessages = {
+            'cluster-overview': {
+                user: '告诉我当前OpenShift集群的基本信息和ETCD集群状态',
+                toolResult: `<table class="response-table">
+                    <thead>
+                        <tr><th>集群信息</th><th>值</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>集群名称</td><td>production-ocp-cluster</td></tr>
+                        <tr><td>OpenShift版本</td><td>4.14.3</td></tr>
+                        <tr><td>Kubernetes版本</td><td>v1.27.6</td></tr>
+                        <tr><td>节点总数</td><td>15 (3 Master + 12 Worker)</td></tr>
+                        <tr><td>ETCD成员数</td><td>3</td></tr>
+                        <tr><td>ETCD健康状态</td><td class="metric-good">健康 ✓</td></tr>
+                        <tr><td>集群运行时间</td><td>45天</td></tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis: `**集群状态总结**
+
+您的OpenShift集群运行状况良好：
+
+• **版本**: OpenShift 4.14.3 (最新稳定版)
+• **规模**: 15节点配置，适合中等规模生产环境
+• **ETCD**: 3成员集群，符合高可用配置建议
+• **健康状态**: 所有ETCD成员健康，无告警
+
+**建议**: 集群配置合理，继续监控资源使用趋势。`
+            },
+            'general-info': {
+                user: '显示ETCD的常规性能指标',
+                toolResult: `<table class="response-table">
+                    <thead>
+                        <tr><th>指标</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>状态</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CPU使用率</strong></td>
+                            <td>42%</td><td>45%</td><td>43%</td>
+                            <td class="metric-good">正常</td>
+                        </tr>
+                        <tr>
+                            <td><strong>内存使用</strong></td>
+                            <td>3.2 GB</td><td>3.4 GB</td><td>3.3 GB</td>
+                            <td class="metric-good">正常</td>
+                        </tr>
+                        <tr>
+                            <td><strong>数据库物理大小</strong></td>
+                            <td>2.8 GB</td><td>2.8 GB</td><td>2.8 GB</td>
+                            <td class="metric-good">正常</td>
+                        </tr>
+                        <tr>
+                            <td><strong>数据库逻辑大小</strong></td>
+                            <td>2.1 GB</td><td>2.1 GB</td><td>2.1 GB</td>
+                            <td class="metric-good">正常</td>
+                        </tr>
+                        <tr>
+                            <td><strong>空间使用率</strong></td>
+                            <td>62%</td><td>62%</td><td>62%</td>
+                            <td class="metric-good">健康</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Proposal失败率</strong></td>
+                            <td>0%</td><td>0%</td><td>0%</td>
+                            <td class="metric-good">优秀</td>
+                        </tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis: `**ETCD常规指标分析**
+
+整体表现优秀：
+
+• **资源使用**: CPU和内存使用率在健康范围内 (40-45%)
+• **数据库健康**: 空间使用率62%，距离默认配额(8GB)还有充足余量
+• **碎片率**: 物理大小2.8GB vs 逻辑2.1GB，碎片率约25%，正常范围
+• **稳定性**: Proposal失败率为0，集群写入操作完全稳定
+
+**建议**: 无需立即优化，继续监控即可。`
+            },
+            'wal-fsync': {
+                user: '检查ETCD的WAL fsync性能',
+                toolResult: `<table class="response-table">
+                    <thead>
+                        <tr><th>指标</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>阈值</th><th>状态</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>P99延迟</strong></td>
+                            <td>8.2 ms</td><td>7.9 ms</td><td>8.5 ms</td>
+                            <td>&lt; 10ms</td>
+                            <td class="metric-good">✓ 优秀</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P90延迟</strong></td>
+                            <td>5.1 ms</td><td>4.8 ms</td><td>5.3 ms</td>
+                            <td>&lt; 7ms</td>
+                            <td class="metric-good">✓ 优秀</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P50延迟</strong></td>
+                            <td>2.3 ms</td><td>2.1 ms</td><td>2.4 ms</td>
+                            <td>&lt; 3ms</td>
+                            <td class="metric-good">✓ 优秀</td>
+                        </tr>
+                        <tr>
+                            <td><strong>平均延迟</strong></td>
+                            <td>1.8 ms</td><td>1.7 ms</td><td>1.9 ms</td>
+                            <td>&lt; 2ms</td>
+                            <td class="metric-good">✓ 优秀</td>
+                        </tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis: `**WAL Fsync性能评估**
+
+🎉 **性能优秀** - 所有延迟指标均远低于推荐阈值
+
+**关键发现**:
+• P99延迟: 8.2ms (目标: <10ms) - 优秀
+• P90延迟: 5.1ms - 表现稳定
+• P50延迟: 2.3ms - 快速响应
+
+**性能含义**:
+WAL fsync是ETCD写入路径的关键环节。当前延迟表明：
+- 磁盘写入性能优秀
+- SSD响应时间快速
+- 无I/O竞争问题
+
+**建议**: 性能优秀，无需优化。继续保持当前配置。`
+            },
+            'backend-commit': {
+                user: '分析Backend Commit性能',
+                toolResult: `<table class="response-table">
+                    <thead>
+                        <tr><th>指标</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>阈值</th><th>状态</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>P99延迟</strong></td>
+                            <td>32.5 ms</td><td>31.8 ms</td><td>33.2 ms</td>
+                            <td>&lt; 25ms</td>
+                            <td class="metric-warning">⚠ 需关注</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P90延迟</strong></td>
+                            <td>18.3 ms</td><td>17.9 ms</td><td>18.7 ms</td>
+                            <td>&lt; 15ms</td>
+                            <td class="metric-warning">⚠ 轻微超标</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P50延迟</strong></td>
+                            <td>8.1 ms</td><td>7.8 ms</td><td>8.3 ms</td>
+                            <td>&lt; 10ms</td>
+                            <td class="metric-good">✓ 正常</td>
+                        </tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis: `**Backend Commit性能分析**
+
+⚠️ **需要关注** - P99延迟超过推荐阈值30%
+
+**问题识别**:
+• P99延迟: 32.5ms (目标: <25ms) - 超标30%
+• P90延迟: 18.3ms (目标: <15ms) - 超标22%
+• P50延迟: 8.1ms - 在正常范围
+
+**可能原因**:
+1. 磁盘I/O负载较高
+2. 后端数据库commit操作频繁
+3. 磁盘性能不足或存在竞争
+
+**优化建议**:
+1. **短期**: 检查磁盘I/O Wait指标
+2. **中期**: 考虑使用更快的NVMe SSD
+3. **长期**: 调整I/O调度器为deadline或noop
+
+**影响评估**: 当前延迟虽然超标，但不会严重影响集群性能。建议在非高峰期进行优化。`
+            },
+            'deep-dive': {
+                user: '对ETCD性能进行深度分析，找出瓶颈',
+                toolResult: `<div style="margin-bottom: 15px;">
+                    <strong>🔍 多维度性能扫描完成</strong>
+                    <p style="margin-top: 5px;">已检查: 常规指标 · WAL Fsync · Backend Commit · 磁盘I/O · 网络I/O · 节点资源</p>
+                </div>
+                <table class="response-table">
+                    <thead>
+                        <tr><th>子系统</th><th>关键指标</th><th>当前值</th><th>状态</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>WAL Fsync</strong></td>
+                            <td>P99延迟</td>
+                            <td>8.2 ms</td>
+                            <td class="metric-good">✓ 优秀</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Backend Commit</strong></td>
+                            <td>P99延迟</td>
+                            <td>32.5 ms</td>
+                            <td class="metric-warning">⚠ 需关注</td>
+                        </tr>
+                        <tr>
+                            <td><strong>磁盘I/O</strong></td>
+                            <td>I/O Wait</td>
+                            <td>15%</td>
+                            <td class="metric-critical">✗ 瓶颈</td>
+                        </tr>
+                        <tr>
+                            <td><strong>网络I/O</strong></td>
+                            <td>Peer延迟</td>
+                            <td>3.2 ms</td>
+                            <td class="metric-good">✓ 优秀</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CPU使用</strong></td>
+                            <td>平均使用率</td>
+                            <td>43%</td>
+                            <td class="metric-good">✓ 正常</td>
+                        </tr>
+                        <tr>
+                            <td><strong>内存使用</strong></td>
+                            <td>平均使用率</td>
+                            <td>58%</td>
+                            <td class="metric-good">✓ 正常</td>
+                        </tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis: `**🎯 深度性能分析结果**
+
+**🔴 已识别瓶颈: 磁盘I/O**
+
+**根因分析**:
+磁盘I/O Wait达到15%，这是导致Backend Commit延迟超标的主要原因。
+
+**证据链**:
+1. WAL Fsync性能优秀 (8.2ms) → 顺序写入快速
+2. Backend Commit超标 (32.5ms) → 随机写入慢
+3. 磁盘I/O Wait高 (15%) → 磁盘繁忙
+4. CPU/内存正常 → 非计算资源瓶颈
+
+**优化方案** (按优先级):
+
+**立即执行**:
+1. 检查是否有其他进程竞争磁盘I/O
+2. 使用 \`iostat -x 1\` 查看磁盘详细统计
+3. 确认ETCD数据目录挂载的磁盘类型
+
+**短期优化** (1-2周):
+1. 调整I/O调度器: echo deadline > /sys/block/sda/queue/scheduler
+2. 增加磁盘缓存或使用battery-backed cache
+3. 考虑将ETCD迁移到专用高性能磁盘
+
+**长期规划** (1-3个月):
+1. 升级到NVMe SSD (推荐: 企业级SSD)
+2. 使用RAID配置提高可靠性
+3. 考虑分离WAL和数据库到不同磁盘
+
+**预期改善**:
+实施后，Backend Commit P99延迟预计可降至20ms以下，满足生产环境要求。`
+            },
+            'full-report': {
+                user: '生成完整的ETCD性能分析报告',
+                toolResult: `<div style="background: white; padding: 20px; border-radius: 8px; margin: 10px 0;">
+                    <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 15px;">
+                        📊 ETCD性能分析报告
+                    </h3>
+                    <p><strong>报告生成时间:</strong> 2026-04-12 15:30:00 UTC</p>
+                    <p><strong>分析时间范围:</strong> 2026-04-12 14:00:00 - 15:00:00 (1小时)</p>
+                    <p><strong>集群名称:</strong> production-ocp-cluster</p>
+
+                    <h4 style="margin-top: 20px; color: #2c3e50;">📋 执行摘要</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>集群健康状态:</strong> <span class="metric-good">健康 ✓</span></li>
+                        <li><strong>发现问题数:</strong> 1个警告 (Backend Commit延迟)</li>
+                        <li><strong>识别瓶颈:</strong> 磁盘I/O瓶颈</li>
+                        <li><strong>优先级:</strong> 中等 (建议1-2周内优化)</li>
+                    </ul>
+
+                    <h4 style="margin-top: 20px; color: #2c3e50;">🎯 关键性能指标</h4>
+                    <table class="response-table" style="margin-top: 10px;">
+                        <tr><td>WAL Fsync P99</td><td class="metric-good">8.2 ms ✓</td><td>目标: &lt;10ms</td></tr>
+                        <tr><td>Backend Commit P99</td><td class="metric-warning">32.5 ms ⚠</td><td>目标: &lt;25ms</td></tr>
+                        <tr><td>CPU使用率</td><td class="metric-good">43% ✓</td><td>警告: &lt;70%</td></tr>
+                        <tr><td>内存使用率</td><td class="metric-good">58% ✓</td><td>警告: &lt;70%</td></tr>
+                        <tr><td>磁盘I/O Wait</td><td class="metric-critical">15% ✗</td><td>目标: &lt;10%</td></tr>
+                        <tr><td>网络延迟</td><td class="metric-good">3.2 ms ✓</td><td>警告: &lt;50ms</td></tr>
+                    </table>
+
+                    <h4 style="margin-top: 20px; color: #2c3e50;">🔍 瓶颈分析</h4>
+                    <div style="background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; border-radius: 4px; margin-top: 10px;">
+                        <strong>识别瓶颈: 磁盘I/O性能不足</strong><br>
+                        • I/O Wait达到15%，超过10%健康阈值<br>
+                        • 直接影响Backend Commit延迟<br>
+                        • 需要优化磁盘性能或减少I/O竞争
+                    </div>
+
+                    <h4 style="margin-top: 20px; color: #2c3e50;">💡 优化建议</h4>
+                    <ol style="line-height: 1.8;">
+                        <li><strong>立即检查:</strong> 使用iostat确认磁盘繁忙度</li>
+                        <li><strong>短期优化:</strong> 调整I/O调度器为deadline</li>
+                        <li><strong>中期方案:</strong> 迁移到NVMe SSD</li>
+                        <li><strong>持续监控:</strong> 设置Backend Commit告警 (阈值: 30ms)</li>
+                    </ol>
+
+                    <p style="margin-top: 20px; font-size: 0.9em; color: #7f8c8d;">
+                        报告已保存至: <code>exports/etcd_performance_report_20260412.html</code>
+                    </p>
+                </div>`,
+                aiAnalysis: `**报告生成完成** ✅
+
+我已经生成了详细的ETCD性能分析报告，包含：
+
+📊 **完整分析内容**:
+• 执行摘要 - 快速了解集群状态
+• 关键指标 - 6个核心性能维度
+• 瓶颈识别 - 磁盘I/O瓶颈分析
+• 优化建议 - 4步优化路线图
+
+📁 **报告已保存**:
+HTML格式报告已导出，可直接在浏览器中查看或分享给团队。
+
+**建议**: 将此报告作为性能基线，定期(每周)生成新报告进行对比，跟踪优化效果。`
+            }
+        };
+
+        // 切换标签页
+        function switchTab(tab) {
+            // 移除所有active类
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('chat-view').style.display = 'none';
+            document.getElementById('architecture-view').classList.remove('active');
+            document.getElementById('demo-view').classList.remove('active');
+
+            // 激活选中的标签
+            event.target.classList.add('active');
+
+            if (tab === 'chat') {
+                document.getElementById('chat-view').style.display = 'flex';
+            } else if (tab === 'architecture') {
+                document.getElementById('architecture-view').classList.add('active');
+            } else if (tab === 'demo') {
+                document.getElementById('demo-view').classList.add('active');
+            }
+        }
+
+        // 发送演示消息
+        function sendDemoMessage(type) {
+            const demo = demoMessages[type];
+            if (!demo) return;
+
+            // 切换到聊天视图
+            document.getElementById('chat-view').style.display = 'flex';
+            document.getElementById('architecture-view').classList.remove('active');
+            document.getElementById('demo-view').classList.remove('active');
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+
+            const messagesDiv = document.getElementById('messages');
+
+            // 移除欢迎消息
+            const welcome = messagesDiv.querySelector('.welcome-message');
+            if (welcome) welcome.remove();
+
+            // 添加用户消息
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.textContent = demo.user;
+            messagesDiv.appendChild(userMsg);
+
+            // 显示打字指示器
+            const typing = document.getElementById('typingIndicator');
+            typing.style.display = 'block';
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            // 模拟延迟后显示AI响应
+            setTimeout(() => {
+                typing.style.display = 'none';
+
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'message ai';
+
+                let content = '';
+                if (demo.toolResult) {
+                    content += `<div class="tool-result-section">
+                        <div class="tool-result-header">📊 数据结果</div>
+                        ${demo.toolResult}
+                    </div>`;
+                }
+                if (demo.aiAnalysis) {
+                    content += `<div class="ai-analysis-section">
+                        <div style="font-weight: 600; color: #2c3e50; margin-bottom: 10px;">🤖 AI分析</div>
+                        ${demo.aiAnalysis.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
+                    </div>`;
+                }
+
+                aiMsg.innerHTML = content;
+                messagesDiv.appendChild(aiMsg);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

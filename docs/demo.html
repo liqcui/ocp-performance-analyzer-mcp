@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCP Performance Analyzer MCP - 架构与演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .badges {
+            margin-top: 15px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+        nav {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 2em;
+        }
+
+        .section h3 {
+            color: #2a5298;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .architecture-diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .architecture-diagram pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+            color: #2c3e50;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .feature-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-card li:before {
+            content: "✓ ";
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .component-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .component-card h4 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .demo-panel {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .demo-panel pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .metric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .metric-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .metric-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .metric-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .metric-value-good {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .metric-value-warning {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .metric-value-critical {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .stat-box .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .analysis-result {
+            background: #e7f3ff;
+            border-left: 5px solid #2196F3;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .analysis-result h4 {
+            color: #1976D2;
+            margin-bottom: 10px;
+        }
+
+        .recommendation {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .recommendation h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .code-block .comment {
+            color: #5c6370;
+        }
+
+        .code-block .keyword {
+            color: #c678dd;
+        }
+
+        .code-block .string {
+            color: #98c379;
+        }
+
+        .code-block .function {
+            color: #61afef;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 20px 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: -30px;
+            width: 2px;
+            background: #667eea;
+        }
+
+        .timeline-item:last-child:before {
+            display: none;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 8px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+
+        .tab-container {
+            margin: 20px 0;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 25px;
+            background: #e9ecef;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 OCP Performance Analyzer MCP</h1>
+            <p>AI驱动的OpenShift/Kubernetes集群性能分析平台</p>
+            <div class="badges">
+                <span class="badge">Python 3.8+</span>
+                <span class="badge">MCP Protocol</span>
+                <span class="badge">LangGraph AI</span>
+                <span class="badge">FastAPI</span>
+                <span class="badge">DuckDB</span>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#overview">概览</a></li>
+                <li><a href="#architecture">架构设计</a></li>
+                <li><a href="#features">核心功能</a></li>
+                <li><a href="#components">组件说明</a></li>
+                <li><a href="#demo">性能分析演示</a></li>
+                <li><a href="#usage">使用示例</a></li>
+            </ul>
+        </nav>
+
+        <!-- 概览 -->
+        <section id="overview" class="section">
+            <h2>📊 项目概览</h2>
+            <p style="font-size: 1.1em; margin-bottom: 20px;">
+                OCP Performance Analyzer MCP 是一个全面的、AI驱动的OpenShift/Kubernetes集群性能分析和监控平台。
+                通过Model Context Protocol (MCP)协议，结合LangGraph智能代理，提供深度性能洞察、自动化根因分析和可执行的优化建议。
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">分析组件</div>
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">ETCD · 网络 · OVN-K</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">性能指标</div>
+                    <div class="stat-value">200+</div>
+                    <div class="stat-label">跨越11个配置文件</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">分析工具</div>
+                    <div class="stat-value">35+</div>
+                    <div class="stat-label">MCP服务器工具</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">AI代理</div>
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Chat · Report · Storage</div>
+                </div>
+            </div>
+
+            <h3>🎯 主要分析领域</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>🔷 ETCD分析器</h4>
+                    <ul>
+                        <li>15+分析工具</li>
+                        <li>集群健康状态监控</li>
+                        <li>WAL Fsync性能 (P99 &lt;10ms)</li>
+                        <li>Backend Commit延迟 (P99 &lt;25ms)</li>
+                        <li>磁盘I/O性能分析</li>
+                        <li>网络I/O监控</li>
+                        <li>深度性能剖析</li>
+                        <li>瓶颈自动检测</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🌐 网络分析器</h4>
+                    <ul>
+                        <li>10+网络工具</li>
+                        <li>L1物理层统计</li>
+                        <li>Socket统计 (TCP/UDP/IP)</li>
+                        <li>内存统计 (Socket Buffer)</li>
+                        <li>Softnet统计</li>
+                        <li>Netstat指标 (TCP/UDP)</li>
+                        <li>网络I/O吞吐量</li>
+                        <li>95+网络指标覆盖</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🔗 OVN-Kubernetes分析器</h4>
+                    <ul>
+                        <li>8+专用工具</li>
+                        <li>OVN数据库监控</li>
+                        <li>Kubelet CNI性能</li>
+                        <li>网络延迟分析</li>
+                        <li>OVS使用情况</li>
+                        <li>Pod指标监控</li>
+                        <li>API统计信息</li>
+                        <li>NB/SB数据库大小</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 架构设计 -->
+        <section id="architecture" class="section">
+            <h2>🏗️ 系统架构</h2>
+
+            <h3>高层架构设计</h3>
+            <div class="architecture-diagram">
+                <pre>
+┌─────────────────────────────────────────────────────────────────────┐
+│                         客户端层 (Client Layer)                      │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐              │
+│  │   Web UI     │  │  CLI Tools    │  │  REST API     │              │
+│  │  交互式界面   │  │   命令行工具   │  │  RESTful接口  │              │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘              │
+└─────────┼─────────────────┼─────────────────┼───────────────────────┘
+          │                 │                 │
+          └─────────────────┼─────────────────┘
+                            │
+┌───────────────────────────┼──────────────────────────────────────────┐
+│                    AI代理层 (Port 8080)                               │
+│  ┌──────────────────────────────────────────────────────────────┐   │
+│  │  LangGraph智能代理: Chat · Report · Storage                   │   │
+│  │  • 流式响应支持                                                │   │
+│  │  • 工具编排调度                                                │   │
+│  │  • 对话上下文记忆                                              │   │
+│  │  • OpenAI/兼容LLM集成                                          │   │
+│  └──────────────────────────────────────────────────────────────┘   │
+└───────────────────────────┬──────────────────────────────────────────┘
+                            │ MCP协议通信
+┌───────────────────────────┼──────────────────────────────────────────┐
+│                    MCP服务器层 (Port 8000)                            │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
+│  │ ETCD Server │  │Network Server│  │ OVNK Server │                 │
+│  │  15+ 工具   │  │   10+ 工具   │  │   8+ 工具   │                 │
+│  └─────┬───────┘  └─────┬───────┘  └─────┬───────┘                 │
+└────────┼─────────────────┼─────────────────┼─────────────────────────┘
+         │                 │                 │
+┌────────┼─────────────────┼─────────────────┼─────────────────────────┐
+│        │                 │                 │                         │
+│  ┌─────▼──────┐    ┌─────▼──────┐    ┌─────▼──────┐                │
+│  │ Tools/     │    │ Tools/     │    │ Tools/     │                │
+│  │ Collectors │    │ Collectors │    │ Collectors │                │
+│  │ 指标收集器  │    │ 指标收集器  │    │ 指标收集器  │                │
+│  └─────┬──────┘    └─────┬──────┘    └─────┬──────┘                │
+│        │                 │                 │                         │
+│  ┌─────▼──────┐    ┌─────▼──────┐    ┌─────▼──────┐                │
+│  │ Analysis   │    │ Analysis   │    │ Analysis   │                │
+│  │ Modules    │    │ Modules    │    │ Modules    │                │
+│  │ 分析模块    │    │ 分析模块    │    │ 分析模块    │                │
+│  └─────┬──────┘    └─────┬──────┘    └─────┬──────┘                │
+│        │                 │                 │                         │
+│  ┌─────▼──────┐    ┌─────▼──────┐    ┌─────▼──────┐                │
+│  │    ELT     │    │    ELT     │    │    ELT     │                │
+│  │  Pipeline  │    │  Pipeline  │    │  Pipeline  │                │
+│  │ 数据转换管道 │    │ 数据转换管道 │    │ 数据转换管道 │                │
+│  └─────┬──────┘    └─────┬──────┘    └─────┬──────┘                │
+│        │                 │                 │                         │
+│  ┌─────▼─────────────────▼─────────────────▼──────┐                │
+│  │              存储层 (DuckDB)                      │                │
+│  │  • 时序数据存储  • SQL查询接口  • 历史数据分析   │                │
+│  └──────────────────────────────────────────────────┘                │
+└──────────────────────────┬───────────────────────────────────────────┘
+                           │
+                           ▼
+┌──────────────────────────────────────────────────────────────────────┐
+│          OpenShift/Kubernetes 集群基础设施                            │
+│  • ETCD集群          • Prometheus/Thanos    • Kubernetes API         │
+│  • Master节点        • OVN-Kubernetes       • 网络组件                │
+└──────────────────────────────────────────────────────────────────────┘
+                </pre>
+            </div>
+
+            <h3>组件架构模式</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>1️⃣ MCP服务器 (FastMCP)</h4>
+                    <p>基于FastMCP框架的服务器，暴露分析工具供AI代理调用。支持SSE流式通信和HTTP REST API。</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>2️⃣ 工具/收集器 (Tools/Collectors)</h4>
+                    <p>专用的Prometheus指标收集器，通过PromQL查询获取集群性能数据。</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>3️⃣ 分析模块 (Analysis Modules)</h4>
+                    <p>性能分析引擎，实现瓶颈检测、阈值对比、根因分析等功能。</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>4️⃣ ELT管道 (Extract-Load-Transform)</h4>
+                    <p>数据转换管道，将原始JSON数据转换为结构化表格和HTML可视化。</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>5️⃣ 存储模块 (Storage Layer)</h4>
+                    <p>基于DuckDB的时序数据持久化，支持历史数据分析和趋势预测。</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h4>6️⃣ AI代理 (LangGraph Agents)</h4>
+                    <p>智能代理层，提供对话式分析、自动报告生成和数据收集服务。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 核心功能 -->
+        <section id="features" class="section">
+            <h2>⚡ 核心功能特性</h2>
+
+            <div class="component-card">
+                <h4>🔍 实时性能监控</h4>
+                <p>通过Prometheus/Thanos实时采集200+性能指标，覆盖ETCD、网络、节点、Pod等多个维度。支持自定义时间范围和采样频率。</p>
+            </div>
+
+            <div class="component-card">
+                <h4>🤖 AI驱动的智能分析</h4>
+                <p>集成LangGraph和OpenAI，提供对话式性能分析。AI代理能够理解自然语言查询，自动调用相关工具，生成专业的分析报告。</p>
+            </div>
+
+            <div class="component-card">
+                <h4>📈 历史趋势分析</h4>
+                <p>基于DuckDB的时序数据存储，支持长期性能趋势分析、基线对比和异常检测。</p>
+            </div>
+
+            <div class="component-card">
+                <h4>🎯 自动瓶颈检测</h4>
+                <p>多维度瓶颈分析引擎，自动识别CPU、内存、磁盘I/O、网络等性能瓶颈，并提供优化建议。</p>
+            </div>
+
+            <div class="component-card">
+                <h4>📊 可视化报告生成</h4>
+                <p>自动生成HTML格式的性能报告，包含执行摘要、详细指标表格、趋势图表和优化建议。</p>
+            </div>
+
+            <div class="component-card">
+                <h4>🔌 可扩展的插件架构</h4>
+                <p>基于配置文件的指标管理，支持快速添加新的监控指标和分析工具，无需修改核心代码。</p>
+            </div>
+        </section>
+
+        <!-- 组件说明 -->
+        <section id="components" class="section">
+            <h2>🧩 组件详细说明</h2>
+
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="showTab('etcd-component')">ETCD分析器</button>
+                    <button class="tab-button" onclick="showTab('network-component')">网络分析器</button>
+                    <button class="tab-button" onclick="showTab('ovnk-component')">OVN-K分析器</button>
+                </div>
+
+                <div id="etcd-component" class="tab-content active">
+                    <h3>ETCD分析器 - 关键性能指标</h3>
+                    <table class="metric-table">
+                        <thead>
+                            <tr>
+                                <th>指标类别</th>
+                                <th>指标名称</th>
+                                <th>阈值</th>
+                                <th>重要性</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>磁盘性能</strong></td>
+                                <td>WAL Fsync P99延迟</td>
+                                <td class="metric-value-good">&lt; 10ms (优秀)</td>
+                                <td>🔴 关键</td>
+                            </tr>
+                            <tr>
+                                <td><strong>磁盘性能</strong></td>
+                                <td>Backend Commit P99延迟</td>
+                                <td class="metric-value-good">&lt; 25ms (优秀)</td>
+                                <td>🔴 关键</td>
+                            </tr>
+                            <tr>
+                                <td><strong>资源使用</strong></td>
+                                <td>etcd Pod CPU使用率</td>
+                                <td class="metric-value-warning">&lt; 70% (警告)<br>&lt; 85% (严重)</td>
+                                <td>🟡 重要</td>
+                            </tr>
+                            <tr>
+                                <td><strong>资源使用</strong></td>
+                                <td>etcd Pod内存使用率</td>
+                                <td class="metric-value-warning">&lt; 70% (警告)<br>&lt; 85% (严重)</td>
+                                <td>🟡 重要</td>
+                            </tr>
+                            <tr>
+                                <td><strong>数据库</strong></td>
+                                <td>数据库空间使用率</td>
+                                <td class="metric-value-warning">&lt; 90%</td>
+                                <td>🟡 重要</td>
+                            </tr>
+                            <tr>
+                                <td><strong>网络</strong></td>
+                                <td>Peer延迟</td>
+                                <td class="metric-value-warning">&lt; 50ms (警告)<br>&lt; 100ms (严重)</td>
+                                <td>🟡 重要</td>
+                            </tr>
+                            <tr>
+                                <td><strong>集群健康</strong></td>
+                                <td>Proposal失败率</td>
+                                <td class="metric-value-good">0%</td>
+                                <td>🔴 关键</td>
+                            </tr>
+                            <tr>
+                                <td><strong>压缩/碎片整理</strong></td>
+                                <td>压缩/碎片整理次数</td>
+                                <td>定期监控</td>
+                                <td>🔵 一般</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>ETCD分析器工具列表</h4>
+                    <ul style="columns: 2; column-gap: 30px; margin-top: 15px;">
+                        <li>get_server_health - 服务器健康检查</li>
+                        <li>get_etcd_cluster_status - 集群状态</li>
+                        <li>get_ocp_cluster_info - 集群信息</li>
+                        <li>get_etcd_general_info - 常规指标</li>
+                        <li>get_etcd_node_usage - 节点使用情况</li>
+                        <li>get_etcd_disk_wal_fsync - WAL Fsync性能</li>
+                        <li>get_etcd_disk_backend_commit - Backend Commit性能</li>
+                        <li>get_node_disk_io - 磁盘I/O</li>
+                        <li>get_etcd_disk_compact_defrag - 压缩/碎片整理</li>
+                        <li>get_etcd_network_io - 网络I/O</li>
+                        <li>get_etcd_performance_deep_drive - 深度分析</li>
+                        <li>get_etcd_bottleneck_analysis - 瓶颈检测</li>
+                        <li>generate_etcd_performance_report - 性能报告</li>
+                    </ul>
+                </div>
+
+                <div id="network-component" class="tab-content">
+                    <h3>网络分析器 - 95+网络指标</h3>
+                    <table class="metric-table">
+                        <thead>
+                            <tr>
+                                <th>分析层级</th>
+                                <th>工具</th>
+                                <th>关键指标</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>L1 物理层</strong></td>
+                                <td>query_network_l1_metrics</td>
+                                <td>接收/发送字节数、包数、错误、丢包</td>
+                            </tr>
+                            <tr>
+                                <td><strong>网络I/O</strong></td>
+                                <td>query_network_io_metrics</td>
+                                <td>吞吐量、IOPS、带宽利用率</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TCP Socket</strong></td>
+                                <td>query_network_socket_tcp_metrics</td>
+                                <td>活动连接数、TIME_WAIT、重传</td>
+                            </tr>
+                            <tr>
+                                <td><strong>UDP Socket</strong></td>
+                                <td>query_network_socket_udp_metrics</td>
+                                <td>接收/发送数据包、错误</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IP Socket</strong></td>
+                                <td>query_network_socket_ip_metrics</td>
+                                <td>IP层统计、分片、路由</td>
+                            </tr>
+                            <tr>
+                                <td><strong>内存统计</strong></td>
+                                <td>query_network_socket_mem_metrics</td>
+                                <td>Socket缓冲区使用、内存压力</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Softnet统计</strong></td>
+                                <td>query_network_socket_softnet_metrics</td>
+                                <td>软中断处理、丢包、挤压</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TCP Netstat</strong></td>
+                                <td>query_network_netstat_tcp_metrics</td>
+                                <td>TCP状态分布、连接追踪</td>
+                            </tr>
+                            <tr>
+                                <td><strong>UDP Netstat</strong></td>
+                                <td>query_network_netstat_udp_metrics</td>
+                                <td>UDP统计、错误率</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="ovnk-component" class="tab-content">
+                    <h3>OVN-Kubernetes分析器</h3>
+                    <table class="metric-table">
+                        <thead>
+                            <tr>
+                                <th>组件</th>
+                                <th>工具</th>
+                                <th>监控内容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>OVN Pod</strong></td>
+                                <td>query_ovnk_pod_metrics</td>
+                                <td>CPU、内存、重启次数</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Multus CNI</strong></td>
+                                <td>query_multus_pod_metrics</td>
+                                <td>Multus组件健康状态</td>
+                            </tr>
+                            <tr>
+                                <td><strong>OVN容器</strong></td>
+                                <td>query_ovnk_container_metrics</td>
+                                <td>容器级资源使用</td>
+                            </tr>
+                            <tr>
+                                <td><strong>OVN同步</strong></td>
+                                <td>query_ovnk_sync_metrics</td>
+                                <td>NB/SB数据库同步延迟</td>
+                            </tr>
+                            <tr>
+                                <td><strong>OVS守护进程</strong></td>
+                                <td>query_ovnk_ovs_metrics</td>
+                                <td>OVS流表、连接追踪</td>
+                            </tr>
+                            <tr>
+                                <td><strong>网络延迟</strong></td>
+                                <td>query_ovnk_latency_metrics</td>
+                                <td>Pod间延迟、CNI操作延迟</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Kubernetes API</strong></td>
+                                <td>query_kube_api_metrics</td>
+                                <td>API请求延迟、错误率</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 性能分析演示 -->
+        <section id="demo" class="section">
+            <h2>🎬 性能分析演示</h2>
+
+            <h3>示例1: ETCD深度性能分析</h3>
+            <div class="demo-panel">
+                <pre>
+<span class="comment"># 场景：分析ETCD集群过去1小时的性能表现</span>
+
+<span class="keyword">用户查询:</span> "分析etcd过去1小时的性能，重点关注WAL fsync和backend commit延迟"
+
+<span class="keyword">AI代理执行流程:</span>
+1. 调用 get_etcd_performance_deep_drive(duration="1h")
+2. 收集以下子系统数据:
+   - 常规信息 (CPU、内存、数据库大小)
+   - WAL Fsync性能 (P50/P90/P99延迟)
+   - Backend Commit性能 (P50/P90/P99延迟)
+   - 磁盘I/O (IOPS、吞吐量、延迟)
+   - 网络I/O (带宽、包速率)
+   - 节点资源使用 (CPU、内存、cgroup)
+   - 压缩/碎片整理统计
+3. 执行瓶颈检测算法
+4. 生成分析报告
+                </pre>
+            </div>
+
+            <div class="analysis-result">
+                <h4>📋 分析结果示例</h4>
+                <p><strong>时间范围:</strong> 2026-04-12 14:00:00 UTC ~ 2026-04-12 15:00:00 UTC</p>
+                <p><strong>集群状态:</strong> <span class="metric-value-good">健康 ✓</span></p>
+
+                <h5 style="margin-top: 15px;">关键发现:</h5>
+                <ul style="margin-top: 10px;">
+                    <li><strong>WAL Fsync P99延迟:</strong> <span class="metric-value-good">8.2ms</span> - 优秀 (目标: &lt;10ms)</li>
+                    <li><strong>Backend Commit P99延迟:</strong> <span class="metric-value-warning">32.5ms</span> - 需关注 (目标: &lt;25ms)</li>
+                    <li><strong>etcd Pod平均CPU使用率:</strong> <span class="metric-value-good">45%</span> - 正常</li>
+                    <li><strong>数据库空间使用:</strong> <span class="metric-value-good">62%</span> - 健康</li>
+                    <li><strong>磁盘I/O Wait:</strong> <span class="metric-value-critical">15%</span> - 瓶颈!</li>
+                    <li><strong>Proposal失败率:</strong> <span class="metric-value-good">0%</span> - 正常</li>
+                </ul>
+            </div>
+
+            <div class="recommendation">
+                <h4>💡 优化建议</h4>
+                <ol style="margin-top: 10px;">
+                    <li><strong>Backend Commit优化:</strong>
+                        <ul style="margin-top: 5px;">
+                            <li>检查磁盘性能，考虑使用更快的SSD (NVMe)</li>
+                            <li>确认磁盘I/O调度器设置 (建议使用noop或deadline)</li>
+                            <li>检查是否有其他进程竞争磁盘I/O资源</li>
+                        </ul>
+                    </li>
+                    <li><strong>磁盘I/O Wait优化:</strong>
+                        <ul style="margin-top: 5px;">
+                            <li>当前15%的I/O Wait表明存在磁盘瓶颈</li>
+                            <li>建议使用专用的高性能存储设备</li>
+                            <li>考虑启用磁盘缓存或使用更大的内存</li>
+                        </ul>
+                    </li>
+                    <li><strong>持续监控:</strong>
+                        <ul style="margin-top: 5px;">
+                            <li>定期检查压缩/碎片整理执行情况</li>
+                            <li>监控数据库增长速率，提前规划容量</li>
+                            <li>设置告警阈值，及时发现性能退化</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h3 style="margin-top: 40px;">示例2: 网络性能分析</h3>
+            <div class="demo-panel">
+                <pre>
+<span class="comment"># 场景：排查集群网络延迟问题</span>
+
+<span class="keyword">用户查询:</span> "为什么我的Pod间通信变慢了？帮我分析网络性能"
+
+<span class="keyword">AI代理执行流程:</span>
+1. 调用 query_network_l1_metrics(duration="30m") - 检查物理层
+2. 调用 query_network_io_metrics(duration="30m") - 检查吞吐量
+3. 调用 query_network_socket_tcp_metrics(duration="30m") - 检查TCP连接
+4. 调用 query_network_socket_softnet_metrics(duration="30m") - 检查软中断
+5. 分析数据，识别异常模式
+6. 生成诊断报告
+                </pre>
+            </div>
+
+            <div class="analysis-result">
+                <h4>📋 网络诊断结果</h4>
+                <table class="metric-table" style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>网络层</th>
+                            <th>指标</th>
+                            <th>当前值</th>
+                            <th>状态</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>L1物理层</strong></td>
+                            <td>丢包率</td>
+                            <td class="metric-value-critical">2.3%</td>
+                            <td>🔴 异常</td>
+                        </tr>
+                        <tr>
+                            <td><strong>L1物理层</strong></td>
+                            <td>错误包</td>
+                            <td class="metric-value-critical">1,234 pps</td>
+                            <td>🔴 异常</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TCP</strong></td>
+                            <td>重传率</td>
+                            <td class="metric-value-warning">1.8%</td>
+                            <td>🟡 警告</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TCP</strong></td>
+                            <td>TIME_WAIT连接数</td>
+                            <td class="metric-value-good">8,523</td>
+                            <td>🟢 正常</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Softnet</strong></td>
+                            <td>Dropped包</td>
+                            <td class="metric-value-critical">5,678</td>
+                            <td>🔴 异常</td>
+                        </tr>
+                        <tr>
+                            <td><strong>网络I/O</strong></td>
+                            <td>带宽利用率</td>
+                            <td class="metric-value-warning">78%</td>
+                            <td>🟡 接近饱和</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="recommendation">
+                <h4>🔧 网络问题根因分析</h4>
+                <p><strong>主要问题:</strong> 物理层丢包和Softnet Dropped包表明网络接口或驱动存在问题</p>
+
+                <h5 style="margin-top: 15px;">排查步骤:</h5>
+                <ol style="margin-top: 10px;">
+                    <li><strong>检查网络硬件:</strong>
+                        <ul>
+                            <li>检查网卡状态: <code>ethtool -S eth0</code></li>
+                            <li>查看网卡错误: <code>dmesg | grep -i eth</code></li>
+                            <li>确认网卡驱动版本和固件版本</li>
+                        </ul>
+                    </li>
+                    <li><strong>优化Softnet参数:</strong>
+                        <ul>
+                            <li>增加netdev_max_backlog: <code>sysctl -w net.core.netdev_max_backlog=5000</code></li>
+                            <li>调整RPS/RFS以平衡CPU负载</li>
+                            <li>考虑增加中断合并时间</li>
+                        </ul>
+                    </li>
+                    <li><strong>带宽管理:</strong>
+                        <ul>
+                            <li>当前78%带宽使用率接近饱和</li>
+                            <li>考虑升级网络带宽或实施QoS策略</li>
+                            <li>分析流量模式，识别异常流量源</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h3 style="margin-top: 40px;">示例3: OVN-Kubernetes延迟分析</h3>
+            <div class="demo-panel">
+                <pre>
+<span class="comment"># 场景：分析OVN-Kubernetes网络延迟</span>
+
+<span class="keyword">用户查询:</span> "OVN数据库同步延迟是多少？有性能问题吗？"
+
+<span class="keyword">AI代理执行:</span>
+1. 调用 query_ovnk_sync_metrics(duration="1h")
+2. 调用 query_ovnk_latency_metrics(duration="1h")
+3. 调用 query_ovnk_pod_metrics(duration="1h")
+4. 调用 query_ovnk_ovs_metrics(duration="1h")
+5. 综合分析OVN性能
+                </pre>
+            </div>
+
+            <div class="analysis-result">
+                <h4>📋 OVN-Kubernetes性能报告</h4>
+                <div class="stats-grid" style="margin-top: 15px;">
+                    <div class="stat-box">
+                        <div class="stat-label">NB DB同步延迟 (P99)</div>
+                        <div class="stat-value">125ms</div>
+                        <div class="stat-label">🟡 轻微延迟</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">SB DB同步延迟 (P99)</div>
+                        <div class="stat-value">89ms</div>
+                        <div class="stat-label">🟢 正常</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">OVN Pod CPU使用率</div>
+                        <div class="stat-value">52%</div>
+                        <div class="stat-label">🟢 健康</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">OVS流表条目</div>
+                        <div class="stat-value">12,345</div>
+                        <div class="stat-label">🟢 正常</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 使用示例 -->
+        <section id="usage" class="section">
+            <h2>📖 使用示例</h2>
+
+            <h3>快速启动</h3>
+            <div class="code-block">
+<span class="comment"># 1. 克隆仓库</span>
+<span class="keyword">git</span> <span class="function">clone</span> git@github.com:liqcui/ocp-performance-analyzer-mcp.git
+<span class="keyword">cd</span> ocp-performance-analyzer-mcp
+
+<span class="comment"># 2. 创建虚拟环境</span>
+<span class="keyword">python3</span> -m venv venv
+<span class="keyword">source</span> venv/bin/activate
+
+<span class="comment"># 3. 安装依赖</span>
+<span class="keyword">pip</span> <span class="function">install</span> -e .
+
+<span class="comment"># 4. 配置环境变量</span>
+<span class="keyword">export</span> <span class="string">KUBECONFIG=/path/to/kubeconfig</span>
+<span class="keyword">export</span> <span class="string">OPENAI_API_KEY=your-api-key</span>
+
+<span class="comment"># 5. 启动ETCD分析器</span>
+<span class="keyword">cd</span> mcp/etcd
+./etcd_analyzer_command.sh start
+
+<span class="comment"># 6. 访问Web UI</span>
+<span class="comment"># 打开浏览器访问: http://localhost:8080/ui</span>
+            </div>
+
+            <h3>命令行工具使用</h3>
+            <div class="code-block">
+<span class="comment"># 启动MCP服务器</span>
+<span class="keyword">python</span> <span class="function">etcd_analyzer_mcp_server.py</span>
+
+<span class="comment"># 启动AI聊天客户端</span>
+<span class="keyword">python</span> <span class="function">etcd_analyzer_client_chat.py</span>
+
+<span class="comment"># 生成性能报告</span>
+<span class="keyword">python</span> <span class="function">etcd_analyzer_mcp_agent_report.py</span>
+
+<span class="comment"># 收集数据到数据库</span>
+<span class="keyword">python</span> <span class="function">etcd_analyzer_mcp_agent_stor2db.py</span>
+            </div>
+
+            <h3>对话式查询示例</h3>
+            <div class="component-card">
+                <h4>💬 示例对话</h4>
+                <div style="margin-top: 15px;">
+                    <p><strong>用户:</strong> "帮我分析etcd过去24小时的性能"</p>
+                    <p><strong>AI:</strong> 正在为您分析ETCD性能... [调用工具: get_etcd_performance_deep_drive]</p>
+                    <p style="margin-top: 10px;"><strong>用户:</strong> "WAL fsync延迟有没有超标？"</p>
+                    <p><strong>AI:</strong> 让我查看WAL fsync的详细数据... [调用工具: get_etcd_disk_wal_fsync]</p>
+                    <p style="margin-top: 10px;"><strong>用户:</strong> "生成一份完整的性能报告发给我"</p>
+                    <p><strong>AI:</strong> 正在生成报告... [调用工具: generate_etcd_performance_report]<br>
+                    报告已生成，保存在 exports/etcd_performance_report_20260412.html</p>
+                </div>
+            </div>
+
+            <h3>API调用示例</h3>
+            <div class="code-block">
+<span class="comment"># 使用REST API查询ETCD性能</span>
+<span class="keyword">curl</span> -X POST <span class="string">http://localhost:8000/tools/get_etcd_disk_wal_fsync</span> \
+  -H <span class="string">"Content-Type: application/json"</span> \
+  -d <span class="string">'{"duration": "1h"}'</span>
+
+<span class="comment"># 查询网络I/O指标</span>
+<span class="keyword">curl</span> -X POST <span class="string">http://localhost:8000/tools/query_network_io_metrics</span> \
+  -H <span class="string">"Content-Type: application/json"</span> \
+  -d <span class="string">'{"duration": "30m"}'</span>
+
+<span class="comment"># 健康检查</span>
+<span class="keyword">curl</span> <span class="string">http://localhost:8000/health</span>
+
+<span class="comment"># 获取工具列表</span>
+<span class="keyword">curl</span> <span class="string">http://localhost:8080/api/tools</span>
+            </div>
+
+            <h3>配置文件示例</h3>
+            <div class="code-block">
+<span class="comment"># config/metrics-etcd.yml 片段</span>
+<span class="keyword">metrics:</span>
+  - <span class="keyword">name:</span> <span class="string">etcd_pods_cpu_usage</span>
+    <span class="keyword">title:</span> <span class="string">"etcd_pods_cpu_usage"</span>
+    <span class="keyword">expr:</span> <span class="string">'sum(irate(container_cpu_usage_seconds_total{
+            namespace="openshift-etcd",
+            container="etcd",
+            pod=~".*"
+          }[2m])) by (pod) * 100'</span>
+    <span class="keyword">unit:</span> <span class="string">"percent"</span>
+    <span class="keyword">category:</span> <span class="string">"general_info"</span>
+    <span class="keyword">description:</span> <span class="string">"CPU usage percentage for etcd containers"</span>
+
+  - <span class="keyword">name:</span> <span class="string">etcd_disk_wal_fsync_p99</span>
+    <span class="keyword">title:</span> <span class="string">"WAL Fsync P99 Latency"</span>
+    <span class="keyword">expr:</span> <span class="string">'histogram_quantile(0.99,
+            rate(etcd_disk_wal_fsync_duration_seconds_bucket[2m])
+          ) * 1000'</span>
+    <span class="keyword">unit:</span> <span class="string">"ms"</span>
+    <span class="keyword">category:</span> <span class="string">"wal_fsync"</span>
+    <span class="keyword">threshold:</span> 10.0
+            </div>
+        </section>
+
+        <footer>
+            <h3>🔗 相关链接</h3>
+            <p style="margin: 15px 0;">
+                <a href="https://github.com/liqcui/ocp-performance-analyzer-mcp" target="_blank">GitHub仓库</a> •
+                <a href="https://modelcontextprotocol.io" target="_blank">MCP协议</a> •
+                <a href="https://langchain.com" target="_blank">LangChain</a> •
+                <a href="https://duckdb.org" target="_blank">DuckDB</a>
+            </p>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+                Built with ❤️ for the OpenShift and Kubernetes community<br>
+                © 2026 OCP Performance Analyzer MCP | MIT License
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // 隐藏所有标签内容
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // 移除所有按钮的active类
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // 显示选中的标签内容
+            document.getElementById(tabId).classList.add('active');
+
+            // 激活对应的按钮
+            event.target.classList.add('active');
+        }
+
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 添加滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(20px)';
+                    entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
