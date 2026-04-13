@@ -973,7 +973,194 @@ master-2: CPU 43.8%, Mem 43.4% (-1.4%, -1.1%) 略低
 • 内存: 可再增加55% (约1.5年)
 • 磁盘: 可再增加38%使用 (约4个月)
 
-**结论**: Master节点资源充足，集群健康。建议3个月后开始规划磁盘扩容。`
+**结论**: Master节点资源充足，集群健康。建议3个月后开始规划磁盘扩容。`,
+                toolResult_en: `<table class="response-table">
+                    <thead>
+                        <tr><th>Node</th><th>CPU Usage</th><th>Memory Used</th><th>Memory Total</th><th>Disk Usage</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>master-0</strong></td>
+                            <td>45.2%</td>
+                            <td>28.5 GB</td>
+                            <td>64 GB</td>
+                            <td>62%</td>
+                            <td class="metric-good">✓ Healthy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-1</strong></td>
+                            <td>48.7%</td>
+                            <td>30.2 GB</td>
+                            <td>64 GB</td>
+                            <td>58%</td>
+                            <td class="metric-good">✓ Healthy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-2</strong></td>
+                            <td>43.8%</td>
+                            <td>27.8 GB</td>
+                            <td>64 GB</td>
+                            <td>65%</td>
+                            <td class="metric-good">✓ Healthy</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="margin-top: 20px; color: #2c3e50;">Detailed Resource Allocation</h4>
+                <table class="response-table">
+                    <thead>
+                        <tr><th>Resource Type</th><th>master-0</th><th>master-1</th><th>master-2</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>System Process CPU</strong></td>
+                            <td>12.3%</td>
+                            <td>13.1%</td>
+                            <td>11.9%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ETCD Pod CPU</strong></td>
+                            <td>18.5%</td>
+                            <td>19.2%</td>
+                            <td>17.8%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>API Server CPU</strong></td>
+                            <td>8.4%</td>
+                            <td>9.1%</td>
+                            <td>8.2%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Other Pods CPU</strong></td>
+                            <td>6.0%</td>
+                            <td>7.3%</td>
+                            <td>5.9%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>System Memory</strong></td>
+                            <td>8.2 GB</td>
+                            <td>8.5 GB</td>
+                            <td>8.1 GB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ETCD Pod Memory</strong></td>
+                            <td>12.4 GB</td>
+                            <td>13.1 GB</td>
+                            <td>11.9 GB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>API Server Memory</strong></td>
+                            <td>5.2 GB</td>
+                            <td>5.6 GB</td>
+                            <td>5.0 GB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cache</strong></td>
+                            <td>2.7 GB</td>
+                            <td>3.0 GB</td>
+                            <td>2.8 GB</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="margin-top: 20px; color: #2c3e50;">Network Statistics</h4>
+                <table class="response-table">
+                    <thead>
+                        <tr><th>Node</th><th>Inbound Traffic</th><th>Outbound Traffic</th><th>Connections</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>master-0</strong></td>
+                            <td>125 MB/s</td>
+                            <td>132 MB/s</td>
+                            <td>1,234</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-1</strong></td>
+                            <td>118 MB/s</td>
+                            <td>128 MB/s</td>
+                            <td>1,189</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-2</strong></td>
+                            <td>122 MB/s</td>
+                            <td>130 MB/s</td>
+                            <td>1,207</td>
+                        </tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis_en: `**Master Node Resource Usage Analysis**
+
+**Overall Assessment**: 🟢 **All nodes operating normally**
+
+**Key Findings**:
+
+**1. CPU Usage**:
+• Average utilization: 45.9% (healthy range)
+• ETCD process usage: ~18% (reasonable)
+• API Server usage: ~8.5% (normal)
+• System overhead: ~12.4% (standard)
+
+**Load Distribution**: Three Master nodes well-balanced, variance <5%
+
+**2. Memory Usage**:
+• Average usage: 28.8 GB / 64 GB (45%)
+• ETCD memory: ~12.5 GB (reasonable, supports 8GB database)
+• Available: ~35 GB (sufficient buffer)
+• Memory pressure: None
+
+**Memory Allocation**: ETCD represents 43%, as expected
+
+**3. Disk Usage**:
+• Average utilization: 62%
+• Distance to 80% threshold: 18% space
+• Estimated capacity: 3-4 months (based on current growth rate)
+
+**Recommendation**: Plan disk expansion within 6 months
+
+**4. Network Performance**:
+• Average throughput: Inbound 122 MB/s, Outbound 130 MB/s
+• Connections: ~1,210 (normal)
+• Bandwidth utilization: <15% (1Gbps network)
+• Latency: <5ms (inter-node)
+
+**Network Status**: Excellent, no bottlenecks
+
+**5. Resource Distribution Comparison**:
+
+\`\`\`
+Node load variance analysis:
+master-0: CPU 45.2%, Mem 44.5% (baseline)
+master-1: CPU 48.7%, Mem 47.2% (+3.5%, +2.7%) slightly higher
+master-2: CPU 43.8%, Mem 43.4% (-1.4%, -1.1%) slightly lower
+
+Cause: Normal pod scheduling imbalance
+Impact: Negligible
+\`\`\`
+
+**Optimization Recommendations**:
+
+**Short-term** (no action needed):
+• Current resource usage is healthy, no adjustments required
+• Continue with current configuration
+
+**Mid-term** (3-6 months):
+• Monitor disk usage trends
+• Plan storage expansion (target: expand at 65% utilization)
+• Consider enabling data compression
+
+**Long-term** (6-12 months):
+• Evaluate need for increased Master node configuration
+• Consider upgrading to larger memory (128GB) to support cluster expansion
+• Optimize ETCD data cleanup strategy
+
+**Capacity Planning**:
+Based on current growth rate, expected to support:
+• CPU: Can add 30% more load (~1 year)
+• Memory: Can add 55% more (~1.5 years)
+• Disk: Can add 38% more usage (~4 months)
+
+**Conclusion**: Master node resources are sufficient, cluster is healthy. Recommend starting disk expansion planning in 3 months.`
             },
             'disk-io': {
                 user: '分析Master节点的磁盘I/O性能',
@@ -1212,7 +1399,172 @@ Backend Commit: 32ms → <20ms (达标)
 **业务影响评估**:
 - 当前: 不影响正常运行，但性能未达最优
 - 风险: 如果负载增加，可能导致延迟进一步恶化
-- 建议: 在下次维护窗口进行磁盘升级`
+- 建议: 在下次维护窗口进行磁盘升级`,
+                toolResult_en: `<table class="response-table">
+                    <thead>
+                        <tr><th>Node</th><th>Read IOPS</th><th>Write IOPS</th><th>Read Throughput</th><th>Write Throughput</th><th>I/O Wait</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>master-0</strong></td>
+                            <td>1,245</td>
+                            <td>3,567</td>
+                            <td>52 MB/s</td>
+                            <td>145 MB/s</td>
+                            <td class="metric-critical">15.2%</td>
+                            <td class="metric-warning">⚠ Needs Attention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-1</strong></td>
+                            <td>1,189</td>
+                            <td>3,423</td>
+                            <td>48 MB/s</td>
+                            <td>138 MB/s</td>
+                            <td class="metric-critical">14.8%</td>
+                            <td class="metric-warning">⚠ Needs Attention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-2</strong></td>
+                            <td>1,298</td>
+                            <td>3,689</td>
+                            <td>55 MB/s</td>
+                            <td>152 MB/s</td>
+                            <td class="metric-critical">15.5%</td>
+                            <td class="metric-warning">⚠ Needs Attention</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="margin-top: 20px; color: #2c3e50;">Disk Latency Analysis</h4>
+                <table class="response-table">
+                    <thead>
+                        <tr><th>Node</th><th>Read Latency (Avg)</th><th>Read Latency (P99)</th><th>Write Latency (Avg)</th><th>Write Latency (P99)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>master-0</strong></td>
+                            <td>2.1 ms</td>
+                            <td>8.5 ms</td>
+                            <td>5.4 ms</td>
+                            <td class="metric-warning">18.2 ms</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-1</strong></td>
+                            <td>2.0 ms</td>
+                            <td>8.2 ms</td>
+                            <td>5.2 ms</td>
+                            <td class="metric-warning">17.8 ms</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-2</strong></td>
+                            <td>2.2 ms</td>
+                            <td>8.7 ms</td>
+                            <td>5.6 ms</td>
+                            <td class="metric-warning">18.5 ms</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="margin-top: 20px; color: #2c3e50;">Disk Queue Depth</h4>
+                <table class="response-table">
+                    <thead>
+                        <tr><th>Node</th><th>Avg Queue Depth</th><th>Max Queue Depth</th><th>Queue Saturation</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>master-0</strong></td>
+                            <td>12.5</td>
+                            <td>45</td>
+                            <td class="metric-warning">68%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-1</strong></td>
+                            <td>11.8</td>
+                            <td>42</td>
+                            <td class="metric-warning">65%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-2</strong></td>
+                            <td>13.2</td>
+                            <td>48</td>
+                            <td class="metric-warning">71%</td>
+                        </tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis_en: `**Disk I/O Performance Analysis**
+
+🔴 **Bottleneck Detected**: Disk I/O Wait is high, optimization needed
+
+**Key Issues**:
+
+**1. High I/O Wait**:
+• Average I/O Wait across three nodes: 15.2%
+• Healthy threshold: <10%
+• **Exceeding standard**: 52% (critical)
+
+**Impact**:
+- CPU spending too much time waiting for I/O completion
+- Directly affects Backend Commit latency
+- Reduces overall system responsiveness
+
+**2. Write Latency Problem**:
+• P99 write latency: 18.2ms (target: <10ms)
+• 2.2x higher than read latency
+• ETCD is sensitive to write latency
+
+**Root Cause Analysis**:
+- Random write pattern (ETCD characteristic)
+- Disk may not be enterprise-grade SSD
+- Frequent fsync operations
+
+**3. Queue Depth Saturation**:
+• Average queue depth: 12.5 (high)
+• Queue saturation: 68% (close to limit)
+• Indicates disk bandwidth insufficient
+
+**Optimization Recommendations**:
+
+**Immediate Actions** (0-1 week):
+
+1. **Verify disk type**
+2. **Adjust I/O scheduler** (deadline or noop for SSD)
+3. **Check filesystem** (ensure XFS with noatime)
+
+**Short-term Optimization** (1-2 weeks):
+
+1. **Separate WAL and data** to independent fast disks
+2. **Enable write cache** (if UPS/BBU available)
+3. **Optimize kernel parameters** (dirty ratio)
+
+**Mid-term Solution** (1-2 months):
+
+1. **Upgrade to NVMe SSD**:
+   - Recommended: Intel P4510, Samsung PM983
+   - Expected improvement: I/O Wait <5%, latency <5ms
+   - Cost: $500-800/drive
+
+2. **Use RAID configuration** (RAID 10 for performance+reliability)
+3. **Data migration** during maintenance window
+
+**Long-term Planning** (3-6 months):
+
+1. **Storage architecture optimization**
+2. **Monitoring and alerting** (I/O Wait >10% alert)
+
+**Expected Results** after NVMe upgrade:
+\`\`\`
+I/O Wait:        15% → <5%  (66% improvement)
+Write Latency P99: 18ms → <5ms (72% improvement)
+Backend Commit:   32ms → <20ms (meets target)
+Queue Depth:      12 → <4   (67% improvement)
+\`\`\`
+
+**Priority**: 🔴 **High** - Recommend upgrade within 1 month
+
+**Business Impact Assessment**:
+- Current: Not affecting normal operations, but performance not optimal
+- Risk: If load increases, latency may further deteriorate
+- Recommendation: Perform disk upgrade during next maintenance window`
             },
             'network-io': {
                 user: '分析ETCD集群的网络I/O性能',
@@ -1515,7 +1867,202 @@ ip link set eth0 mtu 9000
 网络不是性能瓶颈，重点应放在磁盘I/O优化上。
 
 **建议行动**:
-无。继续监控网络健康度，保持现状即可。`
+无。继续监控网络健康度，保持现状即可。`,
+                toolResult_en: `<table class="response-table">
+                    <thead>
+                        <tr><th>Metric</th><th>master-0</th><th>master-1</th><th>master-2</th><th>Threshold</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Peer Round-trip Latency</strong></td>
+                            <td>3.2 ms</td>
+                            <td>3.1 ms</td>
+                            <td>3.3 ms</td>
+                            <td>&lt; 50ms</td>
+                            <td class="metric-good">✓ Excellent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sent Bytes/sec</strong></td>
+                            <td>132 MB/s</td>
+                            <td>128 MB/s</td>
+                            <td>130 MB/s</td>
+                            <td>-</td>
+                            <td class="metric-good">Normal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Received Bytes/sec</strong></td>
+                            <td>125 MB/s</td>
+                            <td>118 MB/s</td>
+                            <td>122 MB/s</td>
+                            <td>-</td>
+                            <td class="metric-good">Normal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Send Failures</strong></td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td class="metric-good">✓ Perfect</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Packet Loss Rate</strong></td>
+                            <td>0.001%</td>
+                            <td>0.001%</td>
+                            <td>0.001%</td>
+                            <td>&lt; 0.1%</td>
+                            <td class="metric-good">✓ Excellent</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="margin-top: 20px; color: #2c3e50;">Bandwidth Utilization</h4>
+                <table class="response-table">
+                    <thead>
+                        <tr><th>Node</th><th>Inbound Usage</th><th>Outbound Usage</th><th>Link Capacity</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>master-0</strong></td>
+                            <td>12.5%</td>
+                            <td>13.2%</td>
+                            <td>1 Gbps</td>
+                            <td class="metric-good">✓ Sufficient</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-1</strong></td>
+                            <td>11.8%</td>
+                            <td>12.8%</td>
+                            <td>1 Gbps</td>
+                            <td class="metric-good">✓ Sufficient</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-2</strong></td>
+                            <td>12.2%</td>
+                            <td>13.0%</td>
+                            <td>1 Gbps</td>
+                            <td class="metric-good">✓ Sufficient</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="margin-top: 20px; color: #2c3e50;">ETCD Peer Communication Details</h4>
+                <table class="response-table">
+                    <thead>
+                        <tr><th>Connection</th><th>Round-trip Latency</th><th>Send Failures</th><th>Slow Requests</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>master-0 → master-1</strong></td>
+                            <td>3.1 ms</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td class="metric-good">✓ Healthy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-0 → master-2</strong></td>
+                            <td>3.3 ms</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td class="metric-good">✓ Healthy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-1 → master-0</strong></td>
+                            <td>3.2 ms</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td class="metric-good">✓ Healthy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-1 → master-2</strong></td>
+                            <td>3.1 ms</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td class="metric-good">✓ Healthy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-2 → master-0</strong></td>
+                            <td>3.3 ms</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td class="metric-good">✓ Healthy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>master-2 → master-1</strong></td>
+                            <td>3.2 ms</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td class="metric-good">✓ Healthy</td>
+                        </tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis_en: `**Network I/O Performance Analysis**
+
+🟢 **Overall Assessment**: **Network performance excellent, no bottlenecks**
+
+**Key Findings**:
+
+**1. Peer Communication Latency** ✅:
+• Average latency: 3.2ms
+• Latency stability: Excellent (std dev <0.1ms)
+• Threshold comparison: Far below 50ms warning line
+
+**Performance Grade**: **Excellent** (< 5ms)
+
+**2. Bandwidth Utilization** ✅:
+• Average usage: 12.5%
+• Available capacity: 87.5%
+• Traffic is balanced across all nodes
+
+**Capacity Assessment**: Very sufficient
+
+**3. Network Reliability** ✅:
+• Send failures: 0 (perfect)
+• Packet loss rate: 0.001% (excellent)
+• Slow requests: 0
+
+**Reliability**: Excellent, no issues detected
+
+**4. Scalability Analysis**:
+\`\`\`
+Current: 130 MB/s (12.5% of 1Gbps)
+Scalable capacity: 74.8%
+
+Can support additional load:
+- 3x current traffic: Completely no pressure
+- 10x current traffic: Need upgrade to 10 Gbps
+\`\`\`
+
+**Bottleneck Assessment**:
+
+Network vs Disk comparison:
+\`\`\`
+Network: Utilization 12.5%, Latency 3.2ms  ✓
+Disk:    Utilization 68%,  Latency 18ms   ⚠
+
+Conclusion: Disk is the bottleneck, not network
+\`\`\`
+
+**Optimization Recommendations**:
+
+**Current Status**: 🟢 **No optimization needed**
+
+**Long-term Planning** (6-12 months):
+- If cluster expands to 5 Masters
+- Or Worker nodes increase to 50+
+- Consider upgrading to 10 Gbps
+
+**Strengths**:
+- Low latency (3.2ms)
+- High reliability (packet loss <0.001%)
+- Sufficient bandwidth (87% headroom)
+- Optimized topology (full mesh)
+
+**No improvements needed**:
+Network is not a performance bottleneck, focus should be on disk I/O optimization.
+
+**Recommended Action**:
+None. Continue monitoring network health, maintain current status.`
             },
             'general-info': {
                 user: '显示ETCD的常规性能指标',
@@ -1566,7 +2113,54 @@ ip link set eth0 mtu 9000
 • **碎片率**: 物理大小2.8GB vs 逻辑2.1GB，碎片率约25%，正常范围
 • **稳定性**: Proposal失败率为0，集群写入操作完全稳定
 
-**建议**: 无需立即优化，继续监控即可。`
+**建议**: 无需立即优化，继续监控即可。`,
+                toolResult_en: `<table class="response-table">
+                    <thead>
+                        <tr><th>Metric</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CPU Usage</strong></td>
+                            <td>42%</td><td>45%</td><td>43%</td>
+                            <td class="metric-good">Normal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Memory Usage</strong></td>
+                            <td>3.2 GB</td><td>3.4 GB</td><td>3.3 GB</td>
+                            <td class="metric-good">Normal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DB Physical Size</strong></td>
+                            <td>2.8 GB</td><td>2.8 GB</td><td>2.8 GB</td>
+                            <td class="metric-good">Normal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DB Logical Size</strong></td>
+                            <td>2.1 GB</td><td>2.1 GB</td><td>2.1 GB</td>
+                            <td class="metric-good">Normal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Space Utilization</strong></td>
+                            <td>62%</td><td>62%</td><td>62%</td>
+                            <td class="metric-good">Healthy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Proposal Failure Rate</strong></td>
+                            <td>0%</td><td>0%</td><td>0%</td>
+                            <td class="metric-good">Excellent</td>
+                        </tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis_en: `**ETCD General Metrics Analysis**
+
+Overall performance excellent:
+
+• **Resource Usage**: CPU and memory usage in healthy range (40-45%)
+• **Database Health**: Space utilization at 62%, plenty of room before default quota (8GB)
+• **Fragmentation**: Physical size 2.8GB vs logical 2.1GB, ~25% fragmentation rate is normal
+• **Stability**: Proposal failure rate is 0%, cluster write operations completely stable
+
+**Recommendation**: No immediate optimization needed, continue monitoring.`
             },
             'wal-fsync': {
                 user: '检查ETCD的WAL fsync性能',
@@ -1669,7 +2263,6 @@ WAL fsync is a critical component of ETCD's write path. Current latency indicate
             'backend-commit': {
                 user: '分析Backend Commit性能',
                 user_en: 'Analyze Backend Commit performance',
-                user_en: 'Analyze Backend Commit performance',
                 toolResult: `<table class="response-table">
                     <thead>
                         <tr><th>指标</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>阈值</th><th>状态</th></tr>
@@ -1714,7 +2307,52 @@ WAL fsync is a critical component of ETCD's write path. Current latency indicate
 2. **中期**: 考虑使用更快的NVMe SSD
 3. **长期**: 调整I/O调度器为deadline或noop
 
-**影响评估**: 当前延迟虽然超标，但不会严重影响集群性能。建议在非高峰期进行优化。`
+**影响评估**: 当前延迟虽然超标，但不会严重影响集群性能。建议在非高峰期进行优化。`,
+                toolResult_en: `<table class="response-table">
+                    <thead>
+                        <tr><th>Metric</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>Threshold</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>P99 Latency</strong></td>
+                            <td>32.5 ms</td><td>31.8 ms</td><td>33.2 ms</td>
+                            <td>&lt; 25ms</td>
+                            <td class="metric-warning">⚠ Needs Attention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P90 Latency</strong></td>
+                            <td>18.3 ms</td><td>17.9 ms</td><td>18.7 ms</td>
+                            <td>&lt; 15ms</td>
+                            <td class="metric-warning">⚠ Slightly Exceeds</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P50 Latency</strong></td>
+                            <td>8.1 ms</td><td>7.8 ms</td><td>8.3 ms</td>
+                            <td>&lt; 10ms</td>
+                            <td class="metric-good">✓ Normal</td>
+                        </tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis_en: `**Backend Commit Performance Analysis**
+
+⚠️ **Needs Attention** - P99 latency exceeds recommended threshold by 30%
+
+**Issue Identification**:
+• P99 latency: 32.5ms (target: <25ms) - 30% over threshold
+• P90 latency: 18.3ms (target: <15ms) - 22% over threshold
+• P50 latency: 8.1ms - within normal range
+
+**Possible Causes**:
+1. High disk I/O load
+2. Frequent backend database commit operations
+3. Insufficient disk performance or contention
+
+**Optimization Recommendations**:
+1. **Short-term**: Check disk I/O Wait metrics
+2. **Mid-term**: Consider using faster NVMe SSD
+3. **Long-term**: Adjust I/O scheduler to deadline or noop
+
+**Impact Assessment**: Current latency exceeds threshold but does not severely impact cluster performance. Recommend optimization during off-peak hours.`
             },
             'deep-dive': {
                 user: '对ETCD性能进行深度分析，找出瓶颈',
@@ -1797,7 +2435,147 @@ WAL fsync is a critical component of ETCD's write path. Current latency indicate
 3. 考虑分离WAL和数据库到不同磁盘
 
 **预期改善**:
-实施后，Backend Commit P99延迟预计可降至20ms以下，满足生产环境要求。`
+实施后，Backend Commit P99延迟预计可降至20ms以下，满足生产环境要求。`,
+                toolResult_en: `<div style="margin-bottom: 15px;">
+                    <strong>🔍 Multi-dimensional Performance Scan Complete</strong>
+                    <p style="margin-top: 5px;">Checked: General metrics · WAL Fsync · Backend Commit · Disk I/O · Network I/O · Node Resources</p>
+                </div>
+                <table class="response-table">
+                    <thead>
+                        <tr><th>Subsystem</th><th>Key Metric</th><th>Current Value</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>General Info</strong></td>
+                            <td>CPU / Memory / DB Size</td>
+                            <td>43% / 3.3GB / 2.8GB</td>
+                            <td class="metric-good">✓ Normal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>WAL Fsync</strong></td>
+                            <td>P99 Latency</td>
+                            <td>8.2 ms</td>
+                            <td class="metric-good">✓ Excellent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Backend Commit</strong></td>
+                            <td>P99 Latency</td>
+                            <td>32.5 ms</td>
+                            <td class="metric-warning">⚠ Needs Attention</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Disk I/O</strong></td>
+                            <td>I/O Wait</td>
+                            <td>15.2%</td>
+                            <td class="metric-critical">🔴 High</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Network I/O</strong></td>
+                            <td>Peer Latency</td>
+                            <td>3.2 ms</td>
+                            <td class="metric-good">✓ Excellent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Node Resources</strong></td>
+                            <td>CPU / Memory</td>
+                            <td>46% / 29GB</td>
+                            <td class="metric-good">✓ Healthy</td>
+                        </tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis_en: `**Deep ETCD Performance Analysis Report**
+
+**🎯 Bottleneck Identified**: Disk I/O is the primary performance limiting factor
+
+**Executive Summary**:
+
+After comprehensive multi-dimensional analysis, the cluster's main performance bottleneck is **disk I/O performance**. While most subsystems are operating healthily, disk I/O Wait (15.2%) is significantly exceeding the recommended threshold, directly impacting Backend Commit latency.
+
+**Performance Scoring** (100-point scale):
+\`\`\`
+General Metrics:     92/100  ✓ (Excellent)
+WAL Fsync:          95/100  ✓ (Excellent)
+Backend Commit:     68/100  ⚠ (Needs Improvement)
+Disk I/O:           45/100  🔴 (Critical)
+Network I/O:        98/100  ✓ (Outstanding)
+Node Resources:     85/100  ✓ (Good)
+────────────────────────────
+Overall Score:      80/100  (Good, Optimization Recommended)
+\`\`\`
+
+**Root Cause Analysis**:
+
+**Primary Bottleneck**: Disk I/O
+- I/O Wait: 15.2% (target: <10%) - **52% over threshold**
+- Write Latency P99: 18.2ms (target: <10ms) - **82% over threshold**
+- Queue Depth: 12.5 (high saturation)
+
+**Impact Chain**:
+\`\`\`
+High Disk I/O Wait (15.2%)
+        ↓
+Increased Write Latency (18.2ms)
+        ↓
+Backend Commit Latency Increases (32.5ms)
+        ↓
+Overall ETCD Write Performance Affected
+\`\`\`
+
+**Other Subsystems**:
+✅ Network: Excellent (latency 3.2ms, bandwidth utilization 12%)
+✅ WAL Fsync: Excellent (P99 8.2ms, below 10ms threshold)
+✅ Node Resources: Healthy (CPU 46%, Memory 45%, sufficient headroom)
+
+**Optimization Priority List**:
+
+**🔴 Priority 1: Disk I/O Optimization (Urgent)**
+Impact: High | Difficulty: Medium | Timeline: 1-2 months
+
+Actions:
+1. Upgrade to NVMe enterprise SSD
+2. Separate WAL and data to independent disks
+3. Adjust I/O scheduler to deadline or noop
+
+Expected Results:
+- I/O Wait: 15.2% → <5%
+- Backend Commit P99: 32.5ms → <20ms
+- Overall performance improvement: 40-50%
+
+**🟡 Priority 2: Backend Commit Tuning (Medium)**
+Impact: Medium | Difficulty: Low | Timeline: 1-2 weeks
+
+Actions:
+1. Monitor I/O patterns
+2. Optimize backend commit frequency
+3. Tune kernel parameters (dirty ratio)
+
+**🟢 Priority 3: Monitoring Enhancement (Low)**
+Impact: Low | Difficulty: Low | Timeline: Ongoing
+
+Actions:
+1. Set up I/O Wait alerts (>10%)
+2. Track disk lifespan and error rates
+3. Establish performance baselines
+
+**Immediate Recommendations**:
+
+**Short-term** (0-2 weeks):
+1. Verify current disk type and configuration
+2. Check for competing I/O processes
+3. Optimize filesystem mount options
+
+**Mid-term** (1-2 months):
+1. Plan NVMe SSD upgrade
+2. Design migration strategy
+3. Implement during maintenance window
+
+**Long-term** (3-6 months):
+1. Upgrade to NVMe enterprise SSD (recommended: Intel P4510, Samsung PM983)
+2. Use RAID configuration for improved reliability
+3. Consider separating WAL and database to different disks
+
+**Expected Improvement**:
+After implementation, Backend Commit P99 latency is expected to drop below 20ms, meeting production environment requirements.`
             },
             'full-report': {
                 user: '生成完整的ETCD性能分析报告',
@@ -1861,7 +2639,67 @@ WAL fsync is a critical component of ETCD's write path. Current latency indicate
 📁 **报告已保存**:
 HTML格式报告已导出，可直接在浏览器中查看或分享给团队。
 
-**建议**: 将此报告作为性能基线，定期(每周)生成新报告进行对比，跟踪优化效果。`
+**建议**: 将此报告作为性能基线，定期(每周)生成新报告进行对比，跟踪优化效果。`,
+                toolResult_en: `<div style="background: white; padding: 20px; border-radius: 8px; margin: 10px 0;">
+                    <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 15px;">
+                        📊 ETCD Performance Analysis Report
+                    </h3>
+                    <p><strong>Report Generated:</strong> 2026-04-12 15:30:00 UTC</p>
+                    <p><strong>Analysis Time Range:</strong> 2026-04-12 14:00:00 - 15:00:00 (1 hour)</p>
+                    <p><strong>Cluster Name:</strong> production-ocp-cluster</p>
+
+                    <h4 style="margin-top: 20px; color: #2c3e50;">📋 Executive Summary</h4>
+                    <ul style="line-height: 1.8;">
+                        <li><strong>Cluster Health Status:</strong> <span class="metric-good">Healthy ✓</span></li>
+                        <li><strong>Issues Found:</strong> 1 warning (Backend Commit latency)</li>
+                        <li><strong>Identified Bottleneck:</strong> Disk I/O bottleneck</li>
+                        <li><strong>Priority:</strong> Medium (recommend optimization within 1-2 weeks)</li>
+                    </ul>
+
+                    <h4 style="margin-top: 20px; color: #2c3e50;">🎯 Key Performance Metrics</h4>
+                    <table class="response-table" style="margin-top: 10px;">
+                        <tr><td>WAL Fsync P99</td><td class="metric-good">8.2 ms ✓</td><td>Target: &lt;10ms</td></tr>
+                        <tr><td>Backend Commit P99</td><td class="metric-warning">32.5 ms ⚠</td><td>Target: &lt;25ms</td></tr>
+                        <tr><td>CPU Usage</td><td class="metric-good">43% ✓</td><td>Warning: &lt;70%</td></tr>
+                        <tr><td>Memory Usage</td><td class="metric-good">58% ✓</td><td>Warning: &lt;70%</td></tr>
+                        <tr><td>Disk I/O Wait</td><td class="metric-critical">15% ✗</td><td>Target: &lt;10%</td></tr>
+                        <tr><td>Network Latency</td><td class="metric-good">3.2 ms ✓</td><td>Warning: &lt;50ms</td></tr>
+                    </table>
+
+                    <h4 style="margin-top: 20px; color: #2c3e50;">🔍 Bottleneck Analysis</h4>
+                    <div style="background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; border-radius: 4px; margin-top: 10px;">
+                        <strong>Identified Bottleneck: Insufficient Disk I/O Performance</strong><br>
+                        • I/O Wait reached 15%, exceeding 10% health threshold<br>
+                        • Directly affecting Backend Commit latency<br>
+                        • Need to optimize disk performance or reduce I/O contention
+                    </div>
+
+                    <h4 style="margin-top: 20px; color: #2c3e50;">💡 Optimization Recommendations</h4>
+                    <ol style="line-height: 1.8;">
+                        <li><strong>Immediate Check:</strong> Use iostat to confirm disk utilization</li>
+                        <li><strong>Short-term Optimization:</strong> Adjust I/O scheduler to deadline</li>
+                        <li><strong>Mid-term Solution:</strong> Migrate to NVMe SSD</li>
+                        <li><strong>Continuous Monitoring:</strong> Set Backend Commit alert (threshold: 30ms)</li>
+                    </ol>
+
+                    <p style="margin-top: 20px; font-size: 0.9em; color: #7f8c8d;">
+                        Report saved to: <code>exports/etcd_performance_report_20260412.html</code>
+                    </p>
+                </div>`,
+                aiAnalysis_en: `**Report Generated Successfully** ✅
+
+I have generated a detailed ETCD performance analysis report containing:
+
+📊 **Complete Analysis Content**:
+• Executive Summary - Quick overview of cluster status
+• Key Metrics - 6 core performance dimensions
+• Bottleneck Identification - Disk I/O bottleneck analysis
+• Optimization Recommendations - 4-step optimization roadmap
+
+📁 **Report Saved**:
+HTML format report has been exported and can be viewed directly in a browser or shared with the team.
+
+**Recommendation**: Use this report as a performance baseline, generate new reports periodically (weekly) for comparison and track optimization effectiveness.`
             }
         };
 
