@@ -1,0 +1,16 @@
+# OCP Performance Analyzer - Enhanced CLI Requirements
+
+# Rich library for enhanced terminal UI
+# Provides colored output, tables, progress bars, and markdown rendering
+rich>=13.0.0
+
+# MCP (Model Context Protocol) client
+mcp>=1.0.0
+
+# HTTP client for async requests
+aiohttp>=3.9.0
+
+# Core dependencies (should already be installed with main project)
+# fastapi>=0.104.0
+# pydantic>=2.0.0
+# python-dotenv>=1.0.0

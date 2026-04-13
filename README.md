@@ -22,6 +22,30 @@ Experience the full capabilities of OCP Performance Analyzer MCP with our online
 - [Documentation Demo](https://liqcui.github.io/ocp-performance-analyzer-mcp/demo.html) - Project overview
 - [Demo Guide](DEMO.md) - How to use the demos
 
+## 🖥️ Enhanced CLI Tool
+
+**NEW!** Interactive command-line interface with rich terminal UI:
+
+```bash
+# Install CLI dependencies
+pip install -r requirements-cli.txt
+
+# Run the enhanced CLI
+./cli.py
+
+# Or with custom server
+./cli.py --server http://localhost:8001
+```
+
+**Features:**
+- 🎯 9 quick analysis scenarios via simple menu
+- 🎨 Rich terminal UI with colors, tables, and progress bars
+- 📊 Real-time performance metrics
+- 🤖 AI-powered insights in the terminal
+- 📁 HTML report generation
+
+See [CLI_GUIDE.md](CLI_GUIDE.md) for detailed usage instructions.
+
 ## Table of Contents
 
 - [Overview](#overview)
