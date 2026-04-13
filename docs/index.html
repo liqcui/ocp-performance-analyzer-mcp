@@ -729,10 +729,12 @@
     </div>
 
     <script>
-        // 演示数据
-        const demoMessages = {
+        // Demo Data with Bilingual Support
+        // 演示数据 - 支持双语
+        const demoMessagesData = {
             'cluster-overview': {
                 user: '告诉我当前OpenShift集群的基本信息和ETCD集群状态',
+                user_en: 'Tell me about the current OpenShift cluster and ETCD cluster status',
                 toolResult: `<table class="response-table">
                     <thead>
                         <tr><th>集群信息</th><th>值</th></tr>
@@ -747,6 +749,20 @@
                         <tr><td>集群运行时间</td><td>45天</td></tr>
                     </tbody>
                 </table>`,
+                toolResult_en: `<table class="response-table">
+                    <thead>
+                        <tr><th>Cluster Info</th><th>Value</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Cluster Name</td><td>production-ocp-cluster</td></tr>
+                        <tr><td>OpenShift Version</td><td>4.14.3</td></tr>
+                        <tr><td>Kubernetes Version</td><td>v1.27.6</td></tr>
+                        <tr><td>Total Nodes</td><td>15 (3 Master + 12 Worker)</td></tr>
+                        <tr><td>ETCD Members</td><td>3</td></tr>
+                        <tr><td>ETCD Health</td><td class="metric-good">Healthy ✓</td></tr>
+                        <tr><td>Cluster Uptime</td><td>45 days</td></tr>
+                    </tbody>
+                </table>`,
                 aiAnalysis: `**集群状态总结**
 
 您的OpenShift集群运行状况良好：
@@ -756,7 +772,17 @@
 • **ETCD**: 3成员集群，符合高可用配置建议
 • **健康状态**: 所有ETCD成员健康，无告警
 
-**建议**: 集群配置合理，继续监控资源使用趋势。`
+**建议**: 集群配置合理，继续监控资源使用趋势。`,
+                aiAnalysis_en: `**Cluster Status Summary**
+
+Your OpenShift cluster is running in healthy condition:
+
+• **Version**: OpenShift 4.14.3 (latest stable release)
+• **Scale**: 15-node configuration suitable for medium-sized production environments
+• **ETCD**: 3-member cluster meets high availability configuration recommendations
+• **Health Status**: All ETCD members healthy, no alerts
+
+**Recommendation**: Cluster configuration is reasonable. Continue monitoring resource usage trends.`
             },
             'node-usage': {
                 user: '显示ETCD Master节点的资源使用情况',
@@ -1540,6 +1566,7 @@ ip link set eth0 mtu 9000
             },
             'wal-fsync': {
                 user: '检查ETCD的WAL fsync性能',
+                user_en: 'Check ETCD WAL fsync performance',
                 toolResult: `<table class="response-table">
                     <thead>
                         <tr><th>指标</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>阈值</th><th>状态</th></tr>
@@ -1586,10 +1613,58 @@ WAL fsync是ETCD写入路径的关键环节。当前延迟表明：
 - SSD响应时间快速
 - 无I/O竞争问题
 
-**建议**: 性能优秀，无需优化。继续保持当前配置。`
+**建议**: 性能优秀，无需优化。继续保持当前配置。`,
+                toolResult_en: `<table class="response-table">
+                    <thead>
+                        <tr><th>Metric</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>Threshold</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>P99 Latency</strong></td>
+                            <td>8.2 ms</td><td>7.9 ms</td><td>8.5 ms</td>
+                            <td>&lt; 10ms</td>
+                            <td class="metric-good">✓ Excellent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P90 Latency</strong></td>
+                            <td>5.1 ms</td><td>4.8 ms</td><td>5.3 ms</td>
+                            <td>&lt; 7ms</td>
+                            <td class="metric-good">✓ Excellent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P50 Latency</strong></td>
+                            <td>2.3 ms</td><td>2.1 ms</td><td>2.4 ms</td>
+                            <td>&lt; 3ms</td>
+                            <td class="metric-good">✓ Excellent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Average Latency</strong></td>
+                            <td>1.8 ms</td><td>1.7 ms</td><td>1.9 ms</td>
+                            <td>&lt; 2ms</td>
+                            <td class="metric-good">✓ Excellent</td>
+                        </tr>
+                    </tbody>
+                </table>`,
+                aiAnalysis_en: `**WAL Fsync Performance Assessment**
+
+🎉 **Performance: EXCELLENT** - All latency metrics are well below recommended thresholds
+
+**Key Findings**:
+• P99 Latency: 8.2ms (target: <10ms) - Excellent
+• P90 Latency: 5.1ms - Consistently stable
+• P50 Latency: 2.3ms - Fast response
+
+**Performance Implications**:
+WAL fsync is a critical component of ETCD's write path. Current latency indicates:
+- Excellent disk write performance
+- Fast SSD response time
+- No I/O contention issues
+
+**Recommendation**: Performance is excellent, no optimization needed. Continue maintaining current configuration.`
             },
             'backend-commit': {
                 user: '分析Backend Commit性能',
+                user_en: 'Analyze Backend Commit performance',
                 toolResult: `<table class="response-table">
                     <thead>
                         <tr><th>指标</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>阈值</th><th>状态</th></tr>
@@ -1783,6 +1858,33 @@ HTML格式报告已导出，可直接在浏览器中查看或分享给团队。
             }
         };
 
+        // Get demo message in current language
+        function getDemoMessage(type) {
+            const data = demoMessagesData[type];
+            if (!data) return null;
+
+            return {
+                user: currentLang === 'zh' ? data.user : (data.user_en || data.user),
+                toolResult: currentLang === 'zh' ? data.toolResult : (data.toolResult_en || data.toolResult),
+                aiAnalysis: currentLang === 'zh' ? data.aiAnalysis : (data.aiAnalysis_en || data.aiAnalysis)
+            };
+        }
+
+        // Translation for demo UI elements
+        function getDemoUIText(key) {
+            const demoUITranslations = {
+                zh: {
+                    'data-result': '📊 数据结果',
+                    'ai-analysis': '🤖 AI分析'
+                },
+                en: {
+                    'data-result': '📊 Data Result',
+                    'ai-analysis': '🤖 AI Analysis'
+                }
+            };
+            return demoUITranslations[currentLang][key] || demoUITranslations.zh[key];
+        }
+
         // 切换标签页
         function switchTab(tab) {
             // 移除所有active类
@@ -1805,7 +1907,7 @@ HTML格式报告已导出，可直接在浏览器中查看或分享给团队。
 
         // 发送演示消息
         function sendDemoMessage(type) {
-            const demo = demoMessages[type];
+            const demo = getDemoMessage(type);
             if (!demo) return;
 
             // 切换到聊天视图
@@ -1842,13 +1944,13 @@ HTML格式报告已导出，可直接在浏览器中查看或分享给团队。
                 let content = '';
                 if (demo.toolResult) {
                     content += `<div class="tool-result-section">
-                        <div class="tool-result-header">📊 数据结果</div>
+                        <div class="tool-result-header">${getDemoUIText('data-result')}</div>
                         ${demo.toolResult}
                     </div>`;
                 }
                 if (demo.aiAnalysis) {
                     content += `<div class="ai-analysis-section">
-                        <div style="font-weight: 600; color: #2c3e50; margin-bottom: 10px;">🤖 AI分析</div>
+                        <div style="font-weight: 600; color: #2c3e50; margin-bottom: 10px;">${getDemoUIText('ai-analysis')}</div>
                         ${demo.aiAnalysis.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
                     </div>`;
                 }
