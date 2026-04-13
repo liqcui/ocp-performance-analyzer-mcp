@@ -9,18 +9,20 @@ A comprehensive, AI-powered performance analysis and monitoring platform for Ope
 
 ## 🎬 Live Demo
 
-**[Try the Interactive Demo →](https://liqcui.github.io/ocp-performance-analyzer-mcp/)**
+**[Try the Interactive Demo →](https://liqcui.github.io/ocp-performance-analyzer-mcp/)** 🌐 **EN/中文**
 
 Experience the full capabilities of OCP Performance Analyzer MCP with our online demo:
 - 🤖 AI-powered chat interface with 9 realistic scenarios
 - 📊 Complete system architecture visualization
 - 🔍 Real-world performance analysis examples
 - 📖 Comprehensive documentation and guides
+- 🌐 **NEW:** Full bilingual support (English/Chinese) with instant language switching
 
 **Quick Links:**
-- [Interactive Demo](https://liqcui.github.io/ocp-performance-analyzer-mcp/) - Full AI chat simulation
-- [Documentation Demo](https://liqcui.github.io/ocp-performance-analyzer-mcp/demo.html) - Project overview
+- [Interactive Demo](https://liqcui.github.io/ocp-performance-analyzer-mcp/) - Full AI chat simulation (EN/中文)
+- [Documentation Demo](https://liqcui.github.io/ocp-performance-analyzer-mcp/demo.html) - Project overview (EN/中文)
 - [Demo Guide](DEMO.md) - How to use the demos
+- [Bilingual Support Guide](docs/BILINGUAL_SUPPORT.md) - Language switching instructions
 
 ## 🖥️ Enhanced CLI Tool
 
