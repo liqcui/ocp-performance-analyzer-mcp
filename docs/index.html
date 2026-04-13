@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OCP Performance Analyzer MCP - 交互式演示</title>
+    <title>OCP Performance Analyzer MCP - Interactive Demo</title>
     <style>
         * {
             margin: 0;
@@ -161,6 +161,23 @@
         }
 
         .tab-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .lang-toggle {
+            padding: 6px 12px;
+            border: 1px solid #3498db;
+            background: white;
+            color: #3498db;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .lang-toggle:hover {
             background: #3498db;
             color: white;
         }
@@ -463,11 +480,14 @@
         <!-- 主内容区 -->
         <div class="main-content">
             <div class="header">
-                <h2>性能分析演示界面</h2>
+                <h2 data-i18n="header-title">性能分析演示界面</h2>
                 <div class="header-tabs">
-                    <button class="tab-btn active" onclick="switchTab('chat')">💬 AI聊天</button>
-                    <button class="tab-btn" onclick="switchTab('architecture')">🏗️ 架构</button>
-                    <button class="tab-btn" onclick="switchTab('demo')">🎬 演示</button>
+                    <button class="tab-btn active" onclick="switchTab('chat')"><span data-i18n="tab-chat">💬 AI聊天</span></button>
+                    <button class="tab-btn" onclick="switchTab('architecture')"><span data-i18n="tab-arch">🏗️ 架构</span></button>
+                    <button class="tab-btn" onclick="switchTab('demo')"><span data-i18n="tab-demo">🎬 演示</span></button>
+                    <button class="lang-toggle" onclick="toggleLanguage()">
+                        <span id="lang-text">EN</span>
+                    </button>
                 </div>
             </div>
 
@@ -1838,6 +1858,126 @@ HTML格式报告已导出，可直接在浏览器中查看或分享给团队。
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
             }, 1500);
         }
+
+        // ========================================
+        // Internationalization (i18n) System
+        // ========================================
+
+        let currentLang = localStorage.getItem('preferredLanguage') || 'zh';
+
+        const translations = {
+            zh: {
+                'header-title': '性能分析演示界面',
+                'tab-chat': '💬 AI聊天',
+                'tab-arch': '🏗️ 架构',
+                'tab-demo': '🎬 演示',
+                'sidebar-title': '🚀 OCP ETCD Analyzer',
+                'sidebar-subtitle': 'AI驱动的性能分析平台',
+                'quick-actions': '📊 快速操作',
+                'action-1': '🏛️ 集群概览',
+                'action-2': '🖥️ ETCD常规信息',
+                'action-3': '📈 节点资源使用',
+                'action-4': '🔄 WAL Fsync性能',
+                'action-5': '🔗 Backend Commit',
+                'action-6': '💾 磁盘I/O分析',
+                'action-7': '🌐 网络I/O分析',
+                'action-8': '🔍 深度性能分析',
+                'action-9': '📊 完整性能报告',
+                'status-connected': 'MCP服务器已连接 (演示模式)',
+                'status-healthy': '集群健康 (15个工具可用)',
+                'welcome-title': '👋 欢迎使用 OpenShift ETCD 性能分析助手',
+                'welcome-desc': '我可以帮助您分析OpenShift集群性能、检查系统健康状况，并提供基于AI的深度洞察。',
+                'welcome-tip': '点击左侧快速操作按钮开始演示'
+            },
+            en: {
+                'header-title': 'Performance Analysis Demo',
+                'tab-chat': '💬 AI Chat',
+                'tab-arch': '🏗️ Architecture',
+                'tab-demo': '🎬 Demo',
+                'sidebar-title': '🚀 OCP ETCD Analyzer',
+                'sidebar-subtitle': 'AI-Powered Performance Analysis Platform',
+                'quick-actions': '📊 Quick Actions',
+                'action-1': '🏛️ Cluster Overview',
+                'action-2': '🖥️ ETCD General Info',
+                'action-3': '📈 Node Resource Usage',
+                'action-4': '🔄 WAL Fsync Performance',
+                'action-5': '🔗 Backend Commit',
+                'action-6': '💾 Disk I/O Analysis',
+                'action-7': '🌐 Network I/O Analysis',
+                'action-8': '🔍 Deep Performance Analysis',
+                'action-9': '📊 Full Performance Report',
+                'status-connected': 'MCP Server Connected (Demo Mode)',
+                'status-healthy': 'Cluster Healthy (15 Tools Available)',
+                'welcome-title': '👋 Welcome to OpenShift ETCD Performance Analyzer',
+                'welcome-desc': 'I can help you analyze OpenShift cluster performance, check system health, and provide AI-powered deep insights.',
+                'welcome-tip': 'Click the quick action buttons on the left to start the demo'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            localStorage.setItem('preferredLanguage', currentLang);
+            applyLanguage();
+        }
+
+        function applyLanguage() {
+            // Update language indicator
+            document.getElementById('lang-text').textContent = currentLang === 'zh' ? 'EN' : '中文';
+            document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+
+            // Update all translatable elements
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
+
+            // Update dynamic content
+            updateSidebarText();
+            updateWelcomeMessage();
+        }
+
+        function updateSidebarText() {
+            const sidebarHeader = document.querySelector('.sidebar-header h1');
+            const sidebarSubtitle = document.querySelector('.sidebar-header p');
+            const quickActionsTitle = document.querySelector('.quick-actions h3');
+            const statusItems = document.querySelectorAll('.status-item span');
+
+            if (sidebarHeader) sidebarHeader.textContent = translations[currentLang]['sidebar-title'];
+            if (sidebarSubtitle) sidebarSubtitle.textContent = translations[currentLang]['sidebar-subtitle'];
+            if (quickActionsTitle) quickActionsTitle.textContent = translations[currentLang]['quick-actions'];
+
+            if (statusItems.length >= 2) {
+                statusItems[0].textContent = translations[currentLang]['status-connected'];
+                statusItems[1].textContent = translations[currentLang]['status-healthy'];
+            }
+
+            // Update action buttons
+            const actionButtons = document.querySelectorAll('.action-button');
+            actionButtons.forEach((btn, index) => {
+                const key = `action-${index + 1}`;
+                if (translations[currentLang][key]) {
+                    btn.textContent = translations[currentLang][key];
+                }
+            });
+        }
+
+        function updateWelcomeMessage() {
+            const welcomeTitle = document.querySelector('.welcome-message h3');
+            const welcomeParas = document.querySelectorAll('.welcome-message p');
+
+            if (welcomeTitle) welcomeTitle.textContent = translations[currentLang]['welcome-title'];
+            if (welcomeParas.length >= 2) {
+                welcomeParas[0].textContent = translations[currentLang]['welcome-desc'];
+                welcomeParas[1].textContent = translations[currentLang]['welcome-tip'];
+            }
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            applyLanguage();
+        });
     </script>
 </body>
 </html>
