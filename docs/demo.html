@@ -490,7 +490,7 @@
                 <div class="stat-box">
                     <div class="stat-label">Analysis Components</div>
                     <div class="stat-value">3</div>
-                    <div class="stat-label">ETCD · 网络 · OVN-K</div>
+                    <div class="stat-label">ETCD · Network · OVN-K</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-label">Performance Metrics</div>
@@ -557,35 +557,35 @@
         <section id="architecture" class="section">
             <h2 data-i18n="section-architecture-title">🏗️ System Architecture</h2>
 
-            <h3>高层架构设计</h3>
+            <h3>High-Level Architecture Design</h3>
             <div class="architecture-diagram">
                 <pre>
 ┌─────────────────────────────────────────────────────────────────────┐
-│                         客户端层 (Client Layer)                      │
+│                         Client Layer                      │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐              │
 │  │   Web UI     │  │  CLI Tools    │  │  REST API     │              │
-│  │  交互式界面   │  │   命令行工具   │  │  RESTful接口  │              │
+│  │  Interactive UI   │  │   CLI Tools   │  │  RESTful API  │              │
 │  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘              │
 └─────────┼─────────────────┼─────────────────┼───────────────────────┘
           │                 │                 │
           └─────────────────┼─────────────────┘
                             │
 ┌───────────────────────────┼──────────────────────────────────────────┐
-│                    AI Agents层 (Port 8080)                               │
+│                    AI Agents Layer (Port 8080)                               │
 │  ┌──────────────────────────────────────────────────────────────┐   │
-│  │  LangGraph智能代理: Chat · Report · Storage                   │   │
-│  │  • 流式响应支持                                                │   │
-│  │  • 工具编排调度                                                │   │
-│  │  • 对话上下文记忆                                              │   │
-│  │  • OpenAI/兼容LLM集成                                          │   │
+│  │  LangGraph AI Agents: Chat · Report · Storage                   │   │
+│  │  • Streaming response support                                                │   │
+│  │  • Tool orchestration                                                │   │
+│  │  • Conversation context memory                                              │   │
+│  │  • OpenAI/Compatible LLM integration                                          │   │
 │  └──────────────────────────────────────────────────────────────┘   │
 └───────────────────────────┬──────────────────────────────────────────┘
-                            │ MCP协议通信
+                            │ MCP Protocol Communication
 ┌───────────────────────────┼──────────────────────────────────────────┐
-│                    MCP服务器层 (Port 8000)                            │
+│                    MCP Server Layer (Port 8000)                            │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
 │  │ ETCD Server │  │Network Server│  │ OVNK Server │                 │
-│  │  15+ 工具   │  │   10+ 工具   │  │   8+ 工具   │                 │
+│  │  15+ Tools   │  │   10+ Tools   │  │   8+ Tools   │                 │
 │  └─────┬───────┘  └─────┬───────┘  └─────┬───────┘                 │
 └────────┼─────────────────┼─────────────────┼─────────────────────────┘
          │                 │                 │
@@ -617,9 +617,9 @@
                            │
                            ▼
 ┌──────────────────────────────────────────────────────────────────────┐
-│          OpenShift/Kubernetes 集群基础设施                            │
-│  • ETCD集群          • Prometheus/Thanos    • Kubernetes API         │
-│  • Master节点        • OVN-Kubernetes       • 网络组件                │
+│          OpenShift/Kubernetes Cluster Infrastructure                            │
+│  • ETCD Cluster          • Prometheus/Thanos    • Kubernetes API         │
+│  • Master Nodes        • OVN-Kubernetes       • Network Components                │
 └──────────────────────────────────────────────────────────────────────┘
                 </pre>
             </div>
@@ -700,77 +700,77 @@
 
             <div class="tab-container">
                 <div class="tab-buttons">
-                    <button class="tab-button active" onclick="showTab('etcd-component')">ETCD分析器</button>
-                    <button class="tab-button" onclick="showTab('network-component')">网络分析器</button>
-                    <button class="tab-button" onclick="showTab('ovnk-component')">OVN-K分析器</button>
+                    <button class="tab-button active" onclick="showTab('etcd-component')">ETCD Analyzer</button>
+                    <button class="tab-button" onclick="showTab('network-component')">Network Analyzer</button>
+                    <button class="tab-button" onclick="showTab('ovnk-component')">OVN-K Analyzer</button>
                 </div>
 
                 <div id="etcd-component" class="tab-content active">
-                    <h3>ETCD分析器 - 关键Performance Metrics</h3>
+                    <h3>ETCD Analyzer - Key Performance Metrics</h3>
                     <table class="metric-table">
                         <thead>
                             <tr>
-                                <th>指标类别</th>
-                                <th>指标名称</th>
-                                <th>阈值</th>
-                                <th>重要性</th>
+                                <th>Metric Category</th>
+                                <th>Metric Name</th>
+                                <th>Threshold</th>
+                                <th>Importance</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>磁盘性能</strong></td>
-                                <td>WAL Fsync P99延迟</td>
-                                <td class="metric-value-good">&lt; 10ms (优秀)</td>
-                                <td>🔴 关键</td>
+                                <td><strong>Disk Performance</strong></td>
+                                <td>WAL Fsync P99 Latency</td>
+                                <td class="metric-value-good">&lt; 10ms (Excellent)</td>
+                                <td>🔴 Critical</td>
                             </tr>
                             <tr>
-                                <td><strong>磁盘性能</strong></td>
-                                <td>Backend Commit P99延迟</td>
-                                <td class="metric-value-good">&lt; 25ms (优秀)</td>
-                                <td>🔴 关键</td>
+                                <td><strong>Disk Performance</strong></td>
+                                <td>Backend Commit P99 Latency</td>
+                                <td class="metric-value-good">&lt; 25ms (Excellent)</td>
+                                <td>🔴 Critical</td>
                             </tr>
                             <tr>
-                                <td><strong>资源使用</strong></td>
-                                <td>etcd Pod CPU使用率</td>
-                                <td class="metric-value-warning">&lt; 70% (警告)<br>&lt; 85% (严重)</td>
-                                <td>🟡 重要</td>
+                                <td><strong>Resource Usage</strong></td>
+                                <td>etcd Pod CPU Usage</td>
+                                <td class="metric-value-warning">&lt; 70% (Warning)<br>&lt; 85% (严重)</td>
+                                <td>🟡 Important</td>
                             </tr>
                             <tr>
-                                <td><strong>资源使用</strong></td>
-                                <td>etcd Pod内存使用率</td>
-                                <td class="metric-value-warning">&lt; 70% (警告)<br>&lt; 85% (严重)</td>
-                                <td>🟡 重要</td>
+                                <td><strong>Resource Usage</strong></td>
+                                <td>etcd PodMemory Usage</td>
+                                <td class="metric-value-warning">&lt; 70% (Warning)<br>&lt; 85% (严重)</td>
+                                <td>🟡 Important</td>
                             </tr>
                             <tr>
                                 <td><strong>数据库</strong></td>
                                 <td>数据库空间使用率</td>
                                 <td class="metric-value-warning">&lt; 90%</td>
-                                <td>🟡 重要</td>
+                                <td>🟡 Important</td>
                             </tr>
                             <tr>
                                 <td><strong>网络</strong></td>
                                 <td>Peer延迟</td>
-                                <td class="metric-value-warning">&lt; 50ms (警告)<br>&lt; 100ms (严重)</td>
-                                <td>🟡 重要</td>
+                                <td class="metric-value-warning">&lt; 50ms (Warning)<br>&lt; 100ms (严重)</td>
+                                <td>🟡 Important</td>
                             </tr>
                             <tr>
-                                <td><strong>集群健康</strong></td>
-                                <td>Proposal失败率</td>
+                                <td><strong>Cluster Health</strong></td>
+                                <td>Proposal Failure Rate</td>
                                 <td class="metric-value-good">0%</td>
-                                <td>🔴 关键</td>
+                                <td>🔴 Critical</td>
                             </tr>
                             <tr>
                                 <td><strong>压缩/碎片整理</strong></td>
                                 <td>压缩/碎片整理次数</td>
                                 <td>定期监控</td>
-                                <td>🔵 一般</td>
+                                <td>🔵 Normal</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <h4>ETCD分析器工具列表</h4>
+                    <h4>ETCD Analyzer工具列表</h4>
                     <ul style="columns: 2; column-gap: 30px; margin-top: 15px;">
-                        <li>get_server_health - 服务器健康检查</li>
+                        <li>get_server_health - 服务器Healthy检查</li>
                         <li>get_etcd_cluster_status - 集群状态</li>
                         <li>get_ocp_cluster_info - 集群信息</li>
                         <li>get_etcd_general_info - 常规指标</li>
@@ -787,7 +787,7 @@
                 </div>
 
                 <div id="network-component" class="tab-content">
-                    <h3>网络分析器 - 95+网络指标</h3>
+                    <h3>Network Analyzer - 95+网络指标</h3>
                     <table class="metric-table">
                         <thead>
                             <tr>
@@ -865,12 +865,12 @@
                             <tr>
                                 <td><strong>Multus CNI</strong></td>
                                 <td>query_multus_pod_metrics</td>
-                                <td>Multus组件健康状态</td>
+                                <td>Multus组件Healthy状态</td>
                             </tr>
                             <tr>
                                 <td><strong>OVN容器</strong></td>
                                 <td>query_ovnk_container_metrics</td>
-                                <td>容器级资源使用</td>
+                                <td>容器级Resource Usage</td>
                             </tr>
                             <tr>
                                 <td><strong>OVN同步</strong></td>
@@ -902,22 +902,22 @@
         <section id="demo" class="section">
             <h2 data-i18n="section-demo-title">🎬 Performance Demo</h2>
 
-            <h3>示例1: ETCD深度性能分析</h3>
+            <h3>Example 1: ETCD Deep Performance Analysis</h3>
             <div class="demo-panel">
                 <pre>
-<span class="comment"># 场景：分析ETCD集群过去1小时的性能表现</span>
+<span class="comment"># 场景：分析ETCD Cluster过去1小时的性能表现</span>
 
-<span class="keyword">用户查询:</span> "分析etcd过去1小时的性能，重点关注WAL fsync和backend commit延迟"
+<span class="keyword">User Query:</span> "Analyze etcd performance over the past 1 hour, focusing on WAL fsync and backend commit latency"
 
 <span class="keyword">AI Agents执行流程:</span>
 1. 调用 get_etcd_performance_deep_drive(duration="1h")
 2. 收集以下子系统数据:
-   - 常规信息 (CPU、内存、数据库大小)
+   - 常规信息 (CPU、内存、Database Size)
    - WAL Fsync性能 (P50/P90/P99延迟)
    - Backend Commit性能 (P50/P90/P99延迟)
    - 磁盘I/O (IOPS、吞吐量、延迟)
    - 网络I/O (带宽、包速率)
-   - 节点资源使用 (CPU、内存、cgroup)
+   - 节点Resource Usage (CPU、内存、cgroup)
    - 压缩/碎片整理统计
 3. 执行瓶颈检测算法
 4. 生成分析报告
@@ -929,14 +929,14 @@
                 <p><strong>Time Range:</strong> 2026-04-12 14:00:00 UTC ~ 2026-04-12 15:00:00 UTC</p>
                 <p><strong>Cluster Status:</strong> <span class="metric-value-good">Healthy ✓</span></p>
 
-                <h5 style="margin-top: 15px;">关键发现:</h5>
+                <h5 style="margin-top: 15px;">Critical发现:</h5>
                 <ul style="margin-top: 10px;">
-                    <li><strong>WAL Fsync P99延迟:</strong> <span class="metric-value-good">8.2ms</span> - 优秀 (目标: &lt;10ms)</li>
-                    <li><strong>Backend Commit P99延迟:</strong> <span class="metric-value-warning">32.5ms</span> - 需关注 (目标: &lt;25ms)</li>
-                    <li><strong>etcd Pod平均CPU使用率:</strong> <span class="metric-value-good">45%</span> - 正常</li>
-                    <li><strong>数据库空间使用:</strong> <span class="metric-value-good">62%</span> - 健康</li>
+                    <li><strong>WAL Fsync P99 Latency:</strong> <span class="metric-value-good">8.2ms</span> - Excellent (目标: &lt;10ms)</li>
+                    <li><strong>Backend Commit P99 Latency:</strong> <span class="metric-value-warning">32.5ms</span> - Needs Attention (目标: &lt;25ms)</li>
+                    <li><strong>etcd Pod平均CPU Usage:</strong> <span class="metric-value-good">45%</span> - Normal</li>
+                    <li><strong>数据库空间使用:</strong> <span class="metric-value-good">62%</span> - Healthy</li>
                     <li><strong>磁盘I/O Wait:</strong> <span class="metric-value-critical">15%</span> - 瓶颈!</li>
-                    <li><strong>Proposal失败率:</strong> <span class="metric-value-good">0%</span> - 正常</li>
+                    <li><strong>Proposal Failure Rate:</strong> <span class="metric-value-good">0%</span> - Normal</li>
                 </ul>
             </div>
 
@@ -945,7 +945,7 @@
                 <ol style="margin-top: 10px;">
                     <li><strong>Backend Commit优化:</strong>
                         <ul style="margin-top: 5px;">
-                            <li>检查磁盘性能，考虑使用更快的SSD (NVMe)</li>
+                            <li>检查Disk Performance，考虑使用更快的SSD (NVMe)</li>
                             <li>确认磁盘I/O调度器设置 (建议使用noop或deadline)</li>
                             <li>检查是否有其他进程竞争磁盘I/O资源</li>
                         </ul>
@@ -961,18 +961,18 @@
                         <ul style="margin-top: 5px;">
                             <li>定期检查压缩/碎片整理执行情况</li>
                             <li>监控数据库增长速率，提前规划容量</li>
-                            <li>设置告警阈值，及时发现性能退化</li>
+                            <li>设置告警Threshold，及时发现性能退化</li>
                         </ul>
                     </li>
                 </ol>
             </div>
 
-            <h3 style="margin-top: 40px;">示例2: 网络性能分析</h3>
+            <h3 style="margin-top: 40px;">示例2: Network Performance分析</h3>
             <div class="demo-panel">
                 <pre>
 <span class="comment"># 场景：排查集群网络延迟问题</span>
 
-<span class="keyword">用户查询:</span> "为什么我的Pod间通信变慢了？帮我分析网络性能"
+<span class="keyword">User Query:</span> "为什么我的Pod间通信变慢了？帮我分析Network Performance"
 
 <span class="keyword">AI Agents执行流程:</span>
 1. 调用 query_network_l1_metrics(duration="30m") - 检查物理层
@@ -1012,13 +1012,13 @@
                             <td><strong>TCP</strong></td>
                             <td>重传率</td>
                             <td class="metric-value-warning">1.8%</td>
-                            <td>🟡 警告</td>
+                            <td>🟡 Warning</td>
                         </tr>
                         <tr>
                             <td><strong>TCP</strong></td>
                             <td>TIME_WAIT连接数</td>
                             <td class="metric-value-good">8,523</td>
-                            <td>🟢 正常</td>
+                            <td>🟢 Normal</td>
                         </tr>
                         <tr>
                             <td><strong>Softnet</strong></td>
@@ -1071,7 +1071,7 @@
                 <pre>
 <span class="comment"># 场景：分析OVN-Kubernetes网络延迟</span>
 
-<span class="keyword">用户查询:</span> "OVN数据库同步延迟是多少？有性能问题吗？"
+<span class="keyword">User Query:</span> "OVN数据库同步延迟是多少？有性能问题吗？"
 
 <span class="keyword">AI Agents执行:</span>
 1. 调用 query_ovnk_sync_metrics(duration="1h")
@@ -1093,17 +1093,17 @@
                     <div class="stat-box">
                         <div class="stat-label">SB DB同步延迟 (P99)</div>
                         <div class="stat-value">89ms</div>
-                        <div class="stat-label">🟢 正常</div>
+                        <div class="stat-label">🟢 Normal</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-label">OVN Pod CPU使用率</div>
+                        <div class="stat-label">OVN Pod CPU Usage</div>
                         <div class="stat-value">52%</div>
-                        <div class="stat-label">🟢 健康</div>
+                        <div class="stat-label">🟢 Healthy</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-label">OVS流表条目</div>
                         <div class="stat-value">12,345</div>
-                        <div class="stat-label">🟢 正常</div>
+                        <div class="stat-label">🟢 Normal</div>
                     </div>
                 </div>
             </div>
@@ -1113,24 +1113,24 @@
         <section id="usage" class="section">
             <h2 data-i18n="section-usage-title">📖 Usage Examples</h2>
 
-            <h3>快速启动</h3>
+            <h3>Quick Start</h3>
             <div class="code-block">
-<span class="comment"># 1. 克隆仓库</span>
+<span class="comment"># 1. Clone repository</span>
 <span class="keyword">git</span> <span class="function">clone</span> git@github.com:liqcui/ocp-performance-analyzer-mcp.git
 <span class="keyword">cd</span> ocp-performance-analyzer-mcp
 
-<span class="comment"># 2. 创建虚拟环境</span>
+<span class="comment"># 2. Create virtual environment</span>
 <span class="keyword">python3</span> -m venv venv
 <span class="keyword">source</span> venv/bin/activate
 
-<span class="comment"># 3. 安装依赖</span>
+<span class="comment"># 3. Install dependencies</span>
 <span class="keyword">pip</span> <span class="function">install</span> -e .
 
 <span class="comment"># 4. 配置环境变量</span>
 <span class="keyword">export</span> <span class="string">KUBECONFIG=/path/to/kubeconfig</span>
 <span class="keyword">export</span> <span class="string">OPENAI_API_KEY=your-api-key</span>
 
-<span class="comment"># 5. 启动ETCD分析器</span>
+<span class="comment"># 5. 启动ETCD Analyzer</span>
 <span class="keyword">cd</span> mcp/etcd
 ./etcd_analyzer_command.sh start
 
@@ -1138,9 +1138,9 @@
 <span class="comment"># 打开浏览器访问: http://localhost:8080/ui</span>
             </div>
 
-            <h3>命令行工具使用</h3>
+            <h3>CLI Tools使用</h3>
             <div class="code-block">
-<span class="comment"># 启动MCP服务器</span>
+<span class="comment"># Start MCP server</span>
 <span class="keyword">python</span> <span class="function">etcd_analyzer_mcp_server.py</span>
 
 <span class="comment"># 启动AI聊天客户端</span>
@@ -1179,7 +1179,7 @@
   -H <span class="string">"Content-Type: application/json"</span> \
   -d <span class="string">'{"duration": "30m"}'</span>
 
-<span class="comment"># 健康检查</span>
+<span class="comment"># Healthy检查</span>
 <span class="keyword">curl</span> <span class="string">http://localhost:8000/health</span>
 
 <span class="comment"># 获取工具列表</span>
