@@ -478,7 +478,7 @@
             </ul>
         </nav>
 
-        <!-- 概览 -->
+        <!-- Overview -->
         <section id="overview" class="section">
             <h2 data-i18n="section-overview-title">📊 Project Overview</h2>
             <p style="font-size: 1.1em; margin-bottom: 20px;">
@@ -553,7 +553,7 @@
             </div>
         </section>
 
-        <!-- 架构设计 -->
+        <!-- Architecture Design -->
         <section id="architecture" class="section">
             <h2 data-i18n="section-architecture-title">🏗️ System Architecture</h2>
 
@@ -561,28 +561,28 @@
             <div class="architecture-diagram">
                 <pre>
 ┌─────────────────────────────────────────────────────────────────────┐
-│                         Client Layer                      │
+│                         Client Layer                                │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐              │
 │  │   Web UI     │  │  CLI Tools    │  │  REST API     │              │
-│  │  Interactive UI   │  │   CLI Tools   │  │  RESTful API  │              │
+│  │ Interactive UI│  │  CLI Tools    │  │  RESTful API  │              │
 │  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘              │
 └─────────┼─────────────────┼─────────────────┼───────────────────────┘
           │                 │                 │
           └─────────────────┼─────────────────┘
                             │
 ┌───────────────────────────┼──────────────────────────────────────────┐
-│                    AI Agents Layer (Port 8080)                               │
+│                    AI Agents Layer (Port 8080)                       │
 │  ┌──────────────────────────────────────────────────────────────┐   │
-│  │  LangGraph AI Agents: Chat · Report · Storage                   │   │
-│  │  • Streaming response support                                                │   │
-│  │  • Tool orchestration                                                │   │
-│  │  • Conversation context memory                                              │   │
-│  │  • OpenAI/Compatible LLM integration                                          │   │
+│  │  LangGraph AI Agents: Chat · Report · Storage                │   │
+│  │  • Streaming response support                                │   │
+│  │  • Tool orchestration                                        │   │
+│  │  • Conversation context memory                               │   │
+│  │  • OpenAI/Compatible LLM integration                         │   │
 │  └──────────────────────────────────────────────────────────────┘   │
 └───────────────────────────┬──────────────────────────────────────────┘
                             │ MCP Protocol Communication
 ┌───────────────────────────┼──────────────────────────────────────────┐
-│                    MCP Server Layer (Port 8000)                            │
+│                    MCP Server Layer (Port 8000)                       │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │
 │  │ ETCD Server │  │Network Server│  │ OVNK Server │                 │
 │  │  15+ Tools   │  │   10+ Tools   │  │   8+ Tools   │                 │
@@ -594,32 +594,34 @@
 │  ┌─────▼──────┐    ┌─────▼──────┐    ┌─────▼──────┐                │
 │  │ Tools/     │    │ Tools/     │    │ Tools/     │                │
 │  │ Collectors │    │ Collectors │    │ Collectors │                │
-│  │ Metrics Collector  │    │ Metrics Collector  │    │ Metrics Collector  │                │
+│  │ Metrics    │    │ Metrics    │    │ Metrics    │                │
+│  │ Collector  │    │ Collector  │    │ Collector  │                │
 │  └─────┬──────┘    └─────┬──────┘    └─────┬──────┘                │
 │        │                 │                 │                         │
 │  ┌─────▼──────┐    ┌─────▼──────┐    ┌─────▼──────┐                │
 │  │ Analysis   │    │ Analysis   │    │ Analysis   │                │
 │  │ Modules    │    │ Modules    │    │ Modules    │                │
-│  │ 分析模块    │    │ 分析模块    │    │ 分析模块    │                │
+│  │            │    │            │    │            │                │
 │  └─────┬──────┘    └─────┬──────┘    └─────┬──────┘                │
 │        │                 │                 │                         │
 │  ┌─────▼──────┐    ┌─────▼──────┐    ┌─────▼──────┐                │
 │  │    ELT     │    │    ELT     │    │    ELT     │                │
 │  │  Pipeline  │    │  Pipeline  │    │  Pipeline  │                │
-│  │ Data Transform管道 │    │ Data Transform管道 │    │ Data Transform管道 │                │
+│  │    Data    │    │    Data    │    │    Data    │                │
+│  │ Transform  │    │ Transform  │    │ Transform  │                │
 │  └─────┬──────┘    └─────┬──────┘    └─────┬──────┘                │
 │        │                 │                 │                         │
 │  ┌─────▼─────────────────▼─────────────────▼──────┐                │
-│  │              Storage Layer (DuckDB)                      │                │
-│  │  • 时序数据存储  • SQL查询接口  • 历史数据分析   │                │
+│  │              Storage Layer (DuckDB)             │                │
+│  │  • Time-series storage • SQL interface • History│                │
 │  └──────────────────────────────────────────────────┘                │
 └──────────────────────────┬───────────────────────────────────────────┘
                            │
                            ▼
 ┌──────────────────────────────────────────────────────────────────────┐
-│          OpenShift/Kubernetes Cluster Infrastructure                            │
-│  • ETCD Cluster          • Prometheus/Thanos    • Kubernetes API         │
-│  • Master Nodes        • OVN-Kubernetes       • Network Components                │
+│          OpenShift/Kubernetes Cluster Infrastructure                 │
+│  • ETCD Cluster          • Prometheus/Thanos    • Kubernetes API     │
+│  • Master Nodes          • OVN-Kubernetes       • Network Components │
 └──────────────────────────────────────────────────────────────────────┘
                 </pre>
             </div>
@@ -659,7 +661,7 @@
             </div>
         </section>
 
-        <!-- 核心功能 -->
+        <!-- Core Features -->
         <section id="features" class="section">
             <h2 data-i18n="section-features-title">⚡ Core Features</h2>
 
@@ -694,7 +696,7 @@
             </div>
         </section>
 
-        <!-- Component说明 -->
+        <!-- Component Details -->
         <section id="components" class="section">
             <h2 data-i18n="section-components-title">🧩 Components</h2>
 
@@ -898,7 +900,7 @@
             </div>
         </section>
 
-        <!-- 性能分析演示 -->
+        <!-- Performance Demo -->
         <section id="demo" class="section">
             <h2 data-i18n="section-demo-title">🎬 Performance Demo</h2>
 
@@ -910,17 +912,17 @@
 <span class="keyword">User Query:</span> "Analyze etcd performance over the past 1 hour, focusing on WAL fsync and backend commit latency"
 
 <span class="keyword">AI Agents Execution Flow:</span>
-1. 调用 get_etcd_performance_deep_drive(duration="1h")
-2. 收集以下Subsystem数据:
-   - 常规信息 (CPU、内存、Database Size)
-   - WAL Fsync Performance (P50/P90/P99延迟)
-   - Backend Commit Performance (P50/P90/P99延迟)
-   - Disk I/O (IOPS、吞吐量、延迟)
-   - Network I/O (带宽、包速率)
-   - 节点Resource Usage (CPU、内存、cgroup)
+1. Call get_etcd_performance_deep_drive(duration="1h")
+2. Collect subsystem data:
+   - General info (CPU, memory, database size)
+   - WAL Fsync Performance (P50/P90/P99 latency)
+   - Backend Commit Performance (P50/P90/P99 latency)
+   - Disk I/O (IOPS, throughput, latency)
+   - Network I/O (bandwidth, packet rate)
+   - Node Resource Usage (CPU, memory, cgroup)
    - Compression/Defrag Statistics
-3. 执行Bottleneck Detection算法
-4. 生成分析报告
+3. Execute bottleneck detection algorithm
+4. Generate analysis report
                 </pre>
             </div>
 
@@ -929,7 +931,7 @@
                 <p><strong>Time Range:</strong> 2026-04-12 14:00:00 UTC ~ 2026-04-12 15:00:00 UTC</p>
                 <p><strong>Cluster Status:</strong> <span class="metric-value-good">Healthy ✓</span></p>
 
-                <h5 style="margin-top: 15px;">CriticalFindings:</h5>
+                <h5 style="margin-top: 15px;">Critical Findings:</h5>
                 <ul style="margin-top: 10px;">
                     <li><strong>WAL Fsync P99 Latency:</strong> <span class="metric-value-good">8.2ms</span> - Excellent (Target: &lt;10ms)</li>
                     <li><strong>Backend Commit P99 Latency:</strong> <span class="metric-value-warning">32.5ms</span> - Needs Attention (Target: &lt;25ms)</li>
@@ -1049,49 +1051,49 @@
                             <li>Confirm NIC driver and firmware versions</li>
                         </ul>
                     </li>
-                    <li><strong>优化SoftnetParameters:</strong>
+                    <li><strong>Optimize Softnet Parameters:</strong>
                         <ul>
-                            <li>增加netdev_max_backlog: <code>sysctl -w net.core.netdev_max_backlog=5000</code></li>
-                            <li>调整RPS/RFS以平衡CPU负载</li>
-                            <li>考虑增加中断合并时间</li>
+                            <li>Increase netdev_max_backlog: <code>sysctl -w net.core.netdev_max_backlog=5000</code></li>
+                            <li>Adjust RPS/RFS to balance CPU load</li>
+                            <li>Consider increasing interrupt coalescing time</li>
                         </ul>
                     </li>
-                    <li><strong>带宽管理:</strong>
+                    <li><strong>Bandwidth Management:</strong>
                         <ul>
-                            <li>当前78%带宽使用率Near Saturation</li>
-                            <li>考虑升级网络带宽或实施QoS策略</li>
-                            <li>分析流量模式，识别Abnormal流量源</li>
+                            <li>Current 78% bandwidth utilization near saturation</li>
+                            <li>Consider upgrading network bandwidth or implementing QoS policies</li>
+                            <li>Analyze traffic patterns and identify abnormal traffic sources</li>
                         </ul>
                     </li>
                 </ol>
             </div>
 
-            <h3 style="margin-top: 40px;">示例3: OVN-Kubernetes延迟分析</h3>
+            <h3 style="margin-top: 40px;">Example 3: OVN-Kubernetes Latency Analysis</h3>
             <div class="demo-panel">
                 <pre>
-<span class="comment"># 场景：分析OVN-Kubernetes网络延迟</span>
+<span class="comment"># Scenario: Analyze OVN-Kubernetes network latency</span>
 
-<span class="keyword">User Query:</span> "OVN Database同步延迟是多少？有性能问题吗？"
+<span class="keyword">User Query:</span> "What is the OVN Database sync latency? Are there any performance issues?"
 
-<span class="keyword">AI Agents执行:</span>
-1. 调用 query_ovnk_sync_metrics(duration="1h")
-2. 调用 query_ovnk_latency_metrics(duration="1h")
-3. 调用 query_ovnk_pod_metrics(duration="1h")
-4. 调用 query_ovnk_ovs_metrics(duration="1h")
-5. 综合分析OVN性能
+<span class="keyword">AI Agents Execution:</span>
+1. Call query_ovnk_sync_metrics(duration="1h")
+2. Call query_ovnk_latency_metrics(duration="1h")
+3. Call query_ovnk_pod_metrics(duration="1h")
+4. Call query_ovnk_ovs_metrics(duration="1h")
+5. Comprehensive OVN performance analysis
                 </pre>
             </div>
 
             <div class="analysis-result">
-                <h4>📋 OVN-KubernetesPerformance Report</h4>
+                <h4>📋 OVN-Kubernetes Performance Report</h4>
                 <div class="stats-grid" style="margin-top: 15px;">
                     <div class="stat-box">
-                        <div class="stat-label">NB DB同步延迟 (P99)</div>
+                        <div class="stat-label">NB DB Sync Latency (P99)</div>
                         <div class="stat-value">125ms</div>
-                        <div class="stat-label">🟡 轻微延迟</div>
+                        <div class="stat-label">🟡 Slight Delay</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-label">SB DB同步延迟 (P99)</div>
+                        <div class="stat-label">SB DB Sync Latency (P99)</div>
                         <div class="stat-value">89ms</div>
                         <div class="stat-label">🟢 Normal</div>
                     </div>
@@ -1101,7 +1103,7 @@
                         <div class="stat-label">🟢 Healthy</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-label">OVS流表条目</div>
+                        <div class="stat-label">OVS Flow Table Entries</div>
                         <div class="stat-value">12,345</div>
                         <div class="stat-label">🟢 Normal</div>
                     </div>
@@ -1109,7 +1111,7 @@
             </div>
         </section>
 
-        <!-- 使用示例 -->
+        <!-- Usage Examples -->
         <section id="usage" class="section">
             <h2 data-i18n="section-usage-title">📖 Usage Examples</h2>
 
@@ -1126,69 +1128,69 @@
 <span class="comment"># 3. Install dependencies</span>
 <span class="keyword">pip</span> <span class="function">install</span> -e .
 
-<span class="comment"># 4. 配置环境变量</span>
+<span class="comment"># 4. Configure environment variables</span>
 <span class="keyword">export</span> <span class="string">KUBECONFIG=/path/to/kubeconfig</span>
 <span class="keyword">export</span> <span class="string">OPENAI_API_KEY=your-api-key</span>
 
-<span class="comment"># 5. 启动ETCD Analyzer</span>
+<span class="comment"># 5. Start ETCD Analyzer</span>
 <span class="keyword">cd</span> mcp/etcd
 ./etcd_analyzer_command.sh start
 
-<span class="comment"># 6. 访问Web UI</span>
-<span class="comment"># 打开浏览器访问: http://localhost:8080/ui</span>
+<span class="comment"># 6. Access Web UI</span>
+<span class="comment"># Open browser: http://localhost:8080/ui</span>
             </div>
 
-            <h3>CLI Tools使用</h3>
+            <h3>CLI Tools Usage</h3>
             <div class="code-block">
 <span class="comment"># Start MCP server</span>
 <span class="keyword">python</span> <span class="function">etcd_analyzer_mcp_server.py</span>
 
-<span class="comment"># 启动AI聊天客户端</span>
+<span class="comment"># Start AI chat client</span>
 <span class="keyword">python</span> <span class="function">etcd_analyzer_client_chat.py</span>
 
-<span class="comment"># 生成Performance Report</span>
+<span class="comment"># Generate performance report</span>
 <span class="keyword">python</span> <span class="function">etcd_analyzer_mcp_agent_report.py</span>
 
-<span class="comment"># 收集数据到Database</span>
+<span class="comment"># Collect data to database</span>
 <span class="keyword">python</span> <span class="function">etcd_analyzer_mcp_agent_stor2db.py</span>
             </div>
 
-            <h3>对话式查询示例</h3>
+            <h3>Conversational Query Examples</h3>
             <div class="component-card">
-                <h4>💬 示例对话</h4>
+                <h4>💬 Example Conversation</h4>
                 <div style="margin-top: 15px;">
                     <p><strong>User:</strong> "Analyze etcd performance for the past 24 hours"</p>
                     <p><strong>AI:</strong> Analyzing ETCD performance... [Calling tool: get_etcd_performance_deep_drive]</p>
-                    <p style="margin-top: 10px;"><strong>用户:</strong> "WAL fsync延迟有没有超标？"</p>
+                    <p style="margin-top: 10px;"><strong>User:</strong> "Is the WAL fsync latency exceeding thresholds?"</p>
                     <p><strong>AI:</strong> Let me check WAL fsync detailed data... [Calling tool: get_etcd_disk_wal_fsync]</p>
-                    <p style="margin-top: 10px;"><strong>用户:</strong> "生成一份完整的Performance Report发给我"</p>
+                    <p style="margin-top: 10px;"><strong>User:</strong> "Generate a complete performance report for me"</p>
                     <p><strong>AI:</strong> Generating report... [Calling tool: generate_etcd_performance_report]<br>
-                    报告已生成，保存在 exports/etcd_performance_report_20260412.html</p>
+                    Report generated and saved to exports/etcd_performance_report_20260412.html</p>
                 </div>
             </div>
 
-            <h3>API调用示例</h3>
+            <h3>API Call Examples</h3>
             <div class="code-block">
-<span class="comment"># 使用REST API查询ETCD性能</span>
+<span class="comment"># Query ETCD performance using REST API</span>
 <span class="keyword">curl</span> -X POST <span class="string">http://localhost:8000/tools/get_etcd_disk_wal_fsync</span> \
   -H <span class="string">"Content-Type: application/json"</span> \
   -d <span class="string">'{"duration": "1h"}'</span>
 
-<span class="comment"># 查询Network I/O Metrics</span>
+<span class="comment"># Query Network I/O Metrics</span>
 <span class="keyword">curl</span> -X POST <span class="string">http://localhost:8000/tools/query_network_io_metrics</span> \
   -H <span class="string">"Content-Type: application/json"</span> \
   -d <span class="string">'{"duration": "30m"}'</span>
 
-<span class="comment"># Healthy检查</span>
+<span class="comment"># Health check</span>
 <span class="keyword">curl</span> <span class="string">http://localhost:8000/health</span>
 
-<span class="comment"># 获取Tool列表</span>
+<span class="comment"># Get tool list</span>
 <span class="keyword">curl</span> <span class="string">http://localhost:8080/api/tools</span>
             </div>
 
-            <h3>Configuration file示例</h3>
+            <h3>Configuration File Example</h3>
             <div class="code-block">
-<span class="comment"># config/metrics-etcd.yml 片段</span>
+<span class="comment"># config/metrics-etcd.yml snippet</span>
 <span class="keyword">metrics:</span>
   - <span class="keyword">name:</span> <span class="string">etcd_pods_cpu_usage</span>
     <span class="keyword">title:</span> <span class="string">"etcd_pods_cpu_usage"</span>
@@ -1213,10 +1215,10 @@
         </section>
 
         <footer>
-            <h3>🔗 相关链接</h3>
+            <h3>🔗 Related Links</h3>
             <p style="margin: 15px 0;">
-                <a href="https://github.com/liqcui/ocp-performance-analyzer-mcp" target="_blank">GitHub仓库</a> •
-                <a href="https://modelcontextprotocol.io" target="_blank">MCP协议</a> •
+                <a href="https://github.com/liqcui/ocp-performance-analyzer-mcp" target="_blank">GitHub Repository</a> •
+                <a href="https://modelcontextprotocol.io" target="_blank">MCP Protocol</a> •
                 <a href="https://langchain.com" target="_blank">LangChain</a> •
                 <a href="https://duckdb.org" target="_blank">DuckDB</a>
             </p>
