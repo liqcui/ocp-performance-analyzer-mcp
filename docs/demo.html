@@ -624,37 +624,37 @@
                 </pre>
             </div>
 
-            <h3>组件架构模式</h3>
+            <h3>Component Architecture Pattern</h3>
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <h4>1️⃣ MCP服务器 (FastMCP)</h4>
-                    <p>基于FastMCP框架的服务器，暴露分析工具供AI代理调用。支持SSE流式通信和HTTP REST API。</p>
+                    <h4>1️⃣ MCP Server (FastMCP)</h4>
+                    <p>FastMCP-based server that exposes analysis tools for AI agent invocation. Supports SSE streaming and HTTP REST API.</p>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <h4>2️⃣ 工具/收集器 (Tools/Collectors)</h4>
-                    <p>专用的Prometheus指标收集器，通过PromQL查询获取集群性能数据。</p>
+                    <h4>2️⃣ Tools/Collectors</h4>
+                    <p>Dedicated Prometheus metrics collector that retrieves cluster performance data via PromQL queries.</p>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <h4>3️⃣ 分析模块 (Analysis Modules)</h4>
-                    <p>性能分析引擎，实现瓶颈检测、阈值对比、根因分析等功能。</p>
+                    <h4>3️⃣ Analysis Modules</h4>
+                    <p>Performance analysis engine implementing bottleneck detection, threshold comparison, and root cause analysis.</p>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <h4>4️⃣ ELT管道 (Extract-Load-Transform)</h4>
-                    <p>数据转换管道，将原始JSON数据转换为结构化表格和HTML可视化。</p>
+                    <h4>4️⃣ ELT Pipeline (Extract-Load-Transform)</h4>
+                    <p>Data transformation pipeline converting raw JSON data into structured tables and HTML visualizations.</p>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <h4>5️⃣ 存储模块 (Storage Layer)</h4>
-                    <p>基于DuckDB的时序数据持久化，支持历史数据分析和趋势预测。</p>
+                    <h4>5️⃣ Storage Layer</h4>
+                    <p>DuckDB-based time-series data persistence supporting historical data analysis and trend prediction.</p>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <h4>6️⃣ AI代理 (LangGraph Agents)</h4>
-                    <p>智能代理层，提供对话式分析、自动报告生成和数据收集服务。</p>
+                    <h4>6️⃣ AI Agents (LangGraph)</h4>
+                    <p>Intelligent agent layer providing conversational analysis, automatic report generation, and data collection services.</p>
                 </div>
             </div>
         </section>
@@ -664,33 +664,33 @@
             <h2 data-i18n="section-features-title">⚡ 核心功能特性</h2>
 
             <div class="component-card">
-                <h4>🔍 实时性能监控</h4>
-                <p>通过Prometheus/Thanos实时采集200+性能指标，覆盖ETCD、网络、节点、Pod等多个维度。支持自定义时间范围和采样频率。</p>
+                <h4>🔍 Real-time Performance Monitoring</h4>
+                <p>Real-time collection of 200+ performance metrics via Prometheus/Thanos, covering ETCD, network, nodes, pods and more. Supports custom time ranges and sampling frequencies.</p>
             </div>
 
             <div class="component-card">
-                <h4>🤖 AI驱动的智能分析</h4>
-                <p>集成LangGraph和OpenAI，提供对话式性能分析。AI代理能够理解自然语言查询，自动调用相关工具，生成专业的分析报告。</p>
+                <h4>🤖 AI-Driven Intelligent Analysis</h4>
+                <p>Integrates LangGraph and OpenAI for conversational performance analysis. AI agents understand natural language queries, automatically invoke relevant tools, and generate professional analysis reports.</p>
             </div>
 
             <div class="component-card">
-                <h4>📈 历史趋势分析</h4>
-                <p>基于DuckDB的时序数据存储，支持长期性能趋势分析、基线对比和异常检测。</p>
+                <h4>📈 Historical Trend Analysis</h4>
+                <p>DuckDB-based time-series data storage supporting long-term performance trend analysis, baseline comparison, and anomaly detection.</p>
             </div>
 
             <div class="component-card">
-                <h4>🎯 自动瓶颈检测</h4>
-                <p>多维度瓶颈分析引擎，自动识别CPU、内存、磁盘I/O、网络等性能瓶颈，并提供优化建议。</p>
+                <h4>🎯 Automatic Bottleneck Detection</h4>
+                <p>Multi-dimensional bottleneck analysis engine that automatically identifies performance bottlenecks in CPU, memory, disk I/O, network, and provides optimization recommendations.</p>
             </div>
 
             <div class="component-card">
-                <h4>📊 可视化报告生成</h4>
-                <p>自动生成HTML格式的性能报告，包含执行摘要、详细指标表格、趋势图表和优化建议。</p>
+                <h4>📊 Visual Report Generation</h4>
+                <p>Automatically generates HTML-formatted performance reports including executive summaries, detailed metric tables, trend charts, and optimization recommendations.</p>
             </div>
 
             <div class="component-card">
-                <h4>🔌 可扩展的插件架构</h4>
-                <p>基于配置文件的指标管理，支持快速添加新的监控指标和分析工具，无需修改核心代码。</p>
+                <h4>🔌 Extensible Plugin Architecture</h4>
+                <p>Configuration-file-based metric management supporting rapid addition of new monitoring metrics and analysis tools without modifying core code.</p>
             </div>
         </section>
 
@@ -926,8 +926,8 @@
 
             <div class="analysis-result">
                 <h4>📋 分析结果示例</h4>
-                <p><strong>时间范围:</strong> 2026-04-12 14:00:00 UTC ~ 2026-04-12 15:00:00 UTC</p>
-                <p><strong>集群状态:</strong> <span class="metric-value-good">健康 ✓</span></p>
+                <p><strong>Time Range:</strong> 2026-04-12 14:00:00 UTC ~ 2026-04-12 15:00:00 UTC</p>
+                <p><strong>Cluster Status:</strong> <span class="metric-value-good">Healthy ✓</span></p>
 
                 <h5 style="margin-top: 15px;">关键发现:</h5>
                 <ul style="margin-top: 10px;">
@@ -1038,7 +1038,7 @@
 
             <div class="recommendation">
                 <h4>🔧 网络问题根因分析</h4>
-                <p><strong>主要问题:</strong> 物理层丢包和Softnet Dropped包表明网络接口或驱动存在问题</p>
+                <p><strong>Main Issue:</strong> Physical layer packet loss and Softnet Dropped packets indicate network interface or driver issues</p>
 
                 <h5 style="margin-top: 15px;">排查步骤:</h5>
                 <ol style="margin-top: 10px;">
@@ -1157,12 +1157,12 @@
             <div class="component-card">
                 <h4>💬 示例对话</h4>
                 <div style="margin-top: 15px;">
-                    <p><strong>用户:</strong> "帮我分析etcd过去24小时的性能"</p>
-                    <p><strong>AI:</strong> 正在为您分析ETCD性能... [调用工具: get_etcd_performance_deep_drive]</p>
+                    <p><strong>User:</strong> "Analyze etcd performance for the past 24 hours"</p>
+                    <p><strong>AI:</strong> Analyzing ETCD performance... [Calling tool: get_etcd_performance_deep_drive]</p>
                     <p style="margin-top: 10px;"><strong>用户:</strong> "WAL fsync延迟有没有超标？"</p>
-                    <p><strong>AI:</strong> 让我查看WAL fsync的详细数据... [调用工具: get_etcd_disk_wal_fsync]</p>
+                    <p><strong>AI:</strong> Let me check WAL fsync detailed data... [Calling tool: get_etcd_disk_wal_fsync]</p>
                     <p style="margin-top: 10px;"><strong>用户:</strong> "生成一份完整的性能报告发给我"</p>
-                    <p><strong>AI:</strong> 正在生成报告... [调用工具: generate_etcd_performance_report]<br>
+                    <p><strong>AI:</strong> Generating report... [Calling tool: generate_etcd_performance_report]<br>
                     报告已生成，保存在 exports/etcd_performance_report_20260412.html</p>
                 </div>
             </div>
@@ -1301,8 +1301,8 @@
                 'nav-usage': '使用示例',
                 'section-overview-title': '📊 项目概览',
                 'section-architecture-title': '🏗️ 系统架构',
-                'section-features-title': '⚡ 核心功能',
-                'section-components-title': '🧩 组件说明',
+                'section-features-title': '⚡ 核心功能特性',
+                'section-components-title': '🧩 组件详细说明',
                 'section-demo-title': '🎬 性能分析演示',
                 'section-usage-title': '📖 使用示例'
             },
