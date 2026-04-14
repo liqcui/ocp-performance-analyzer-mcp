@@ -610,7 +610,7 @@
 │  └─────┬──────┘    └─────┬──────┘    └─────┬──────┘                │
 │        │                 │                 │                         │
 │  ┌─────▼─────────────────▼─────────────────▼──────┐                │
-│  │              存储层 (DuckDB)                      │                │
+│  │              Storage Layer (DuckDB)                      │                │
 │  │  • 时序数据存储  • SQL查询接口  • 历史数据分析   │                │
 │  └──────────────────────────────────────────────────┘                │
 └──────────────────────────┬───────────────────────────────────────────┘
@@ -694,7 +694,7 @@
             </div>
         </section>
 
-        <!-- 组件说明 -->
+        <!-- Component说明 -->
         <section id="components" class="section">
             <h2 data-i18n="section-components-title">🧩 Components</h2>
 
@@ -732,25 +732,25 @@
                             <tr>
                                 <td><strong>Resource Usage</strong></td>
                                 <td>etcd Pod CPU Usage</td>
-                                <td class="metric-value-warning">&lt; 70% (Warning)<br>&lt; 85% (严重)</td>
+                                <td class="metric-value-warning">&lt; 70% (Warning)<br>&lt; 85% (Critical)</td>
                                 <td>🟡 Important</td>
                             </tr>
                             <tr>
                                 <td><strong>Resource Usage</strong></td>
                                 <td>etcd PodMemory Usage</td>
-                                <td class="metric-value-warning">&lt; 70% (Warning)<br>&lt; 85% (严重)</td>
+                                <td class="metric-value-warning">&lt; 70% (Warning)<br>&lt; 85% (Critical)</td>
                                 <td>🟡 Important</td>
                             </tr>
                             <tr>
-                                <td><strong>数据库</strong></td>
-                                <td>数据库空间使用率</td>
+                                <td><strong>Database</strong></td>
+                                <td>Database Space Utilization</td>
                                 <td class="metric-value-warning">&lt; 90%</td>
                                 <td>🟡 Important</td>
                             </tr>
                             <tr>
-                                <td><strong>网络</strong></td>
-                                <td>Peer延迟</td>
-                                <td class="metric-value-warning">&lt; 50ms (Warning)<br>&lt; 100ms (严重)</td>
+                                <td><strong>Network</strong></td>
+                                <td>Peer Latency</td>
+                                <td class="metric-value-warning">&lt; 50ms (Warning)<br>&lt; 100ms (Critical)</td>
                                 <td>🟡 Important</td>
                             </tr>
                             <tr>
@@ -760,100 +760,100 @@
                                 <td>🔴 Critical</td>
                             </tr>
                             <tr>
-                                <td><strong>压缩/碎片整理</strong></td>
-                                <td>压缩/碎片整理次数</td>
-                                <td>定期监控</td>
+                                <td><strong>Compression/Defrag</strong></td>
+                                <td>Compression/Defrag Count</td>
+                                <td>Periodic Monitoring</td>
                                 <td>🔵 Normal</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <h4>ETCD Analyzer工具列表</h4>
+                    <h4>ETCD Analyzer Tool List</h4>
                     <ul style="columns: 2; column-gap: 30px; margin-top: 15px;">
-                        <li>get_server_health - 服务器Healthy检查</li>
-                        <li>get_etcd_cluster_status - 集群状态</li>
-                        <li>get_ocp_cluster_info - 集群信息</li>
-                        <li>get_etcd_general_info - 常规指标</li>
-                        <li>get_etcd_node_usage - 节点使用情况</li>
-                        <li>get_etcd_disk_wal_fsync - WAL Fsync性能</li>
-                        <li>get_etcd_disk_backend_commit - Backend Commit性能</li>
-                        <li>get_node_disk_io - 磁盘I/O</li>
-                        <li>get_etcd_disk_compact_defrag - 压缩/碎片整理</li>
-                        <li>get_etcd_network_io - 网络I/O</li>
-                        <li>get_etcd_performance_deep_drive - 深度分析</li>
-                        <li>get_etcd_bottleneck_analysis - 瓶颈检测</li>
-                        <li>generate_etcd_performance_report - 性能报告</li>
+                        <li>get_server_health - Server Health Check</li>
+                        <li>get_etcd_cluster_status - Cluster Status</li>
+                        <li>get_ocp_cluster_info - Cluster Info</li>
+                        <li>get_etcd_general_info - General Metrics</li>
+                        <li>get_etcd_node_usage - Node Usage</li>
+                        <li>get_etcd_disk_wal_fsync - WAL Fsync Performance</li>
+                        <li>get_etcd_disk_backend_commit - Backend Commit Performance</li>
+                        <li>get_node_disk_io - Disk I/O</li>
+                        <li>get_etcd_disk_compact_defrag - Compression/Defrag</li>
+                        <li>get_etcd_network_io - Network I/O</li>
+                        <li>get_etcd_performance_deep_drive - Deep Analysis</li>
+                        <li>get_etcd_bottleneck_analysis - Bottleneck Detection</li>
+                        <li>generate_etcd_performance_report - Performance Report</li>
                     </ul>
                 </div>
 
                 <div id="network-component" class="tab-content">
-                    <h3>Network Analyzer - 95+网络指标</h3>
+                    <h3>Network Analyzer - 95+ Network Metrics</h3>
                     <table class="metric-table">
                         <thead>
                             <tr>
-                                <th>分析层级</th>
-                                <th>工具</th>
+                                <th>Analysis Layer Level</th>
+                                <th>Tool</th>
                                 <th>Key Metrics</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>L1 物理层</strong></td>
+                                <td><strong>L1 Physical Layer</strong></td>
                                 <td>query_network_l1_metrics</td>
-                                <td>接收/发送字节数、包数、错误、丢包</td>
+                                <td>Received/Sent bytes, packets, errors, drops</td>
                             </tr>
                             <tr>
-                                <td><strong>网络I/O</strong></td>
+                                <td><strong>Network I/O</strong></td>
                                 <td>query_network_io_metrics</td>
-                                <td>吞吐量、IOPS、带宽利用率</td>
+                                <td>Throughput, IOPS, bandwidth utilization</td>
                             </tr>
                             <tr>
                                 <td><strong>TCP Socket</strong></td>
                                 <td>query_network_socket_tcp_metrics</td>
-                                <td>活动连接数、TIME_WAIT、重传</td>
+                                <td>Active connections, TIME_WAIT, retransmissions</td>
                             </tr>
                             <tr>
                                 <td><strong>UDP Socket</strong></td>
                                 <td>query_network_socket_udp_metrics</td>
-                                <td>接收/发送数据包、错误</td>
+                                <td>Received/Sent packets, errors</td>
                             </tr>
                             <tr>
                                 <td><strong>IP Socket</strong></td>
                                 <td>query_network_socket_ip_metrics</td>
-                                <td>IP层统计、分片、路由</td>
+                                <td>IP layer statistics, fragmentation, routing</td>
                             </tr>
                             <tr>
-                                <td><strong>内存统计</strong></td>
+                                <td><strong>Memory Statistics</strong></td>
                                 <td>query_network_socket_mem_metrics</td>
-                                <td>Socket缓冲区使用、内存压力</td>
+                                <td>Socket Buffer usage, memory pressure</td>
                             </tr>
                             <tr>
                                 <td><strong>Softnet statistics</strong></td>
                                 <td>query_network_socket_softnet_metrics</td>
-                                <td>软中断处理、丢包、挤压</td>
+                                <td>Softirq processing, drops, squeeze</td>
                             </tr>
                             <tr>
                                 <td><strong>TCP Netstat</strong></td>
                                 <td>query_network_netstat_tcp_metrics</td>
-                                <td>TCP状态分布、连接追踪</td>
+                                <td>TCP state distribution, connection tracking</td>
                             </tr>
                             <tr>
                                 <td><strong>UDP Netstat</strong></td>
                                 <td>query_network_netstat_udp_metrics</td>
-                                <td>UDP统计、错误率</td>
+                                <td>UDP statistics, error rate</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div id="ovnk-component" class="tab-content">
-                    <h3>OVN-Kubernetes分析器</h3>
+                    <h3>OVN-Kubernetes Analyzer</h3>
                     <table class="metric-table">
                         <thead>
                             <tr>
-                                <th>组件</th>
-                                <th>工具</th>
-                                <th>监控内容</th>
+                                <th>Component</th>
+                                <th>Tool</th>
+                                <th>Monitoring Content</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -865,7 +865,7 @@
                             <tr>
                                 <td><strong>Multus CNI</strong></td>
                                 <td>query_multus_pod_metrics</td>
-                                <td>Multus组件Healthy状态</td>
+                                <td>MultusComponentHealthyStatus</td>
                             </tr>
                             <tr>
                                 <td><strong>OVN容器</strong></td>
@@ -875,7 +875,7 @@
                             <tr>
                                 <td><strong>OVN同步</strong></td>
                                 <td>query_ovnk_sync_metrics</td>
-                                <td>NB/SB数据库同步延迟</td>
+                                <td>NB/SB Database Sync Latency</td>
                             </tr>
                             <tr>
                                 <td><strong>OVS守护进程</strong></td>
@@ -883,7 +883,7 @@
                                 <td>OVS流表、连接追踪</td>
                             </tr>
                             <tr>
-                                <td><strong>网络延迟</strong></td>
+                                <td><strong>Network Latency</strong></td>
                                 <td>query_ovnk_latency_metrics</td>
                                 <td>Pod间延迟、CNI操作延迟</td>
                             </tr>
@@ -911,15 +911,15 @@
 
 <span class="keyword">AI Agents执行流程:</span>
 1. 调用 get_etcd_performance_deep_drive(duration="1h")
-2. 收集以下子系统数据:
+2. 收集以下Subsystem数据:
    - 常规信息 (CPU、内存、Database Size)
-   - WAL Fsync性能 (P50/P90/P99延迟)
-   - Backend Commit性能 (P50/P90/P99延迟)
-   - 磁盘I/O (IOPS、吞吐量、延迟)
-   - 网络I/O (带宽、包速率)
+   - WAL Fsync Performance (P50/P90/P99延迟)
+   - Backend Commit Performance (P50/P90/P99延迟)
+   - Disk I/O (IOPS、吞吐量、延迟)
+   - Network I/O (带宽、包速率)
    - 节点Resource Usage (CPU、内存、cgroup)
-   - 压缩/碎片整理统计
-3. 执行瓶颈检测算法
+   - Compression/Defrag Statistics
+3. 执行Bottleneck Detection算法
 4. 生成分析报告
                 </pre>
             </div>
@@ -929,13 +929,13 @@
                 <p><strong>Time Range:</strong> 2026-04-12 14:00:00 UTC ~ 2026-04-12 15:00:00 UTC</p>
                 <p><strong>Cluster Status:</strong> <span class="metric-value-good">Healthy ✓</span></p>
 
-                <h5 style="margin-top: 15px;">Critical发现:</h5>
+                <h5 style="margin-top: 15px;">CriticalFindings:</h5>
                 <ul style="margin-top: 10px;">
                     <li><strong>WAL Fsync P99 Latency:</strong> <span class="metric-value-good">8.2ms</span> - Excellent (目标: &lt;10ms)</li>
                     <li><strong>Backend Commit P99 Latency:</strong> <span class="metric-value-warning">32.5ms</span> - Needs Attention (目标: &lt;25ms)</li>
                     <li><strong>etcd Pod平均CPU Usage:</strong> <span class="metric-value-good">45%</span> - Normal</li>
-                    <li><strong>数据库空间使用:</strong> <span class="metric-value-good">62%</span> - Healthy</li>
-                    <li><strong>磁盘I/O Wait:</strong> <span class="metric-value-critical">15%</span> - 瓶颈!</li>
+                    <li><strong>Database Space Usage:</strong> <span class="metric-value-good">62%</span> - Healthy</li>
+                    <li><strong>Disk I/O Wait:</strong> <span class="metric-value-critical">15%</span> - Bottleneck!</li>
                     <li><strong>Proposal Failure Rate:</strong> <span class="metric-value-good">0%</span> - Normal</li>
                 </ul>
             </div>
@@ -946,11 +946,11 @@
                     <li><strong>Backend Commit优化:</strong>
                         <ul style="margin-top: 5px;">
                             <li>检查Disk Performance，考虑使用更快的SSD (NVMe)</li>
-                            <li>确认磁盘I/O调度器设置 (建议使用noop或deadline)</li>
-                            <li>检查是否有其他进程竞争磁盘I/O资源</li>
+                            <li>确认Disk I/O调度器设置 (建议使用noop或deadline)</li>
+                            <li>检查是否有其他进程竞争Disk I/O资源</li>
                         </ul>
                     </li>
-                    <li><strong>磁盘I/O Wait优化:</strong>
+                    <li><strong>Disk I/O Wait优化:</strong>
                         <ul style="margin-top: 5px;">
                             <li>当前15%的I/O Wait表明存在磁盘瓶颈</li>
                             <li>建议使用专用的高性能存储设备</li>
@@ -959,9 +959,9 @@
                     </li>
                     <li><strong>持续监控:</strong>
                         <ul style="margin-top: 5px;">
-                            <li>定期检查压缩/碎片整理执行情况</li>
-                            <li>监控数据库增长速率，提前规划容量</li>
-                            <li>设置告警Threshold，及时发现性能退化</li>
+                            <li>定期检查Compression/Defrag执行情况</li>
+                            <li>监控Database增长速率，提前规划容量</li>
+                            <li>设置告警Threshold，及时Findings性能退化</li>
                         </ul>
                     </li>
                 </ol>
@@ -992,7 +992,7 @@
                             <th>网络层</th>
                             <th>指标</th>
                             <th>当前值</th>
-                            <th>状态</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1027,7 +1027,7 @@
                             <td>🔴 异常</td>
                         </tr>
                         <tr>
-                            <td><strong>网络I/O</strong></td>
+                            <td><strong>Network I/O</strong></td>
                             <td>带宽利用率</td>
                             <td class="metric-value-warning">78%</td>
                             <td>🟡 接近饱和</td>
@@ -1044,12 +1044,12 @@
                 <ol style="margin-top: 10px;">
                     <li><strong>检查网络硬件:</strong>
                         <ul>
-                            <li>检查网卡状态: <code>ethtool -S eth0</code></li>
+                            <li>检查网卡Status: <code>ethtool -S eth0</code></li>
                             <li>查看网卡错误: <code>dmesg | grep -i eth</code></li>
                             <li>确认网卡驱动版本和固件版本</li>
                         </ul>
                     </li>
-                    <li><strong>优化Softnet参数:</strong>
+                    <li><strong>优化SoftnetParameters:</strong>
                         <ul>
                             <li>增加netdev_max_backlog: <code>sysctl -w net.core.netdev_max_backlog=5000</code></li>
                             <li>调整RPS/RFS以平衡CPU负载</li>
@@ -1071,7 +1071,7 @@
                 <pre>
 <span class="comment"># 场景：分析OVN-Kubernetes网络延迟</span>
 
-<span class="keyword">User Query:</span> "OVN数据库同步延迟是多少？有性能问题吗？"
+<span class="keyword">User Query:</span> "OVN Database同步延迟是多少？有性能问题吗？"
 
 <span class="keyword">AI Agents执行:</span>
 1. 调用 query_ovnk_sync_metrics(duration="1h")
@@ -1083,7 +1083,7 @@
             </div>
 
             <div class="analysis-result">
-                <h4>📋 OVN-Kubernetes性能报告</h4>
+                <h4>📋 OVN-KubernetesPerformance Report</h4>
                 <div class="stats-grid" style="margin-top: 15px;">
                     <div class="stat-box">
                         <div class="stat-label">NB DB同步延迟 (P99)</div>
@@ -1146,10 +1146,10 @@
 <span class="comment"># 启动AI聊天客户端</span>
 <span class="keyword">python</span> <span class="function">etcd_analyzer_client_chat.py</span>
 
-<span class="comment"># 生成性能报告</span>
+<span class="comment"># 生成Performance Report</span>
 <span class="keyword">python</span> <span class="function">etcd_analyzer_mcp_agent_report.py</span>
 
-<span class="comment"># 收集数据到数据库</span>
+<span class="comment"># 收集数据到Database</span>
 <span class="keyword">python</span> <span class="function">etcd_analyzer_mcp_agent_stor2db.py</span>
             </div>
 
@@ -1161,7 +1161,7 @@
                     <p><strong>AI:</strong> Analyzing ETCD performance... [Calling tool: get_etcd_performance_deep_drive]</p>
                     <p style="margin-top: 10px;"><strong>用户:</strong> "WAL fsync延迟有没有超标？"</p>
                     <p><strong>AI:</strong> Let me check WAL fsync detailed data... [Calling tool: get_etcd_disk_wal_fsync]</p>
-                    <p style="margin-top: 10px;"><strong>用户:</strong> "生成一份完整的性能报告发给我"</p>
+                    <p style="margin-top: 10px;"><strong>用户:</strong> "生成一份完整的Performance Report发给我"</p>
                     <p><strong>AI:</strong> Generating report... [Calling tool: generate_etcd_performance_report]<br>
                     报告已生成，保存在 exports/etcd_performance_report_20260412.html</p>
                 </div>
@@ -1182,7 +1182,7 @@
 <span class="comment"># Healthy检查</span>
 <span class="keyword">curl</span> <span class="string">http://localhost:8000/health</span>
 
-<span class="comment"># 获取工具列表</span>
+<span class="comment"># 获取Tool列表</span>
 <span class="keyword">curl</span> <span class="string">http://localhost:8080/api/tools</span>
             </div>
 
@@ -1296,13 +1296,13 @@
                 'nav-overview': '概览',
                 'nav-architecture': '架构设计',
                 'nav-features': '核心功能',
-                'nav-components': '组件说明',
+                'nav-components': 'Component说明',
                 'nav-demo': '性能分析演示',
                 'nav-usage': '使用示例',
                 'section-overview-title': '📊 项目概览',
                 'section-architecture-title': '🏗️ 系统架构',
                 'section-features-title': '⚡ 核心功能特性',
-                'section-components-title': '🧩 组件详细说明',
+                'section-components-title': '🧩 Component详细说明',
                 'section-demo-title': '🎬 性能分析演示',
                 'section-usage-title': '📖 使用示例'
             },
