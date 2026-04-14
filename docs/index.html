@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,7 @@
             background: rgba(255, 255, 255, 0.95);
         }
 
-        /* 左侧边栏 */
+        /* Sidebar */
         .sidebar {
             width: 300px;
             background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
@@ -123,7 +123,7 @@
             50% { opacity: 0.5; }
         }
 
-        /* 主内容区 */
+        /* Main Content */
         .main-content {
             flex: 1;
             display: flex;
@@ -182,7 +182,7 @@
             color: white;
         }
 
-        /* 聊天容器 */
+        /* Chat Container */
         .chat-container {
             flex: 1;
             display: flex;
@@ -328,7 +328,7 @@
             40% { transform: scale(1); }
         }
 
-        /* 架构视图 */
+        /* Architecture View */
         .architecture-view {
             display: none;
             padding: 30px;
@@ -368,7 +368,7 @@
             margin-bottom: 10px;
         }
 
-        /* 演示内容 */
+        /* Demo Content */
         .demo-content {
             display: none;
             padding: 30px;
@@ -427,77 +427,77 @@
 </head>
 <body>
     <div class="demo-container">
-        <!-- 左侧边栏 -->
+        <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
                 <h1>🚀 OCP ETCD Analyzer</h1>
-                <p>AI驱动的性能分析平台</p>
+                <p>AI-Powered Performance Analysis Platform</p>
             </div>
 
             <div class="quick-actions">
-                <h3>📊 快速操作</h3>
+                <h3>📊 Quick Actions</h3>
                 <button class="action-button" onclick="sendDemoMessage('cluster-overview')">
-                    🏛️ 集群概览
+                    🏛️ Cluster Overview
                 </button>
                 <button class="action-button" onclick="sendDemoMessage('general-info')">
-                    🖥️ ETCD常规信息
+                    🖥️ ETCD General Info
                 </button>
                 <button class="action-button" onclick="sendDemoMessage('node-usage')">
-                    📈 节点资源使用
+                    📈 Node Resource Usage
                 </button>
                 <button class="action-button" onclick="sendDemoMessage('wal-fsync')">
-                    🔄 WAL Fsync性能
+                    🔄 WAL Fsync Performance
                 </button>
                 <button class="action-button" onclick="sendDemoMessage('backend-commit')">
                     🔗 Backend Commit
                 </button>
                 <button class="action-button" onclick="sendDemoMessage('disk-io')">
-                    💾 磁盘I/O分析
+                    💾 Disk I/O Analysis
                 </button>
                 <button class="action-button" onclick="sendDemoMessage('network-io')">
-                    🌐 网络I/O分析
+                    🌐 Network I/O Analysis
                 </button>
                 <button class="action-button" onclick="sendDemoMessage('deep-dive')">
-                    🔍 深度性能分析
+                    🔍 Deep Performance Analysis
                 </button>
                 <button class="action-button" onclick="sendDemoMessage('full-report')">
-                    📊 完整性能报告
+                    📊 Full Performance Report
                 </button>
             </div>
 
             <div class="status-panel">
                 <div class="status-item">
                     <div class="status-dot connected"></div>
-                    <span>MCP服务器已连接 (演示模式)</span>
+                    <span>MCP Server Connected (Demo Mode)</span>
                 </div>
                 <div class="status-item">
                     <div class="status-dot connected"></div>
-                    <span>集群健康 (15个工具可用)</span>
+                    <span>Cluster Healthy (15 Tools Available)</span>
                 </div>
             </div>
         </div>
 
-        <!-- 主内容区 -->
+        <!-- Main Content -->
         <div class="main-content">
             <div class="header">
-                <h2 data-i18n="header-title">性能分析演示界面</h2>
+                <h2 data-i18n="header-title">Performance Analysis Demo</h2>
                 <div class="header-tabs">
-                    <button class="tab-btn active" onclick="switchTab('chat')"><span data-i18n="tab-chat">💬 AI聊天</span></button>
-                    <button class="tab-btn" onclick="switchTab('architecture')"><span data-i18n="tab-arch">🏗️ 架构</span></button>
-                    <button class="tab-btn" onclick="switchTab('demo')"><span data-i18n="tab-demo">🎬 演示</span></button>
+                    <button class="tab-btn active" onclick="switchTab('chat')"><span data-i18n="tab-chat">💬 AI Chat</span></button>
+                    <button class="tab-btn" onclick="switchTab('architecture')"><span data-i18n="tab-arch">🏗️ Architecture</span></button>
+                    <button class="tab-btn" onclick="switchTab('demo')"><span data-i18n="tab-demo">🎬 Demo</span></button>
                     <button class="lang-toggle" onclick="toggleLanguage()">
                         <span id="lang-text">EN</span>
                     </button>
                 </div>
             </div>
 
-            <!-- AI聊天视图 -->
+            <!-- AIChat View -->
             <div class="chat-container" id="chat-view">
                 <div class="messages" id="messages">
                     <div class="welcome-message">
-                        <h3>👋 欢迎使用 OpenShift ETCD 性能分析助手</h3>
-                        <p>我可以帮助您分析OpenShift集群性能、检查系统健康状况，并提供基于AI的深度洞察。</p>
-                        <p style="margin-top: 10px; font-size: 0.9em;">点击左侧快速操作按钮开始演示</p>
+                        <h3>👋 Welcome to OpenShift ETCD Performance Analyzer</h3>
+                        <p>I can help you analyze OpenShift cluster performance, check system health, and provide AI-powered deep insights.</p>
+                        <p style="margin-top: 10px; font-size: 0.9em;">Click the Quick Actions buttons on the left to start the demo</p>
                     </div>
                 </div>
 
@@ -510,216 +510,219 @@
                 </div>
             </div>
 
-            <!-- 架构视图 -->
+            <!-- Architecture View -->
             <div class="architecture-view" id="architecture-view">
                 <div class="arch-diagram">
-                    <h2 style="margin-bottom: 20px;">🏗️ 系统架构设计</h2>
+                    <h2 style="margin-bottom: 20px;">🏗️ System Architecture Design</h2>
                     <pre>
 ┌─────────────────────────────────────────────────────────────┐
-│                    客户端层 (Client Layer)                   │
+│                       Client Layer                          │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│  │  Web UI  │  │ CLI工具  │  │ REST API │  │ MCP客户端 │   │
+│  │  Web UI  │  │ CLI Tools│  │ REST API │  │MCP Client│   │
 │  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘   │
 └───────┼─────────────┼─────────────┼─────────────┼──────────┘
         └─────────────┼─────────────┼─────────────┘
                       │             │
 ┌─────────────────────┼─────────────┼──────────────────────────┐
-│            AI代理层 (FastAPI + LangGraph)                    │
+│            AI Agent Layer (FastAPI + LangGraph)              │
 │  ┌────────────────────────────────────────────────────────┐ │
-│  │  🤖 Chat Agent  (对话式交互)                            │ │
-│  │  📊 Report Agent (自动报告生成)                         │ │
-│  │  💾 Storage Agent (数据持久化)                          │ │
-│  │  • 流式响应 (SSE)  • 工具编排  • 上下文记忆            │ │
+│  │  🤖 Chat Agent  (Conversational Interaction)           │ │
+│  │  📊 Report Agent (Auto Report Generation)              │ │
+│  │  💾 Storage Agent (Data Persistence)                   │ │
+│  │  • Streaming Response (SSE)  • Tool Orchestration      │ │
+│  │  • Context Memory                                      │ │
 │  └────────────────────────────────────────────────────────┘ │
 └─────────────────────┬─────────────┬──────────────────────────┘
-                      │ MCP协议通信 │
+                      │ MCP Protocol Communication │
 ┌─────────────────────┼─────────────┼──────────────────────────┐
-│              MCP服务器层 (FastMCP Framework)                 │
+│              MCP Server Layer (FastMCP Framework)            │
 │  ┌─────────────────────────────────────────────────────────┐│
 │  │  ETCD Analyzer Server (Port 8001)                       ││
-│  │  • 15个分析工具                                         ││
-│  │  • 集群状态  • WAL Fsync  • Backend Commit             ││
-│  │  • 磁盘I/O   • 网络I/O    • 深度分析                   ││
+│  │  • 15 Analysis Tools                                    ││
+│  │  • Cluster Status  • WAL Fsync  • Backend Commit        ││
+│  │  • Disk I/O   • Network I/O    • Deep Analysis          ││
 │  └─────────────────────────────────────────────────────────┘│
 └─────────────────────┬─────────────┬──────────────────────────┘
                       │             │
 ┌─────────────────────┼─────────────┼──────────────────────────┐
-│                工具层 (Tools & Collectors)                   │
+│                Tools Layer (Tools & Collectors)              │
 │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐       │
-│  │Prometheus│ │PromQL查询│ │指标收集器│ │数据转换  │       │
-│  │  集成    │ │  执行    │ │  (51+)   │ │  (ELT)   │       │
+│  │Prometheus│ │  PromQL  │ │  Metric  │ │   Data   │       │
+│  │Integration│ │  Query   │ │Collector │ │Transform │       │
+│  │          │ │ Execution│ │  (51+)   │ │  (ELT)   │       │
 │  └──────────┘ └──────────┘ └──────────┘ └──────────┘       │
 └─────────────────────┬─────────────┬──────────────────────────┘
                       │             │
 ┌─────────────────────┼─────────────┼──────────────────────────┐
-│              分析层 (Analysis & Storage)                     │
+│              Analysis Layer (Analysis & Storage)             │
 │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐       │
-│  │瓶颈检测  │ │性能分析  │ │DuckDB存储│ │HTML报告  │       │
-│  │  引擎    │ │  算法    │ │  (时序)  │ │  生成    │       │
+│  │Bottleneck│ │Performance│ │  DuckDB  │ │   HTML   │       │
+│  │Detection │ │ Analysis │ │  Storage │ │  Report  │       │
+│  │  Engine  │ │Algorithm │ │(TimeSeries)│ │Generation│       │
 │  └──────────┘ └──────────┘ └──────────┘ └──────────┘       │
 └──────────────────────────────────────────────────────────────┘
                       │
 ┌─────────────────────┼──────────────────────────────────────────┐
-│          OpenShift/Kubernetes 集群基础设施                    │
-│  • ETCD集群 (3-5节点)   • Prometheus/Thanos监控              │
-│  • Master节点           • Kubernetes API服务器                │
-│  • OVN-Kubernetes网络   • 容器运行时                          │
+│          OpenShift/Kubernetes Cluster Infrastructure         │
+│  • ETCD Cluster (3-5 nodes)  • Prometheus/Thanos Monitoring │
+│  • Master Nodes              • Kubernetes API Server        │
+│  • OVN-Kubernetes Network    • Container Runtime            │
 └──────────────────────────────────────────────────────────────┘
                     </pre>
                 </div>
 
                 <div class="component-card">
-                    <h3>🔧 关键组件说明</h3>
-                    <p><strong>1. MCP服务器 (FastMCP)</strong> - 基于Model Context Protocol的服务器，暴露15+分析工具供AI代理调用</p>
-                    <p><strong>2. AI代理 (LangGraph)</strong> - 智能代理使用OpenAI/兼容LLM，实现对话式分析和自动化报告生成</p>
-                    <p><strong>3. 工具收集器</strong> - 通过PromQL查询Prometheus，收集51+ETCD性能指标</p>
-                    <p><strong>4. ELT管道</strong> - 将原始JSON数据转换为结构化HTML表格，便于展示和分析</p>
-                    <p><strong>5. DuckDB存储</strong> - 时序数据库存储历史性能数据，支持趋势分析</p>
+                    <h3>🔧 Key Component Description</h3>
+                    <p><strong>1. MCP Server (FastMCP)</strong> - Model Context Protocol-based server exposing 15+ analysis tools for AI agent invocation</p>
+                    <p><strong>2. AI Agent (LangGraph)</strong> - Intelligent agent using OpenAI/compatible LLM for conversational analysis and automated report generation</p>
+                    <p><strong>3. Metric Collector</strong> - Queries Prometheus via PromQL to collect 51+ ETCD performance metrics</p>
+                    <p><strong>4. ELT Pipeline</strong> - Transforms raw JSON data into structured HTML tables for easy display and analysis</p>
+                    <p><strong>5. DuckDB Storage</strong> - Time-series database storing historical performance data for trend analysis</p>
                 </div>
             </div>
 
-            <!-- 演示视图 -->
+            <!-- Demo View -->
             <div class="demo-content" id="demo-view">
                 <div class="demo-section">
-                    <h3>🎯 核心功能演示</h3>
+                    <h3>🎯 Core Features Demo</h3>
 
-                    <h4 style="margin-top: 20px;">1️⃣ 实时性能监控</h4>
+                    <h4 style="margin-top: 20px;">1️⃣ Real-time Performance Monitoring</h4>
                     <div class="highlight-box">
-                        <strong>功能:</strong> 通过Prometheus实时采集ETCD集群性能指标<br>
-                        <strong>覆盖指标:</strong> 51个ETCD核心指标，涵盖磁盘、网络、CPU、内存等<br>
-                        <strong>更新频率:</strong> 2分钟采样窗口，实时流式响应
+                        <strong>Feature:</strong> Real-time ETCD cluster performance metrics collection via Prometheus<br>
+                        <strong>Metric Coverage:</strong> 51 core ETCD metrics covering disk, network, CPU, memory, etc.<br>
+                        <strong>Update Frequency:</strong> 2-minute sampling window with real-time streaming response
                     </div>
 
-                    <h4 style="margin-top: 20px;">2️⃣ AI对话式分析</h4>
+                    <h4 style="margin-top: 20px;">2️⃣ AI Conversational Analysis</h4>
                     <div class="code-block">
-# 用户查询示例
-用户: "分析过去1小时ETCD的WAL fsync性能"
+# User Query Example
+User: "Analyze ETCD WAL fsync performance over the past 1 hour"
 
-# AI执行流程
-1. 调用工具: get_etcd_disk_wal_fsync(duration="1h")
-2. 收集指标: P50/P90/P99延迟分布
-3. 分析数据: 对比阈值 (目标: P99 < 10ms)
-4. 生成建议: 如果超标，提供优化方案
+# AI Execution Flow
+1. Call Tool: get_etcd_disk_wal_fsync(duration="1h")
+2. Collect Metrics: P50/P90/P99 latency distribution
+3. Analyze Data: Compare against thresholds (target: P99 < 10ms)
+4. Generate Recommendations: Provide optimization suggestions if thresholds exceeded
 
-# 返回结果
-📊 数据结果:
-  - WAL Fsync P99: 8.2ms ✓ (优秀)
+# Response
+📊 Data Result:
+  - WAL Fsync P99: 8.2ms ✓ (Excellent)
   - WAL Fsync P90: 5.1ms
   - WAL Fsync P50: 2.3ms
 
-🤖 AI分析:
-  WAL fsync性能优秀，P99延迟8.2ms远低于10ms阈值。
-  磁盘写入性能稳定，无需优化。
+🤖 AI Analysis:
+  WAL fsync performance is excellent, P99 latency of 8.2ms is well below 10ms threshold.
+  Disk write performance is stable, no optimization needed.
                     </div>
 
-                    <h4 style="margin-top: 20px;">3️⃣ 自动瓶颈检测</h4>
+                    <h4 style="margin-top: 20px;">3️⃣ Automatic Bottleneck Detection</h4>
                     <div class="highlight-box">
-                        <strong>检测维度:</strong><br>
-                        • CPU使用率 (阈值: 警告70%, 严重85%)<br>
-                        • 内存使用率 (阈值: 警告70%, 严重85%)<br>
-                        • WAL Fsync延迟 (目标: P99 < 10ms)<br>
-                        • Backend Commit延迟 (目标: P99 < 25ms)<br>
-                        • 磁盘I/O Wait (目标: < 10%)<br>
-                        • 网络延迟 (目标: Peer < 50ms)
+                        <strong>Detection Dimensions:</strong><br>
+                        • CPU Usage (Threshold: Warning 70%, Critical 85%)<br>
+                        • Memory Usage (Threshold: Warning 70%, Critical 85%)<br>
+                        • WAL Fsync Latency (Target: P99 < 10ms)<br>
+                        • Backend Commit Latency (Target: P99 < 25ms)<br>
+                        • Disk I/O Wait (Target: < 10%)<br>
+                        • Network Latency (Target: Peer < 50ms)
                     </div>
 
-                    <h4 style="margin-top: 20px;">4️⃣ 完整性能报告</h4>
+                    <h4 style="margin-top: 20px;">4️⃣ Complete Performance Report</h4>
                     <div class="code-block">
-# 报告内容结构
+# Report Structure
 ┌─────────────────────────────────────┐
-│  📋 ETCD性能分析报告                 │
-│  时间范围: 2026-04-12 14:00 - 15:00 │
+│  📋 ETCD Performance Analysis Report│
+│  Time Range: 2026-04-12 14:00-15:00│
 ├─────────────────────────────────────┤
-│  1. 执行摘要                         │
-│     • 集群状态: 健康 ✓               │
-│     • 发现问题: 1个警告              │
-│     • 优先级: 中等                   │
+│  1. Executive Summary               │
+│     • Cluster Status: Healthy ✓     │
+│     • Issues Found: 1 warning       │
+│     • Priority: Medium              │
 ├─────────────────────────────────────┤
-│  2. 关键指标                         │
+│  2. Key Metrics                     │
 │     ✓ WAL Fsync P99: 8.2ms          │
 │     ⚠ Backend Commit P99: 32.5ms    │
-│     ✓ CPU使用率: 45%                 │
-│     ✓ 内存使用率: 58%                │
-│     ✗ 磁盘I/O Wait: 15%              │
+│     ✓ CPU Usage: 45%                │
+│     ✓ Memory Usage: 58%             │
+│     ✗ Disk I/O Wait: 15%            │
 ├─────────────────────────────────────┤
-│  3. 瓶颈分析                         │
-│     🔴 磁盘I/O瓶颈                   │
-│        - I/O Wait 15%过高            │
-│        - 影响Backend Commit性能      │
+│  3. Bottleneck Analysis             │
+│     🔴 Disk I/O Bottleneck          │
+│        - I/O Wait 15% too high      │
+│        - Affects Backend Commit     │
 ├─────────────────────────────────────┤
-│  4. 优化建议                         │
-│     1. 使用更快的SSD (NVMe)         │
-│     2. 调整I/O调度器为deadline       │
-│     3. 检查磁盘竞争进程              │
+│  4. Optimization Recommendations    │
+│     1. Use faster SSD (NVMe)        │
+│     2. Tune I/O scheduler to deadline│
+│     3. Check disk contention        │
 └─────────────────────────────────────┘
                     </div>
                 </div>
 
                 <div class="demo-section">
-                    <h3>🔍 工具列表 (15个)</h3>
+                    <h3>🔍 Tool List (15 Tools)</h3>
                     <table class="response-table">
                         <thead>
                             <tr>
-                                <th>工具名称</th>
-                                <th>功能描述</th>
-                                <th>返回数据</th>
+                                <th>Tool Name</th>
+                                <th>Function Description</th>
+                                <th>Return Data</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><strong>get_server_health</strong></td>
-                                <td>服务器健康检查</td>
-                                <td>状态、时间戳</td>
+                                <td>Server health check</td>
+                                <td>Status, timestamp</td>
                             </tr>
                             <tr>
                                 <td><strong>get_etcd_cluster_status</strong></td>
-                                <td>ETCD集群状态</td>
-                                <td>成员列表、健康状态</td>
+                                <td>ETCD cluster status</td>
+                                <td>Member list, health status</td>
                             </tr>
                             <tr>
                                 <td><strong>get_ocp_cluster_info</strong></td>
-                                <td>OpenShift集群信息</td>
-                                <td>版本、节点数、资源</td>
+                                <td>OpenShift cluster info</td>
+                                <td>Version, node count, resources</td>
                             </tr>
                             <tr>
                                 <td><strong>get_etcd_general_info</strong></td>
-                                <td>ETCD常规指标</td>
-                                <td>CPU、内存、DB大小</td>
+                                <td>ETCD general metrics</td>
+                                <td>CPU, memory, DB size</td>
                             </tr>
                             <tr>
                                 <td><strong>get_etcd_disk_wal_fsync</strong></td>
-                                <td>WAL Fsync性能</td>
-                                <td>P50/P90/P99延迟</td>
+                                <td>WAL Fsync performance</td>
+                                <td>P50/P90/P99 latency</td>
                             </tr>
                             <tr>
                                 <td><strong>get_etcd_disk_backend_commit</strong></td>
-                                <td>Backend Commit性能</td>
-                                <td>P50/P90/P99延迟</td>
+                                <td>Backend Commit performance</td>
+                                <td>P50/P90/P99 latency</td>
                             </tr>
                             <tr>
                                 <td><strong>get_node_disk_io</strong></td>
-                                <td>节点磁盘I/O</td>
-                                <td>IOPS、吞吐量、延迟</td>
+                                <td>Node disk I/O</td>
+                                <td>IOPS, throughput, latency</td>
                             </tr>
                             <tr>
                                 <td><strong>get_etcd_network_io</strong></td>
-                                <td>网络I/O指标</td>
-                                <td>带宽、包速率</td>
+                                <td>Network I/O metrics</td>
+                                <td>Bandwidth, packet rate</td>
                             </tr>
                             <tr>
                                 <td><strong>get_etcd_performance_deep_drive</strong></td>
-                                <td>深度性能分析</td>
-                                <td>多维度综合分析</td>
+                                <td>Deep performance analysis</td>
+                                <td>Multi-dimensional analysis</td>
                             </tr>
                             <tr>
                                 <td><strong>get_etcd_bottleneck_analysis</strong></td>
-                                <td>瓶颈检测</td>
-                                <td>瓶颈识别和建议</td>
+                                <td>Bottleneck detection</td>
+                                <td>Bottleneck identification & suggestions</td>
                             </tr>
                             <tr>
                                 <td><strong>generate_etcd_performance_report</strong></td>
-                                <td>生成性能报告</td>
-                                <td>完整HTML报告</td>
+                                <td>Generate performance report</td>
+                                <td>Complete HTML report</td>
                             </tr>
                         </tbody>
                     </table>
