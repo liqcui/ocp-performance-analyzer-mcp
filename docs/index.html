@@ -729,27 +729,11 @@
     </div>
 
     <script>
-        // Demo Data with Bilingual Support
-        // 演示数据 - 支持双语
+        // Demo Data - English Only
         const demoMessagesData = {
             'cluster-overview': {
-                user: '告诉我当前OpenShift集群的基本信息和ETCD集群状态',
-                user_en: 'Tell me about the current OpenShift cluster and ETCD cluster status',
+                user: 'Tell me about the current OpenShift cluster and ETCD cluster status',
                 toolResult: `<table class="response-table">
-                    <thead>
-                        <tr><th>集群信息</th><th>值</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>集群名称</td><td>production-ocp-cluster</td></tr>
-                        <tr><td>OpenShift版本</td><td>4.14.3</td></tr>
-                        <tr><td>Kubernetes版本</td><td>v1.27.6</td></tr>
-                        <tr><td>节点总数</td><td>15 (3 Master + 12 Worker)</td></tr>
-                        <tr><td>ETCD成员数</td><td>3</td></tr>
-                        <tr><td>ETCD健康状态</td><td class="metric-good">健康 ✓</td></tr>
-                        <tr><td>集群运行时间</td><td>45天</td></tr>
-                    </tbody>
-                </table>`,
-                toolResult_en: `<table class="response-table">
                     <thead>
                         <tr><th>Cluster Info</th><th>Value</th></tr>
                     </thead>
@@ -763,17 +747,7 @@
                         <tr><td>Cluster Uptime</td><td>45 days</td></tr>
                     </tbody>
                 </table>`,
-                aiAnalysis: `**集群状态总结**
-
-您的OpenShift集群运行状况良好：
-
-• **版本**: OpenShift 4.14.3 (最新稳定版)
-• **规模**: 15节点配置，适合中等规模生产环境
-• **ETCD**: 3成员集群，符合高可用配置建议
-• **健康状态**: 所有ETCD成员健康，无告警
-
-**建议**: 集群配置合理，继续监控资源使用趋势。`,
-                aiAnalysis_en: `**Cluster Status Summary**
+                aiAnalysis: `**Cluster Status Summary**
 
 Your OpenShift cluster is running in healthy condition:
 
@@ -785,196 +759,8 @@ Your OpenShift cluster is running in healthy condition:
 **Recommendation**: Cluster configuration is reasonable. Continue monitoring resource usage trends.`
             },
             'node-usage': {
-                user: '显示ETCD Master节点的资源使用情况',
-                user_en: 'Display ETCD Master node resource usage',
+                user: 'Display ETCD Master node resource usage',
                 toolResult: `<table class="response-table">
-                    <thead>
-                        <tr><th>节点</th><th>CPU使用率</th><th>内存使用</th><th>内存总量</th><th>磁盘使用率</th><th>状态</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>master-0</strong></td>
-                            <td>45.2%</td>
-                            <td>28.5 GB</td>
-                            <td>64 GB</td>
-                            <td>62%</td>
-                            <td class="metric-good">✓ 健康</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-1</strong></td>
-                            <td>48.7%</td>
-                            <td>30.2 GB</td>
-                            <td>64 GB</td>
-                            <td>58%</td>
-                            <td class="metric-good">✓ 健康</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-2</strong></td>
-                            <td>43.8%</td>
-                            <td>27.8 GB</td>
-                            <td>64 GB</td>
-                            <td>65%</td>
-                            <td class="metric-good">✓ 健康</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 style="margin-top: 20px; color: #2c3e50;">详细资源分配</h4>
-                <table class="response-table">
-                    <thead>
-                        <tr><th>资源类型</th><th>master-0</th><th>master-1</th><th>master-2</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>系统进程CPU</strong></td>
-                            <td>12.3%</td>
-                            <td>13.1%</td>
-                            <td>11.9%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>ETCD Pod CPU</strong></td>
-                            <td>18.5%</td>
-                            <td>19.2%</td>
-                            <td>17.8%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>API Server CPU</strong></td>
-                            <td>8.4%</td>
-                            <td>9.1%</td>
-                            <td>8.2%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>其他Pod CPU</strong></td>
-                            <td>6.0%</td>
-                            <td>7.3%</td>
-                            <td>5.9%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>系统内存</strong></td>
-                            <td>8.2 GB</td>
-                            <td>8.5 GB</td>
-                            <td>8.1 GB</td>
-                        </tr>
-                        <tr>
-                            <td><strong>ETCD Pod内存</strong></td>
-                            <td>12.4 GB</td>
-                            <td>13.1 GB</td>
-                            <td>11.9 GB</td>
-                        </tr>
-                        <tr>
-                            <td><strong>API Server内存</strong></td>
-                            <td>5.2 GB</td>
-                            <td>5.6 GB</td>
-                            <td>5.0 GB</td>
-                        </tr>
-                        <tr>
-                            <td><strong>缓存</strong></td>
-                            <td>2.7 GB</td>
-                            <td>3.0 GB</td>
-                            <td>2.8 GB</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 style="margin-top: 20px; color: #2c3e50;">网络统计</h4>
-                <table class="response-table">
-                    <thead>
-                        <tr><th>节点</th><th>入站流量</th><th>出站流量</th><th>连接数</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>master-0</strong></td>
-                            <td>125 MB/s</td>
-                            <td>132 MB/s</td>
-                            <td>1,234</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-1</strong></td>
-                            <td>118 MB/s</td>
-                            <td>128 MB/s</td>
-                            <td>1,189</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-2</strong></td>
-                            <td>122 MB/s</td>
-                            <td>130 MB/s</td>
-                            <td>1,207</td>
-                        </tr>
-                    </tbody>
-                </table>`,
-                aiAnalysis: `**Master节点资源使用分析**
-
-**整体评估**: 🟢 **所有节点运行正常**
-
-**关键发现**:
-
-**1. CPU使用情况**:
-• 平均使用率: 45.9% (健康范围)
-• ETCD进程占用: ~18% (合理)
-• API Server占用: ~8.5% (正常)
-• 系统开销: ~12.4% (标准)
-
-**负载分布**: 三个Master节点负载均衡良好，差异<5%
-
-**2. 内存使用情况**:
-• 平均使用: 28.8 GB / 64 GB (45%)
-• ETCD内存: ~12.5 GB (合理，支持8GB数据库)
-• 剩余可用: ~35 GB (充足缓冲)
-• 内存压力: 无
-
-**内存分配**: ETCD占比43%，符合预期
-
-**3. 磁盘使用**:
-• 平均使用率: 62%
-• 距离80%警戒线: 18%空间
-• 预计可用时间: 3-4个月 (基于当前增长率)
-
-**建议**: 在6个月内规划磁盘扩容
-
-**4. 网络性能**:
-• 平均吞吐: 入站122 MB/s, 出站130 MB/s
-• 连接数: ~1,210 (正常)
-• 带宽利用率: <15% (1Gbps网络)
-• 延迟: <5ms (节点间)
-
-**网络状态**: 优秀，无瓶颈
-
-**5. 资源分布对比**:
-
-\`\`\`
-节点负载差异分析:
-master-0: CPU 45.2%, Mem 44.5% (基准)
-master-1: CPU 48.7%, Mem 47.2% (+3.5%, +2.7%) 略高
-master-2: CPU 43.8%, Mem 43.4% (-1.4%, -1.1%) 略低
-
-差异原因: 正常的Pod调度不均衡
-影响程度: 可忽略
-\`\`\`
-
-**优化建议**:
-
-**短期** (无需操作):
-• 当前资源使用健康，无需调整
-• 继续按当前配置运行
-
-**中期** (3-6个月):
-• 监控磁盘使用趋势
-• 规划存储扩容 (目标: 65%使用率时扩容)
-• 考虑启用数据压缩
-
-**长期** (6-12个月):
-• 评估是否需要增加Master节点配置
-• 考虑升级到更大内存 (128GB) 以支持集群扩展
-• 优化ETCD数据清理策略
-
-**容量规划**:
-基于当前增长率，预计可支持:
-• CPU: 可再增加30%负载 (约1年)
-• 内存: 可再增加55% (约1.5年)
-• 磁盘: 可再增加38%使用 (约4个月)
-
-**结论**: Master节点资源充足，集群健康。建议3个月后开始规划磁盘扩容。`,
-                toolResult_en: `<table class="response-table">
                     <thead>
                         <tr><th>Node</th><th>CPU Usage</th><th>Memory Used</th><th>Memory Total</th><th>Disk Usage</th><th>Status</th></tr>
                     </thead>
@@ -1089,7 +875,7 @@ master-2: CPU 43.8%, Mem 43.4% (-1.4%, -1.1%) 略低
                         </tr>
                     </tbody>
                 </table>`,
-                aiAnalysis_en: `**Master Node Resource Usage Analysis**
+                aiAnalysis: `**Master Node Resource Usage Analysis**
 
 **Overall Assessment**: 🟢 **All nodes operating normally**
 
@@ -1163,244 +949,8 @@ Based on current growth rate, expected to support:
 **Conclusion**: Master node resources are sufficient, cluster is healthy. Recommend starting disk expansion planning in 3 months.`
             },
             'disk-io': {
-                user: '分析Master节点的磁盘I/O性能',
-                user_en: 'Analyze Master node disk I/O performance',
+                user: 'Analyze Master node disk I/O performance',
                 toolResult: `<table class="response-table">
-                    <thead>
-                        <tr><th>节点</th><th>读取IOPS</th><th>写入IOPS</th><th>读取吞吐</th><th>写入吞吐</th><th>I/O Wait</th><th>状态</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>master-0</strong></td>
-                            <td>1,245</td>
-                            <td>3,567</td>
-                            <td>52 MB/s</td>
-                            <td>145 MB/s</td>
-                            <td class="metric-critical">15.2%</td>
-                            <td class="metric-warning">⚠ 需关注</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-1</strong></td>
-                            <td>1,189</td>
-                            <td>3,423</td>
-                            <td>48 MB/s</td>
-                            <td>138 MB/s</td>
-                            <td class="metric-critical">14.8%</td>
-                            <td class="metric-warning">⚠ 需关注</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-2</strong></td>
-                            <td>1,298</td>
-                            <td>3,689</td>
-                            <td>55 MB/s</td>
-                            <td>152 MB/s</td>
-                            <td class="metric-critical">15.5%</td>
-                            <td class="metric-warning">⚠ 需关注</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 style="margin-top: 20px; color: #2c3e50;">磁盘延迟分析</h4>
-                <table class="response-table">
-                    <thead>
-                        <tr><th>节点</th><th>读延迟(平均)</th><th>读延迟(P99)</th><th>写延迟(平均)</th><th>写延迟(P99)</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>master-0</strong></td>
-                            <td>2.1 ms</td>
-                            <td>8.5 ms</td>
-                            <td>5.4 ms</td>
-                            <td class="metric-warning">18.2 ms</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-1</strong></td>
-                            <td>2.0 ms</td>
-                            <td>8.2 ms</td>
-                            <td>5.2 ms</td>
-                            <td class="metric-warning">17.8 ms</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-2</strong></td>
-                            <td>2.2 ms</td>
-                            <td>8.7 ms</td>
-                            <td>5.6 ms</td>
-                            <td class="metric-warning">18.5 ms</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 style="margin-top: 20px; color: #2c3e50;">磁盘队列深度</h4>
-                <table class="response-table">
-                    <thead>
-                        <tr><th>节点</th><th>平均队列深度</th><th>最大队列深度</th><th>队列饱和度</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>master-0</strong></td>
-                            <td>12.5</td>
-                            <td>45</td>
-                            <td class="metric-warning">68%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-1</strong></td>
-                            <td>11.8</td>
-                            <td>42</td>
-                            <td class="metric-warning">65%</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-2</strong></td>
-                            <td>13.2</td>
-                            <td>48</td>
-                            <td class="metric-warning">71%</td>
-                        </tr>
-                    </tbody>
-                </table>`,
-                aiAnalysis: `**磁盘I/O性能分析**
-
-🔴 **发现瓶颈**: 磁盘I/O Wait偏高，需要优化
-
-**关键问题**:
-
-**1. I/O Wait过高**:
-• 三个节点平均I/O Wait: 15.2%
-• 健康阈值: <10%
-• **超标**: 52% (严重)
-
-**影响**:
-- CPU等待I/O完成的时间过长
-- 直接影响Backend Commit延迟
-- 降低整体系统响应速度
-
-**2. 写入延迟问题**:
-• P99写延迟: 18.2ms (目标: <10ms)
-• 比读延迟高2.2倍
-• ETCD对写延迟敏感
-
-**原因分析**:
-- 随机写入模式 (ETCD特性)
-- 磁盘可能不是企业级SSD
-- fsync操作频繁
-
-**3. 队列饱和度高**:
-• 平均饱和度: 68%
-• 峰值接近100%
-• 说明磁盘繁忙，请求积压
-
-**队列深度**: 12-13 (正常范围: <8)
-
-**4. IOPS分析**:
-• 写入IOPS: ~3,560 (平均)
-• 读取IOPS: ~1,244 (平均)
-• 写入是读取的2.9倍 (符合ETCD特性)
-
-**对比基准**:
-- 企业级NVMe: 可支持100K+ IOPS
-- 当前磁盘: 接近饱和在5K IOPS
-- 性能差距: 20倍
-
-**5. 吞吐量**:
-• 写入吞吐: 145 MB/s
-• 读取吞吐: 52 MB/s
-• 总吞吐: 197 MB/s
-
-**磁盘类型推测**: SATA SSD (非NVMe)
-
-**根因诊断**:
-
-\`\`\`
-证据链:
-1. I/O Wait 15% -----> 磁盘繁忙
-2. 写延迟P99 18ms ---> 随机写慢
-3. 队列深度 12+ -----> 请求积压
-4. IOPS <5K ---------> 非高性能盘
-                        ↓
-结论: 磁盘性能不足以支撑ETCD负载
-\`\`\`
-
-**优化建议**:
-
-**立即执行** (0-1周):
-
-1. **确认磁盘类型**:
-\`\`\`bash
-lsblk -d -o name,rota,disc-gran
-# 检查是否为SSD，块大小是否优化
-\`\`\`
-
-2. **调整I/O调度器**:
-\`\`\`bash
-echo deadline > /sys/block/sda/queue/scheduler
-# 或使用noop (对SSD更友好)
-\`\`\`
-
-3. **检查文件系统**:
-\`\`\`bash
-mount | grep etcd
-# 确保使用XFS，启用noatime选项
-\`\`\`
-
-**短期优化** (1-2周):
-
-1. **分离WAL和数据**:
-   - 将WAL目录挂载到独立的快速磁盘
-   - 减少随机写入竞争
-
-2. **启用写缓存** (如果安全):
-\`\`\`bash
-hdparm -W1 /dev/sda
-# 仅在有UPS或BBU的情况下使用
-\`\`\`
-
-3. **优化内核参数**:
-\`\`\`bash
-# 增加脏页刷新间隔
-sysctl -w vm.dirty_ratio=15
-sysctl -w vm.dirty_background_ratio=5
-\`\`\`
-
-**中期方案** (1-2个月):
-
-1. **升级到NVMe SSD**:
-   - 推荐: Intel P4510, Samsung PM983
-   - 预期改善: I/O Wait <5%, 延迟<5ms
-   - 成本: $500-800/盘
-
-2. **使用RAID配置**:
-   - RAID 10 (性能+可靠性)
-   - 或单独的高速盘用于WAL
-
-3. **迁移数据**:
-   - 在低峰期执行
-   - 使用etcd备份恢复流程
-
-**长期规划** (3-6个月):
-
-1. **存储架构优化**:
-   - 考虑分布式存储 (Ceph RBD)
-   - 或专用高性能存储柜
-
-2. **监控和告警**:
-   - 设置I/O Wait告警 (>10%)
-   - 监控磁盘寿命和错误率
-
-**预期效果**:
-
-升级到NVMe后:
-\`\`\`
-I/O Wait:   15% → <5%  (改善 66%)
-写延迟P99: 18ms → <5ms (改善 72%)
-Backend Commit: 32ms → <20ms (达标)
-队列深度:   12 → <4   (改善 67%)
-\`\`\`
-
-**优先级**: 🔴 **高** - 建议1个月内完成升级
-
-**业务影响评估**:
-- 当前: 不影响正常运行，但性能未达最优
-- 风险: 如果负载增加，可能导致延迟进一步恶化
-- 建议: 在下次维护窗口进行磁盘升级`,
-                toolResult_en: `<table class="response-table">
                     <thead>
                         <tr><th>Node</th><th>Read IOPS</th><th>Write IOPS</th><th>Read Throughput</th><th>Write Throughput</th><th>I/O Wait</th><th>Status</th></tr>
                     </thead>
@@ -1491,7 +1041,7 @@ Backend Commit: 32ms → <20ms (达标)
                         </tr>
                     </tbody>
                 </table>`,
-                aiAnalysis_en: `**Disk I/O Performance Analysis**
+                aiAnalysis: `**Disk I/O Performance Analysis**
 
 🔴 **Bottleneck Detected**: Disk I/O Wait is high, optimization needed
 
@@ -1567,308 +1117,8 @@ Queue Depth:      12 → <4   (67% improvement)
 - Recommendation: Perform disk upgrade during next maintenance window`
             },
             'network-io': {
-                user: '分析ETCD集群的网络I/O性能',
-                user_en: 'Analyze ETCD cluster network I/O performance',
+                user: 'Analyze ETCD cluster network I/O performance',
                 toolResult: `<table class="response-table">
-                    <thead>
-                        <tr><th>指标</th><th>master-0</th><th>master-1</th><th>master-2</th><th>阈值</th><th>状态</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Peer往返延迟</strong></td>
-                            <td>3.2 ms</td>
-                            <td>3.1 ms</td>
-                            <td>3.3 ms</td>
-                            <td>&lt; 50ms</td>
-                            <td class="metric-good">✓ 优秀</td>
-                        </tr>
-                        <tr>
-                            <td><strong>网络入站流量</strong></td>
-                            <td>125 MB/s</td>
-                            <td>118 MB/s</td>
-                            <td>122 MB/s</td>
-                            <td>&lt; 800 MB/s</td>
-                            <td class="metric-good">✓ 正常</td>
-                        </tr>
-                        <tr>
-                            <td><strong>网络出站流量</strong></td>
-                            <td>132 MB/s</td>
-                            <td>128 MB/s</td>
-                            <td>130 MB/s</td>
-                            <td>&lt; 800 MB/s</td>
-                            <td class="metric-good">✓ 正常</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Peer发送速率</strong></td>
-                            <td>45 KB/s</td>
-                            <td>42 KB/s</td>
-                            <td>48 KB/s</td>
-                            <td>监控</td>
-                            <td class="metric-good">✓ 正常</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Peer接收速率</strong></td>
-                            <td>43 KB/s</td>
-                            <td>40 KB/s</td>
-                            <td>46 KB/s</td>
-                            <td>监控</td>
-                            <td class="metric-good">✓ 正常</td>
-                        </tr>
-                        <tr>
-                            <td><strong>包丢失率</strong></td>
-                            <td>0.001%</td>
-                            <td>0.002%</td>
-                            <td>0.001%</td>
-                            <td>&lt; 0.1%</td>
-                            <td class="metric-good">✓ 优秀</td>
-                        </tr>
-                        <tr>
-                            <td><strong>重传率</strong></td>
-                            <td>0.05%</td>
-                            <td>0.06%</td>
-                            <td>0.04%</td>
-                            <td>&lt; 1%</td>
-                            <td class="metric-good">✓ 优秀</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 style="margin-top: 20px; color: #2c3e50;">网络带宽利用率</h4>
-                <table class="response-table">
-                    <thead>
-                        <tr><th>节点</th><th>入站利用率</th><th>出站利用率</th><th>接口速率</th><th>状态</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>master-0</strong></td>
-                            <td>12.5%</td>
-                            <td>13.2%</td>
-                            <td>1 Gbps</td>
-                            <td class="metric-good">✓ 充足</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-1</strong></td>
-                            <td>11.8%</td>
-                            <td>12.8%</td>
-                            <td>1 Gbps</td>
-                            <td class="metric-good">✓ 充足</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-2</strong></td>
-                            <td>12.2%</td>
-                            <td>13.0%</td>
-                            <td>1 Gbps</td>
-                            <td class="metric-good">✓ 充足</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4 style="margin-top: 20px; color: #2c3e50;">ETCD Peer通信详情</h4>
-                <table class="response-table">
-                    <thead>
-                        <tr><th>连接</th><th>往返延迟</th><th>发送失败</th><th>慢请求</th><th>状态</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>master-0 → master-1</strong></td>
-                            <td>3.1 ms</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td class="metric-good">✓ 健康</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-0 → master-2</strong></td>
-                            <td>3.3 ms</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td class="metric-good">✓ 健康</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-1 → master-0</strong></td>
-                            <td>3.1 ms</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td class="metric-good">✓ 健康</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-1 → master-2</strong></td>
-                            <td>3.2 ms</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td class="metric-good">✓ 健康</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-2 → master-0</strong></td>
-                            <td>3.3 ms</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td class="metric-good">✓ 健康</td>
-                        </tr>
-                        <tr>
-                            <td><strong>master-2 → master-1</strong></td>
-                            <td>3.2 ms</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td class="metric-good">✓ 健康</td>
-                        </tr>
-                    </tbody>
-                </table>`,
-                aiAnalysis: `**网络I/O性能分析**
-
-🟢 **整体评估**: **网络性能优秀，无瓶颈**
-
-**关键发现**:
-
-**1. Peer通信延迟** ✅:
-• 平均延迟: 3.2ms
-• 延迟稳定性: 优秀 (标准差<0.1ms)
-• 阈值对比: 远低于50ms警戒线
-
-**性能等级**: **优秀** (< 5ms)
-
-**延迟分布**:
-- <1ms: 0% (数据中心内部可达)
-- 1-5ms: 100% ✓ (当前)
-- 5-10ms: 0% (可接受)
-- >10ms: 0% (需关注)
-
-**2. 网络吞吐量** ✅:
-• 入站流量: 122 MB/s (平均)
-• 出站流量: 130 MB/s (平均)
-• 总流量: 252 MB/s
-
-**带宽利用率**: 12.5% (1Gbps网卡)
-**余量**: 87.5% (充足)
-
-**流量模式分析**:
-- 出站略高于入站 (8 MB/s差异)
-- 符合ETCD写入复制模式
-- 负载均衡良好
-
-**3. Peer数据传输** ✅:
-• 发送速率: 45 KB/s (平均)
-• 接收速率: 43 KB/s (平均)
-• 双向对称: 良好
-
-**ETCD复制流量**: 正常
-- 3个成员 × 2个Peer = 6个连接
-- 每连接~45 KB/s
-- 总复制带宽: ~270 KB/s
-
-**4. 网络可靠性** ✅:
-• 丢包率: 0.001% (接近零)
-• 重传率: 0.05% (极低)
-• 发送失败: 0 (完美)
-• 慢请求: 0 (无延迟尖峰)
-
-**网络质量**: **企业级**
-
-**5. 网络拓扑评估**:
-
-\`\`\`
-master-0 ←→ master-1  (3.1ms)
-master-0 ←→ master-2  (3.3ms)
-master-1 ←→ master-2  (3.2ms)
-
-拓扑类型: 全连接 (Full Mesh)
-对称性: 优秀 (延迟差异<0.2ms)
-\`\`\`
-
-**网络架构推测**:
-- 同一机架或相邻机架
-- 可能使用ToR交换机
-- 无跨核心交换机跳转
-
-**性能对比**:
-
-| 场景 | 预期延迟 | 实际延迟 | 评分 |
-|------|---------|---------|------|
-| 同主机 | <0.1ms | - | N/A |
-| 同机架 | 1-3ms | 3.2ms | ✓ |
-| 同数据中心 | 3-10ms | - | - |
-| 跨数据中心 | >50ms | - | - |
-
-**结论**: Master节点部署在同一机架或相邻机架
-
-**容量分析**:
-
-**当前负载** vs **网络容量**:
-\`\`\`
-当前带宽: 252 MB/s (双向)
-网卡容量: 1000 MB/s (1 Gbps)
-使用率: 25.2%
-可扩展空间: 74.8%
-
-可支持额外负载:
-- 3倍当前流量: 完全无压力
-- 10倍当前流量: 需升级到10 Gbps
-\`\`\`
-
-**瓶颈评估**:
-
-网络 vs 磁盘对比:
-\`\`\`
-网络: 使用率 12.5%, 延迟 3.2ms  ✓
-磁盘: 使用率 68%,  延迟 18ms   ⚠
-
-结论: 磁盘是瓶颈，网络不是
-\`\`\`
-
-**优化建议**:
-
-**当前状态**: 🟢 **无需优化**
-
-网络性能已经非常优秀，建议保持现状。
-
-**可选优化** (非必需):
-
-1. **升级到10 Gbps** (未来扩展):
-   - 时机: 当带宽利用率>60%时
-   - 预期: 降低延迟到<2ms
-   - 成本: $200-400/端口
-
-2. **启用Jumbo Frames** (可选):
-\`\`\`bash
-# 将MTU从1500提升到9000
-ip link set eth0 mtu 9000
-\`\`\`
-   - 好处: 减少10-15%的CPU开销
-   - 要求: 整条链路都支持
-
-3. **网络监控增强**:
-   - 添加延迟P99告警 (>10ms)
-   - 监控重传率趋势
-   - 追踪带宽利用率
-
-**长期规划**:
-
-**3-6个月**: 继续监控，无需改动
-
-**6-12个月**:
-- 如果集群扩展到5个Master
-- 或Worker节点增加到50+
-- 考虑升级到10 Gbps
-
-**1-2年**:
-- 评估RDMA网络 (超低延迟<1ms)
-- 适用于大规模集群 (100+节点)
-
-**总结**:
-
-✅ **网络性能评分**: 95/100
-
-**优势**:
-- 延迟低 (3.2ms)
-- 可靠性高 (丢包<0.001%)
-- 带宽充足 (87%余量)
-- 拓扑优化 (全连接)
-
-**无需改进**:
-网络不是性能瓶颈，重点应放在磁盘I/O优化上。
-
-**建议行动**:
-无。继续监控网络健康度，保持现状即可。`,
-                toolResult_en: `<table class="response-table">
                     <thead>
                         <tr><th>Metric</th><th>master-0</th><th>master-1</th><th>master-2</th><th>Threshold</th><th>Status</th></tr>
                     </thead>
@@ -1996,7 +1246,7 @@ ip link set eth0 mtu 9000
                         </tr>
                     </tbody>
                 </table>`,
-                aiAnalysis_en: `**Network I/O Performance Analysis**
+                aiAnalysis: `**Network I/O Performance Analysis**
 
 🟢 **Overall Assessment**: **Network performance excellent, no bottlenecks**
 
@@ -2065,56 +1315,8 @@ Network is not a performance bottleneck, focus should be on disk I/O optimizatio
 None. Continue monitoring network health, maintain current status.`
             },
             'general-info': {
-                user: '显示ETCD的常规性能指标',
-                user_en: 'Display ETCD general performance metrics',
+                user: 'Display ETCD general performance metrics',
                 toolResult: `<table class="response-table">
-                    <thead>
-                        <tr><th>指标</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>状态</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>CPU使用率</strong></td>
-                            <td>42%</td><td>45%</td><td>43%</td>
-                            <td class="metric-good">正常</td>
-                        </tr>
-                        <tr>
-                            <td><strong>内存使用</strong></td>
-                            <td>3.2 GB</td><td>3.4 GB</td><td>3.3 GB</td>
-                            <td class="metric-good">正常</td>
-                        </tr>
-                        <tr>
-                            <td><strong>数据库物理大小</strong></td>
-                            <td>2.8 GB</td><td>2.8 GB</td><td>2.8 GB</td>
-                            <td class="metric-good">正常</td>
-                        </tr>
-                        <tr>
-                            <td><strong>数据库逻辑大小</strong></td>
-                            <td>2.1 GB</td><td>2.1 GB</td><td>2.1 GB</td>
-                            <td class="metric-good">正常</td>
-                        </tr>
-                        <tr>
-                            <td><strong>空间使用率</strong></td>
-                            <td>62%</td><td>62%</td><td>62%</td>
-                            <td class="metric-good">健康</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Proposal失败率</strong></td>
-                            <td>0%</td><td>0%</td><td>0%</td>
-                            <td class="metric-good">优秀</td>
-                        </tr>
-                    </tbody>
-                </table>`,
-                aiAnalysis: `**ETCD常规指标分析**
-
-整体表现优秀：
-
-• **资源使用**: CPU和内存使用率在健康范围内 (40-45%)
-• **数据库健康**: 空间使用率62%，距离默认配额(8GB)还有充足余量
-• **碎片率**: 物理大小2.8GB vs 逻辑2.1GB，碎片率约25%，正常范围
-• **稳定性**: Proposal失败率为0，集群写入操作完全稳定
-
-**建议**: 无需立即优化，继续监控即可。`,
-                toolResult_en: `<table class="response-table">
                     <thead>
                         <tr><th>Metric</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>Status</th></tr>
                     </thead>
@@ -2151,7 +1353,7 @@ None. Continue monitoring network health, maintain current status.`
                         </tr>
                     </tbody>
                 </table>`,
-                aiAnalysis_en: `**ETCD General Metrics Analysis**
+                aiAnalysis: `**ETCD General Metrics Analysis**
 
 Overall performance excellent:
 
@@ -2163,56 +1365,8 @@ Overall performance excellent:
 **Recommendation**: No immediate optimization needed, continue monitoring.`
             },
             'wal-fsync': {
-                user: '检查ETCD的WAL fsync性能',
-                user_en: 'Check ETCD WAL fsync performance',
+                user: 'Check ETCD WAL fsync performance',
                 toolResult: `<table class="response-table">
-                    <thead>
-                        <tr><th>指标</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>阈值</th><th>状态</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>P99延迟</strong></td>
-                            <td>8.2 ms</td><td>7.9 ms</td><td>8.5 ms</td>
-                            <td>&lt; 10ms</td>
-                            <td class="metric-good">✓ 优秀</td>
-                        </tr>
-                        <tr>
-                            <td><strong>P90延迟</strong></td>
-                            <td>5.1 ms</td><td>4.8 ms</td><td>5.3 ms</td>
-                            <td>&lt; 7ms</td>
-                            <td class="metric-good">✓ 优秀</td>
-                        </tr>
-                        <tr>
-                            <td><strong>P50延迟</strong></td>
-                            <td>2.3 ms</td><td>2.1 ms</td><td>2.4 ms</td>
-                            <td>&lt; 3ms</td>
-                            <td class="metric-good">✓ 优秀</td>
-                        </tr>
-                        <tr>
-                            <td><strong>平均延迟</strong></td>
-                            <td>1.8 ms</td><td>1.7 ms</td><td>1.9 ms</td>
-                            <td>&lt; 2ms</td>
-                            <td class="metric-good">✓ 优秀</td>
-                        </tr>
-                    </tbody>
-                </table>`,
-                aiAnalysis: `**WAL Fsync性能评估**
-
-🎉 **性能优秀** - 所有延迟指标均远低于推荐阈值
-
-**关键发现**:
-• P99延迟: 8.2ms (目标: <10ms) - 优秀
-• P90延迟: 5.1ms - 表现稳定
-• P50延迟: 2.3ms - 快速响应
-
-**性能含义**:
-WAL fsync是ETCD写入路径的关键环节。当前延迟表明：
-- 磁盘写入性能优秀
-- SSD响应时间快速
-- 无I/O竞争问题
-
-**建议**: 性能优秀，无需优化。继续保持当前配置。`,
-                toolResult_en: `<table class="response-table">
                     <thead>
                         <tr><th>Metric</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>Threshold</th><th>Status</th></tr>
                     </thead>
@@ -2243,7 +1397,7 @@ WAL fsync是ETCD写入路径的关键环节。当前延迟表明：
                         </tr>
                     </tbody>
                 </table>`,
-                aiAnalysis_en: `**WAL Fsync Performance Assessment**
+                aiAnalysis: `**WAL Fsync Performance Assessment**
 
 🎉 **Performance: EXCELLENT** - All latency metrics are well below recommended thresholds
 
@@ -2261,54 +1415,8 @@ WAL fsync is a critical component of ETCD's write path. Current latency indicate
 **Recommendation**: Performance is excellent, no optimization needed. Continue maintaining current configuration.`
             },
             'backend-commit': {
-                user: '分析Backend Commit性能',
-                user_en: 'Analyze Backend Commit performance',
+                user: 'Analyze Backend Commit performance',
                 toolResult: `<table class="response-table">
-                    <thead>
-                        <tr><th>指标</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>阈值</th><th>状态</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>P99延迟</strong></td>
-                            <td>32.5 ms</td><td>31.8 ms</td><td>33.2 ms</td>
-                            <td>&lt; 25ms</td>
-                            <td class="metric-warning">⚠ 需关注</td>
-                        </tr>
-                        <tr>
-                            <td><strong>P90延迟</strong></td>
-                            <td>18.3 ms</td><td>17.9 ms</td><td>18.7 ms</td>
-                            <td>&lt; 15ms</td>
-                            <td class="metric-warning">⚠ 轻微超标</td>
-                        </tr>
-                        <tr>
-                            <td><strong>P50延迟</strong></td>
-                            <td>8.1 ms</td><td>7.8 ms</td><td>8.3 ms</td>
-                            <td>&lt; 10ms</td>
-                            <td class="metric-good">✓ 正常</td>
-                        </tr>
-                    </tbody>
-                </table>`,
-                aiAnalysis: `**Backend Commit性能分析**
-
-⚠️ **需要关注** - P99延迟超过推荐阈值30%
-
-**问题识别**:
-• P99延迟: 32.5ms (目标: <25ms) - 超标30%
-• P90延迟: 18.3ms (目标: <15ms) - 超标22%
-• P50延迟: 8.1ms - 在正常范围
-
-**可能原因**:
-1. 磁盘I/O负载较高
-2. 后端数据库commit操作频繁
-3. 磁盘性能不足或存在竞争
-
-**优化建议**:
-1. **短期**: 检查磁盘I/O Wait指标
-2. **中期**: 考虑使用更快的NVMe SSD
-3. **长期**: 调整I/O调度器为deadline或noop
-
-**影响评估**: 当前延迟虽然超标，但不会严重影响集群性能。建议在非高峰期进行优化。`,
-                toolResult_en: `<table class="response-table">
                     <thead>
                         <tr><th>Metric</th><th>etcd-0</th><th>etcd-1</th><th>etcd-2</th><th>Threshold</th><th>Status</th></tr>
                     </thead>
@@ -2333,7 +1441,7 @@ WAL fsync is a critical component of ETCD's write path. Current latency indicate
                         </tr>
                     </tbody>
                 </table>`,
-                aiAnalysis_en: `**Backend Commit Performance Analysis**
+                aiAnalysis: `**Backend Commit Performance Analysis**
 
 ⚠️ **Needs Attention** - P99 latency exceeds recommended threshold by 30%
 
@@ -2355,88 +1463,8 @@ WAL fsync is a critical component of ETCD's write path. Current latency indicate
 **Impact Assessment**: Current latency exceeds threshold but does not severely impact cluster performance. Recommend optimization during off-peak hours.`
             },
             'deep-dive': {
-                user: '对ETCD性能进行深度分析，找出瓶颈',
-                user_en: 'Perform deep ETCD performance analysis and identify bottlenecks',
+                user: 'Perform deep ETCD performance analysis and identify bottlenecks',
                 toolResult: `<div style="margin-bottom: 15px;">
-                    <strong>🔍 多维度性能扫描完成</strong>
-                    <p style="margin-top: 5px;">已检查: 常规指标 · WAL Fsync · Backend Commit · 磁盘I/O · 网络I/O · 节点资源</p>
-                </div>
-                <table class="response-table">
-                    <thead>
-                        <tr><th>子系统</th><th>关键指标</th><th>当前值</th><th>状态</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>WAL Fsync</strong></td>
-                            <td>P99延迟</td>
-                            <td>8.2 ms</td>
-                            <td class="metric-good">✓ 优秀</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Backend Commit</strong></td>
-                            <td>P99延迟</td>
-                            <td>32.5 ms</td>
-                            <td class="metric-warning">⚠ 需关注</td>
-                        </tr>
-                        <tr>
-                            <td><strong>磁盘I/O</strong></td>
-                            <td>I/O Wait</td>
-                            <td>15%</td>
-                            <td class="metric-critical">✗ 瓶颈</td>
-                        </tr>
-                        <tr>
-                            <td><strong>网络I/O</strong></td>
-                            <td>Peer延迟</td>
-                            <td>3.2 ms</td>
-                            <td class="metric-good">✓ 优秀</td>
-                        </tr>
-                        <tr>
-                            <td><strong>CPU使用</strong></td>
-                            <td>平均使用率</td>
-                            <td>43%</td>
-                            <td class="metric-good">✓ 正常</td>
-                        </tr>
-                        <tr>
-                            <td><strong>内存使用</strong></td>
-                            <td>平均使用率</td>
-                            <td>58%</td>
-                            <td class="metric-good">✓ 正常</td>
-                        </tr>
-                    </tbody>
-                </table>`,
-                aiAnalysis: `**🎯 深度性能分析结果**
-
-**🔴 已识别瓶颈: 磁盘I/O**
-
-**根因分析**:
-磁盘I/O Wait达到15%，这是导致Backend Commit延迟超标的主要原因。
-
-**证据链**:
-1. WAL Fsync性能优秀 (8.2ms) → 顺序写入快速
-2. Backend Commit超标 (32.5ms) → 随机写入慢
-3. 磁盘I/O Wait高 (15%) → 磁盘繁忙
-4. CPU/内存正常 → 非计算资源瓶颈
-
-**优化方案** (按优先级):
-
-**立即执行**:
-1. 检查是否有其他进程竞争磁盘I/O
-2. 使用 \`iostat -x 1\` 查看磁盘详细统计
-3. 确认ETCD数据目录挂载的磁盘类型
-
-**短期优化** (1-2周):
-1. 调整I/O调度器: echo deadline > /sys/block/sda/queue/scheduler
-2. 增加磁盘缓存或使用battery-backed cache
-3. 考虑将ETCD迁移到专用高性能磁盘
-
-**长期规划** (1-3个月):
-1. 升级到NVMe SSD (推荐: 企业级SSD)
-2. 使用RAID配置提高可靠性
-3. 考虑分离WAL和数据库到不同磁盘
-
-**预期改善**:
-实施后，Backend Commit P99延迟预计可降至20ms以下，满足生产环境要求。`,
-                toolResult_en: `<div style="margin-bottom: 15px;">
                     <strong>🔍 Multi-dimensional Performance Scan Complete</strong>
                     <p style="margin-top: 5px;">Checked: General metrics · WAL Fsync · Backend Commit · Disk I/O · Network I/O · Node Resources</p>
                 </div>
@@ -2483,7 +1511,7 @@ WAL fsync is a critical component of ETCD's write path. Current latency indicate
                         </tr>
                     </tbody>
                 </table>`,
-                aiAnalysis_en: `**Deep ETCD Performance Analysis Report**
+                aiAnalysis: `**Deep ETCD Performance Analysis Report**
 
 **🎯 Bottleneck Identified**: Disk I/O is the primary performance limiting factor
 
@@ -2578,69 +1606,8 @@ Actions:
 After implementation, Backend Commit P99 latency is expected to drop below 20ms, meeting production environment requirements.`
             },
             'full-report': {
-                user: '生成完整的ETCD性能分析报告',
-                user_en: 'Generate complete ETCD performance analysis report',
+                user: 'Generate complete ETCD performance analysis report',
                 toolResult: `<div style="background: white; padding: 20px; border-radius: 8px; margin: 10px 0;">
-                    <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 15px;">
-                        📊 ETCD性能分析报告
-                    </h3>
-                    <p><strong>报告生成时间:</strong> 2026-04-12 15:30:00 UTC</p>
-                    <p><strong>分析时间范围:</strong> 2026-04-12 14:00:00 - 15:00:00 (1小时)</p>
-                    <p><strong>集群名称:</strong> production-ocp-cluster</p>
-
-                    <h4 style="margin-top: 20px; color: #2c3e50;">📋 执行摘要</h4>
-                    <ul style="line-height: 1.8;">
-                        <li><strong>集群健康状态:</strong> <span class="metric-good">健康 ✓</span></li>
-                        <li><strong>发现问题数:</strong> 1个警告 (Backend Commit延迟)</li>
-                        <li><strong>识别瓶颈:</strong> 磁盘I/O瓶颈</li>
-                        <li><strong>优先级:</strong> 中等 (建议1-2周内优化)</li>
-                    </ul>
-
-                    <h4 style="margin-top: 20px; color: #2c3e50;">🎯 关键性能指标</h4>
-                    <table class="response-table" style="margin-top: 10px;">
-                        <tr><td>WAL Fsync P99</td><td class="metric-good">8.2 ms ✓</td><td>目标: &lt;10ms</td></tr>
-                        <tr><td>Backend Commit P99</td><td class="metric-warning">32.5 ms ⚠</td><td>目标: &lt;25ms</td></tr>
-                        <tr><td>CPU使用率</td><td class="metric-good">43% ✓</td><td>警告: &lt;70%</td></tr>
-                        <tr><td>内存使用率</td><td class="metric-good">58% ✓</td><td>警告: &lt;70%</td></tr>
-                        <tr><td>磁盘I/O Wait</td><td class="metric-critical">15% ✗</td><td>目标: &lt;10%</td></tr>
-                        <tr><td>网络延迟</td><td class="metric-good">3.2 ms ✓</td><td>警告: &lt;50ms</td></tr>
-                    </table>
-
-                    <h4 style="margin-top: 20px; color: #2c3e50;">🔍 瓶颈分析</h4>
-                    <div style="background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; border-radius: 4px; margin-top: 10px;">
-                        <strong>识别瓶颈: 磁盘I/O性能不足</strong><br>
-                        • I/O Wait达到15%，超过10%健康阈值<br>
-                        • 直接影响Backend Commit延迟<br>
-                        • 需要优化磁盘性能或减少I/O竞争
-                    </div>
-
-                    <h4 style="margin-top: 20px; color: #2c3e50;">💡 优化建议</h4>
-                    <ol style="line-height: 1.8;">
-                        <li><strong>立即检查:</strong> 使用iostat确认磁盘繁忙度</li>
-                        <li><strong>短期优化:</strong> 调整I/O调度器为deadline</li>
-                        <li><strong>中期方案:</strong> 迁移到NVMe SSD</li>
-                        <li><strong>持续监控:</strong> 设置Backend Commit告警 (阈值: 30ms)</li>
-                    </ol>
-
-                    <p style="margin-top: 20px; font-size: 0.9em; color: #7f8c8d;">
-                        报告已保存至: <code>exports/etcd_performance_report_20260412.html</code>
-                    </p>
-                </div>`,
-                aiAnalysis: `**报告生成完成** ✅
-
-我已经生成了详细的ETCD性能分析报告，包含：
-
-📊 **完整分析内容**:
-• 执行摘要 - 快速了解集群状态
-• 关键指标 - 6个核心性能维度
-• 瓶颈识别 - 磁盘I/O瓶颈分析
-• 优化建议 - 4步优化路线图
-
-📁 **报告已保存**:
-HTML格式报告已导出，可直接在浏览器中查看或分享给团队。
-
-**建议**: 将此报告作为性能基线，定期(每周)生成新报告进行对比，跟踪优化效果。`,
-                toolResult_en: `<div style="background: white; padding: 20px; border-radius: 8px; margin: 10px 0;">
                     <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 15px;">
                         📊 ETCD Performance Analysis Report
                     </h3>
@@ -2686,7 +1653,7 @@ HTML格式报告已导出，可直接在浏览器中查看或分享给团队。
                         Report saved to: <code>exports/etcd_performance_report_20260412.html</code>
                     </p>
                 </div>`,
-                aiAnalysis_en: `**Report Generated Successfully** ✅
+                aiAnalysis: `**Report Generated Successfully** ✅
 
 I have generated a detailed ETCD performance analysis report containing:
 
@@ -2703,19 +1670,12 @@ HTML format report has been exported and can be viewed directly in a browser or 
             }
         };
 
-        // Get demo message in current language
+        // Get demo message (data is English-only)
         function getDemoMessage(type) {
-            const data = demoMessagesData[type];
-            if (!data) return null;
-
-            return {
-                user: currentLang === 'zh' ? data.user : (data.user_en || data.user),
-                toolResult: currentLang === 'zh' ? data.toolResult : (data.toolResult_en || data.toolResult),
-                aiAnalysis: currentLang === 'zh' ? data.aiAnalysis : (data.aiAnalysis_en || data.aiAnalysis)
-            };
+            return demoMessagesData[type] || null;
         }
 
-        // Translation for demo UI elements
+        // Demo UI text translations (UI supports bilingual)
         function getDemoUIText(key) {
             const demoUITranslations = {
                 zh: {
@@ -2727,7 +1687,7 @@ HTML format report has been exported and can be viewed directly in a browser or 
                     'ai-analysis': '🤖 AI Analysis'
                 }
             };
-            return demoUITranslations[currentLang][key] || demoUITranslations.zh[key];
+            return demoUITranslations[currentLang][key] || demoUITranslations.en[key];
         }
 
         // 切换标签页
@@ -2810,7 +1770,7 @@ HTML format report has been exported and can be viewed directly in a browser or 
         // Internationalization (i18n) System
         // ========================================
 
-        let currentLang = localStorage.getItem('preferredLanguage') || 'zh';
+        let currentLang = localStorage.getItem('preferredLanguage') || 'en';
 
         const translations = {
             zh: {
