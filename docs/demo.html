@@ -957,96 +957,96 @@
                             <li>Consider enabling disk cache or using more memory</li>
                         </ul>
                     </li>
-                    <li><strong>持续监控:</strong>
+                    <li><strong>Continuous Monitoring:</strong>
                         <ul style="margin-top: 5px;">
-                            <li>定期检查Compression/Defrag执行情况</li>
-                            <li>监控Database增长速率，提前规划容量</li>
-                            <li>设置告警Threshold，及时Findings性能退化</li>
+                            <li>Regularly check Compression/Defrag execution</li>
+                            <li>Monitor Database growth rate, plan capacity in advance</li>
+                            <li>Set alert thresholds, detect performance degradation timely</li>
                         </ul>
                     </li>
                 </ol>
             </div>
 
-            <h3 style="margin-top: 40px;">示例2: Network Performance分析</h3>
+            <h3 style="margin-top: 40px;">Example 2: Network Performance Analysis</h3>
             <div class="demo-panel">
                 <pre>
-<span class="comment"># 场景：排查集群网络延迟问题</span>
+<span class="comment"># Scenario: Troubleshoot cluster network latency issues</span>
 
-<span class="keyword">User Query:</span> "为什么我的Pod间通信变慢了？帮我分析Network Performance"
+<span class="keyword">User Query:</span> "Why is my inter-Pod communication slow? Help me analyze network performance"
 
 <span class="keyword">AI Agents Execution Flow:</span>
-1. 调用 query_network_l1_metrics(duration="30m") - 检查物理层
-2. 调用 query_network_io_metrics(duration="30m") - 检查吞吐量
-3. 调用 query_network_socket_tcp_metrics(duration="30m") - 检查TCP连接
-4. 调用 query_network_socket_softnet_metrics(duration="30m") - 检查软中断
-5. 分析数据，识别异常模式
-6. 生成诊断报告
+1. Call query_network_l1_metrics(duration="30m") - Check physical layer
+2. Call query_network_io_metrics(duration="30m") - Check throughput
+3. Call query_network_socket_tcp_metrics(duration="30m") - Check TCP connections
+4. Call query_network_socket_softnet_metrics(duration="30m") - Check softirq
+5. Analyze data, identify anomalous patterns
+6. Generate diagnostic report
                 </pre>
             </div>
 
             <div class="analysis-result">
-                <h4>📋 网络诊断结果</h4>
+                <h4>📋 Network Diagnosis Results</h4>
                 <table class="metric-table" style="margin-top: 15px;">
                     <thead>
                         <tr>
-                            <th>网络层</th>
-                            <th>指标</th>
-                            <th>当前值</th>
+                            <th>Network Layer</th>
+                            <th>Metric</th>
+                            <th>Current Value</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>L1物理层</strong></td>
-                            <td>丢包率</td>
+                            <td><strong>L1 Physical Layer</strong></td>
+                            <td>Packet Loss Rate</td>
                             <td class="metric-value-critical">2.3%</td>
-                            <td>🔴 异常</td>
+                            <td>🔴 Abnormal</td>
                         </tr>
                         <tr>
-                            <td><strong>L1物理层</strong></td>
-                            <td>错误包</td>
+                            <td><strong>L1 Physical Layer</strong></td>
+                            <td>Error Packets</td>
                             <td class="metric-value-critical">1,234 pps</td>
-                            <td>🔴 异常</td>
+                            <td>🔴 Abnormal</td>
                         </tr>
                         <tr>
                             <td><strong>TCP</strong></td>
-                            <td>重传率</td>
+                            <td>Retransmission Rate</td>
                             <td class="metric-value-warning">1.8%</td>
                             <td>🟡 Warning</td>
                         </tr>
                         <tr>
                             <td><strong>TCP</strong></td>
-                            <td>TIME_WAIT连接数</td>
+                            <td>TIME_WAIT Connections</td>
                             <td class="metric-value-good">8,523</td>
                             <td>🟢 Normal</td>
                         </tr>
                         <tr>
                             <td><strong>Softnet</strong></td>
-                            <td>Dropped包</td>
+                            <td>Dropped Packets</td>
                             <td class="metric-value-critical">5,678</td>
-                            <td>🔴 异常</td>
+                            <td>🔴 Abnormal</td>
                         </tr>
                         <tr>
                             <td><strong>Network I/O</strong></td>
-                            <td>带宽利用率</td>
+                            <td>Bandwidth Utilization</td>
                             <td class="metric-value-warning">78%</td>
-                            <td>🟡 接近饱和</td>
+                            <td>🟡 Near Saturation</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="recommendation">
-                <h4>🔧 网络问题根因分析</h4>
+                <h4>🔧 Network Issue Root Cause Analysis</h4>
                 <p><strong>Main Issue:</strong> Physical layer packet loss and Softnet Dropped packets indicate network interface or driver issues</p>
 
-                <h5 style="margin-top: 15px;">排查步骤:</h5>
+                <h5 style="margin-top: 15px;">Troubleshooting Steps:</h5>
                 <ol style="margin-top: 10px;">
-                    <li><strong>检查网络硬件:</strong>
+                    <li><strong>Check Network Hardware:</strong>
                         <ul>
-                            <li>检查网卡Status: <code>ethtool -S eth0</code></li>
-                            <li>查看网卡错误: <code>dmesg | grep -i eth</code></li>
-                            <li>确认网卡驱动版本和固件版本</li>
+                            <li>Check NIC Status: <code>ethtool -S eth0</code></li>
+                            <li>Check NIC Errors: <code>dmesg | grep -i eth</code></li>
+                            <li>Confirm NIC driver and firmware versions</li>
                         </ul>
                     </li>
                     <li><strong>优化SoftnetParameters:</strong>
@@ -1058,9 +1058,9 @@
                     </li>
                     <li><strong>带宽管理:</strong>
                         <ul>
-                            <li>当前78%带宽使用率接近饱和</li>
+                            <li>当前78%带宽使用率Near Saturation</li>
                             <li>考虑升级网络带宽或实施QoS策略</li>
-                            <li>分析流量模式，识别异常流量源</li>
+                            <li>分析流量模式，识别Abnormal流量源</li>
                         </ul>
                     </li>
                 </ol>
@@ -1186,7 +1186,7 @@
 <span class="keyword">curl</span> <span class="string">http://localhost:8080/api/tools</span>
             </div>
 
-            <h3>配置文件示例</h3>
+            <h3>Configuration file示例</h3>
             <div class="code-block">
 <span class="comment"># config/metrics-etcd.yml 片段</span>
 <span class="keyword">metrics:</span>
