@@ -860,7 +860,7 @@
                             <tr>
                                 <td><strong>OVN Pod</strong></td>
                                 <td>query_ovnk_pod_metrics</td>
-                                <td>CPU、内存、重启次数</td>
+                                <td>CPU, Memory, Restart Count</td>
                             </tr>
                             <tr>
                                 <td><strong>Multus CNI</strong></td>
@@ -868,29 +868,29 @@
                                 <td>MultusComponentHealthyStatus</td>
                             </tr>
                             <tr>
-                                <td><strong>OVN容器</strong></td>
+                                <td><strong>OVN Container</strong></td>
                                 <td>query_ovnk_container_metrics</td>
-                                <td>容器级Resource Usage</td>
+                                <td>Container-level Resource Usage</td>
                             </tr>
                             <tr>
-                                <td><strong>OVN同步</strong></td>
+                                <td><strong>OVN Sync</strong></td>
                                 <td>query_ovnk_sync_metrics</td>
                                 <td>NB/SB Database Sync Latency</td>
                             </tr>
                             <tr>
-                                <td><strong>OVS守护进程</strong></td>
+                                <td><strong>OVS Daemon</strong></td>
                                 <td>query_ovnk_ovs_metrics</td>
-                                <td>OVS流表、连接追踪</td>
+                                <td>OVS Flow Table, Connection Tracking</td>
                             </tr>
                             <tr>
                                 <td><strong>Network Latency</strong></td>
                                 <td>query_ovnk_latency_metrics</td>
-                                <td>Pod间延迟、CNI操作延迟</td>
+                                <td>Inter-Pod Latency, CNI Operation Latency</td>
                             </tr>
                             <tr>
                                 <td><strong>Kubernetes API</strong></td>
                                 <td>query_kube_api_metrics</td>
-                                <td>API请求延迟、错误率</td>
+                                <td>API Request Latency, Error Rate</td>
                             </tr>
                         </tbody>
                     </table>
@@ -905,11 +905,11 @@
             <h3>Example 1: ETCD Deep Performance Analysis</h3>
             <div class="demo-panel">
                 <pre>
-<span class="comment"># 场景：分析ETCD Cluster过去1小时的性能表现</span>
+<span class="comment"># Scenario: Analyze ETCD cluster performance over the past 1 hour</span>
 
 <span class="keyword">User Query:</span> "Analyze etcd performance over the past 1 hour, focusing on WAL fsync and backend commit latency"
 
-<span class="keyword">AI Agents执行流程:</span>
+<span class="keyword">AI Agents Execution Flow:</span>
 1. 调用 get_etcd_performance_deep_drive(duration="1h")
 2. 收集以下Subsystem数据:
    - 常规信息 (CPU、内存、Database Size)
@@ -925,15 +925,15 @@
             </div>
 
             <div class="analysis-result">
-                <h4>📋 分析结果示例</h4>
+                <h4>📋 Analysis Results Example</h4>
                 <p><strong>Time Range:</strong> 2026-04-12 14:00:00 UTC ~ 2026-04-12 15:00:00 UTC</p>
                 <p><strong>Cluster Status:</strong> <span class="metric-value-good">Healthy ✓</span></p>
 
                 <h5 style="margin-top: 15px;">CriticalFindings:</h5>
                 <ul style="margin-top: 10px;">
-                    <li><strong>WAL Fsync P99 Latency:</strong> <span class="metric-value-good">8.2ms</span> - Excellent (目标: &lt;10ms)</li>
-                    <li><strong>Backend Commit P99 Latency:</strong> <span class="metric-value-warning">32.5ms</span> - Needs Attention (目标: &lt;25ms)</li>
-                    <li><strong>etcd Pod平均CPU Usage:</strong> <span class="metric-value-good">45%</span> - Normal</li>
+                    <li><strong>WAL Fsync P99 Latency:</strong> <span class="metric-value-good">8.2ms</span> - Excellent (Target: &lt;10ms)</li>
+                    <li><strong>Backend Commit P99 Latency:</strong> <span class="metric-value-warning">32.5ms</span> - Needs Attention (Target: &lt;25ms)</li>
+                    <li><strong>etcd Pod Average CPU Usage:</strong> <span class="metric-value-good">45%</span> - Normal</li>
                     <li><strong>Database Space Usage:</strong> <span class="metric-value-good">62%</span> - Healthy</li>
                     <li><strong>Disk I/O Wait:</strong> <span class="metric-value-critical">15%</span> - Bottleneck!</li>
                     <li><strong>Proposal Failure Rate:</strong> <span class="metric-value-good">0%</span> - Normal</li>
@@ -941,20 +941,20 @@
             </div>
 
             <div class="recommendation">
-                <h4>💡 优化建议</h4>
+                <h4>💡 Optimization Recommendations</h4>
                 <ol style="margin-top: 10px;">
-                    <li><strong>Backend Commit优化:</strong>
+                    <li><strong>Backend Commit Optimization:</strong>
                         <ul style="margin-top: 5px;">
-                            <li>检查Disk Performance，考虑使用更快的SSD (NVMe)</li>
-                            <li>确认Disk I/O调度器设置 (建议使用noop或deadline)</li>
-                            <li>检查是否有其他进程竞争Disk I/O资源</li>
+                            <li>Check Disk Performance, consider using faster SSD (NVMe)</li>
+                            <li>Confirm Disk I/O scheduler settings (recommend noop or deadline)</li>
+                            <li>Check if other processes are competing for Disk I/O resources</li>
                         </ul>
                     </li>
-                    <li><strong>Disk I/O Wait优化:</strong>
+                    <li><strong>Disk I/O Wait Optimization:</strong>
                         <ul style="margin-top: 5px;">
-                            <li>当前15%的I/O Wait表明存在磁盘瓶颈</li>
-                            <li>建议使用专用的高性能存储设备</li>
-                            <li>考虑启用磁盘缓存或使用更大的内存</li>
+                            <li>Current 15% I/O Wait indicates disk bottleneck</li>
+                            <li>Recommend using dedicated high-performance storage devices</li>
+                            <li>Consider enabling disk cache or using more memory</li>
                         </ul>
                     </li>
                     <li><strong>持续监控:</strong>
@@ -974,7 +974,7 @@
 
 <span class="keyword">User Query:</span> "为什么我的Pod间通信变慢了？帮我分析Network Performance"
 
-<span class="keyword">AI Agents执行流程:</span>
+<span class="keyword">AI Agents Execution Flow:</span>
 1. 调用 query_network_l1_metrics(duration="30m") - 检查物理层
 2. 调用 query_network_io_metrics(duration="30m") - 检查吞吐量
 3. 调用 query_network_socket_tcp_metrics(duration="30m") - 检查TCP连接
