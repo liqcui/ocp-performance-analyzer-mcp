@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OCP Performance Analyzer MCP - 架构与演示</title>
+    <title>OCP Performance Analyzer MCP - Architecture & Demo</title>
     <style>
         * {
             margin: 0;
@@ -457,7 +457,7 @@
     <div class="container">
         <header>
             <h1 data-i18n="header-title">🚀 OCP Performance Analyzer MCP</h1>
-            <p data-i18n="header-subtitle">AI驱动的OpenShift/Kubernetes集群性能分析平台</p>
+            <p data-i18n="header-subtitle">AI-Powered Performance Analysis Platform for OpenShift/Kubernetes Clusters</p>
             <div class="badges">
                 <span class="badge">Python 3.8+</span>
                 <span class="badge">MCP Protocol</span>
@@ -469,85 +469,85 @@
 
         <nav>
             <ul>
-                <li><a href="#overview" data-i18n="nav-overview">概览</a></li>
-                <li><a href="#architecture" data-i18n="nav-architecture">架构设计</a></li>
-                <li><a href="#features" data-i18n="nav-features">核心功能</a></li>
-                <li><a href="#components" data-i18n="nav-components">组件说明</a></li>
-                <li><a href="#demo" data-i18n="nav-demo">性能分析演示</a></li>
-                <li><a href="#usage" data-i18n="nav-usage">使用示例</a></li>
+                <li><a href="#overview" data-i18n="nav-overview">Overview</a></li>
+                <li><a href="#architecture" data-i18n="nav-architecture">Architecture</a></li>
+                <li><a href="#features" data-i18n="nav-features">Core Features</a></li>
+                <li><a href="#components" data-i18n="nav-components">Components</a></li>
+                <li><a href="#demo" data-i18n="nav-demo">Performance Demo</a></li>
+                <li><a href="#usage" data-i18n="nav-usage">Usage Examples</a></li>
             </ul>
         </nav>
 
         <!-- 概览 -->
         <section id="overview" class="section">
-            <h2 data-i18n="section-overview-title">📊 项目概览</h2>
+            <h2 data-i18n="section-overview-title">📊 Project Overview</h2>
             <p style="font-size: 1.1em; margin-bottom: 20px;">
-                OCP Performance Analyzer MCP 是一个全面的、AI驱动的OpenShift/Kubernetes集群性能分析和监控平台。
-                通过Model Context Protocol (MCP)协议，结合LangGraph智能代理，提供深度性能洞察、自动化根因分析和可执行的优化建议。
+                OCP Performance Analyzer MCP is a comprehensive, AI-driven performance analysis and monitoring platform for OpenShift/Kubernetes clusters.
+                Through the Model Context Protocol (MCP), combined with LangGraph intelligent agents, it provides deep performance insights, automated root cause analysis, and actionable optimization recommendations.
             </p>
 
             <div class="stats-grid">
                 <div class="stat-box">
-                    <div class="stat-label">分析组件</div>
+                    <div class="stat-label">Analysis Components</div>
                     <div class="stat-value">3</div>
                     <div class="stat-label">ETCD · 网络 · OVN-K</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-label">性能指标</div>
+                    <div class="stat-label">Performance Metrics</div>
                     <div class="stat-value">200+</div>
-                    <div class="stat-label">跨越11个配置文件</div>
+                    <div class="stat-label">Across 11 config files</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-label">分析工具</div>
+                    <div class="stat-label">Analysis Tools</div>
                     <div class="stat-value">35+</div>
-                    <div class="stat-label">MCP服务器工具</div>
+                    <div class="stat-label">MCP Server Tools</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-label">AI代理</div>
+                    <div class="stat-label">AI Agents</div>
                     <div class="stat-value">3</div>
                     <div class="stat-label">Chat · Report · Storage</div>
                 </div>
             </div>
 
-            <h3>🎯 主要分析领域</h3>
+            <h3>🎯 Main Analysis Areas</h3>
             <div class="features-grid">
                 <div class="feature-card">
-                    <h4>🔷 ETCD分析器</h4>
+                    <h4>🔷 ETCD Analyzer</h4>
                     <ul>
-                        <li>15+分析工具</li>
-                        <li>集群健康状态监控</li>
-                        <li>WAL Fsync性能 (P99 &lt;10ms)</li>
-                        <li>Backend Commit延迟 (P99 &lt;25ms)</li>
-                        <li>磁盘I/O性能分析</li>
-                        <li>网络I/O监控</li>
-                        <li>深度性能剖析</li>
-                        <li>瓶颈自动检测</li>
+                        <li>15+Analysis Tools</li>
+                        <li>Cluster health monitoring</li>
+                        <li>WAL Fsync performance (P99 &lt;10ms)</li>
+                        <li>Backend Commit latency (P99 &lt;25ms)</li>
+                        <li>Disk I/O performance analysis</li>
+                        <li>Network I/O monitoring</li>
+                        <li>Deep performance profiling</li>
+                        <li>Automatic bottleneck detection</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <h4>🌐 网络分析器</h4>
+                    <h4>🌐 Network Analyzer</h4>
                     <ul>
-                        <li>10+网络工具</li>
-                        <li>L1物理层统计</li>
-                        <li>Socket统计 (TCP/UDP/IP)</li>
-                        <li>内存统计 (Socket Buffer)</li>
-                        <li>Softnet统计</li>
-                        <li>Netstat指标 (TCP/UDP)</li>
-                        <li>网络I/O吞吐量</li>
-                        <li>95+网络指标覆盖</li>
+                        <li>10+ network tools</li>
+                        <li>L1 physical layer statistics</li>
+                        <li>Socket statistics (TCP/UDP/IP)</li>
+                        <li>Memory statistics (Socket Buffer)</li>
+                        <li>Softnet statistics</li>
+                        <li>Netstat metrics (TCP/UDP)</li>
+                        <li>Network I/O throughput</li>
+                        <li>95+ network metrics coverage</li>
                     </ul>
                 </div>
                 <div class="feature-card">
-                    <h4>🔗 OVN-Kubernetes分析器</h4>
+                    <h4>🔗 OVN-Kubernetes Analyzer</h4>
                     <ul>
-                        <li>8+专用工具</li>
-                        <li>OVN数据库监控</li>
-                        <li>Kubelet CNI性能</li>
-                        <li>网络延迟分析</li>
-                        <li>OVS使用情况</li>
-                        <li>Pod指标监控</li>
-                        <li>API统计信息</li>
-                        <li>NB/SB数据库大小</li>
+                        <li>8+ dedicated tools</li>
+                        <li>OVN database monitoring</li>
+                        <li>Kubelet CNI performance</li>
+                        <li>Network latency analysis</li>
+                        <li>OVS usage</li>
+                        <li>Pod metrics monitoring</li>
+                        <li>API statistics</li>
+                        <li>NB/SB database size</li>
                     </ul>
                 </div>
             </div>
@@ -555,7 +555,7 @@
 
         <!-- 架构设计 -->
         <section id="architecture" class="section">
-            <h2 data-i18n="section-architecture-title">🏗️ 系统架构</h2>
+            <h2 data-i18n="section-architecture-title">🏗️ System Architecture</h2>
 
             <h3>高层架构设计</h3>
             <div class="architecture-diagram">
@@ -571,7 +571,7 @@
           └─────────────────┼─────────────────┘
                             │
 ┌───────────────────────────┼──────────────────────────────────────────┐
-│                    AI代理层 (Port 8080)                               │
+│                    AI Agents层 (Port 8080)                               │
 │  ┌──────────────────────────────────────────────────────────────┐   │
 │  │  LangGraph智能代理: Chat · Report · Storage                   │   │
 │  │  • 流式响应支持                                                │   │
@@ -594,7 +594,7 @@
 │  ┌─────▼──────┐    ┌─────▼──────┐    ┌─────▼──────┐                │
 │  │ Tools/     │    │ Tools/     │    │ Tools/     │                │
 │  │ Collectors │    │ Collectors │    │ Collectors │                │
-│  │ 指标收集器  │    │ 指标收集器  │    │ 指标收集器  │                │
+│  │ Metrics Collector  │    │ Metrics Collector  │    │ Metrics Collector  │                │
 │  └─────┬──────┘    └─────┬──────┘    └─────┬──────┘                │
 │        │                 │                 │                         │
 │  ┌─────▼──────┐    ┌─────▼──────┐    ┌─────▼──────┐                │
@@ -606,7 +606,7 @@
 │  ┌─────▼──────┐    ┌─────▼──────┐    ┌─────▼──────┐                │
 │  │    ELT     │    │    ELT     │    │    ELT     │                │
 │  │  Pipeline  │    │  Pipeline  │    │  Pipeline  │                │
-│  │ 数据转换管道 │    │ 数据转换管道 │    │ 数据转换管道 │                │
+│  │ Data Transform管道 │    │ Data Transform管道 │    │ Data Transform管道 │                │
 │  └─────┬──────┘    └─────┬──────┘    └─────┬──────┘                │
 │        │                 │                 │                         │
 │  ┌─────▼─────────────────▼─────────────────▼──────┐                │
@@ -661,7 +661,7 @@
 
         <!-- 核心功能 -->
         <section id="features" class="section">
-            <h2 data-i18n="section-features-title">⚡ 核心功能特性</h2>
+            <h2 data-i18n="section-features-title">⚡ Core Features</h2>
 
             <div class="component-card">
                 <h4>🔍 Real-time Performance Monitoring</h4>
@@ -696,7 +696,7 @@
 
         <!-- 组件说明 -->
         <section id="components" class="section">
-            <h2 data-i18n="section-components-title">🧩 组件详细说明</h2>
+            <h2 data-i18n="section-components-title">🧩 Components</h2>
 
             <div class="tab-container">
                 <div class="tab-buttons">
@@ -706,7 +706,7 @@
                 </div>
 
                 <div id="etcd-component" class="tab-content active">
-                    <h3>ETCD分析器 - 关键性能指标</h3>
+                    <h3>ETCD分析器 - 关键Performance Metrics</h3>
                     <table class="metric-table">
                         <thead>
                             <tr>
@@ -793,7 +793,7 @@
                             <tr>
                                 <th>分析层级</th>
                                 <th>工具</th>
-                                <th>关键指标</th>
+                                <th>Key Metrics</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -828,7 +828,7 @@
                                 <td>Socket缓冲区使用、内存压力</td>
                             </tr>
                             <tr>
-                                <td><strong>Softnet统计</strong></td>
+                                <td><strong>Softnet statistics</strong></td>
                                 <td>query_network_socket_softnet_metrics</td>
                                 <td>软中断处理、丢包、挤压</td>
                             </tr>
@@ -900,7 +900,7 @@
 
         <!-- 性能分析演示 -->
         <section id="demo" class="section">
-            <h2 data-i18n="section-demo-title">🎬 性能分析演示</h2>
+            <h2 data-i18n="section-demo-title">🎬 Performance Demo</h2>
 
             <h3>示例1: ETCD深度性能分析</h3>
             <div class="demo-panel">
@@ -909,7 +909,7 @@
 
 <span class="keyword">用户查询:</span> "分析etcd过去1小时的性能，重点关注WAL fsync和backend commit延迟"
 
-<span class="keyword">AI代理执行流程:</span>
+<span class="keyword">AI Agents执行流程:</span>
 1. 调用 get_etcd_performance_deep_drive(duration="1h")
 2. 收集以下子系统数据:
    - 常规信息 (CPU、内存、数据库大小)
@@ -974,7 +974,7 @@
 
 <span class="keyword">用户查询:</span> "为什么我的Pod间通信变慢了？帮我分析网络性能"
 
-<span class="keyword">AI代理执行流程:</span>
+<span class="keyword">AI Agents执行流程:</span>
 1. 调用 query_network_l1_metrics(duration="30m") - 检查物理层
 2. 调用 query_network_io_metrics(duration="30m") - 检查吞吐量
 3. 调用 query_network_socket_tcp_metrics(duration="30m") - 检查TCP连接
@@ -1073,7 +1073,7 @@
 
 <span class="keyword">用户查询:</span> "OVN数据库同步延迟是多少？有性能问题吗？"
 
-<span class="keyword">AI代理执行:</span>
+<span class="keyword">AI Agents执行:</span>
 1. 调用 query_ovnk_sync_metrics(duration="1h")
 2. 调用 query_ovnk_latency_metrics(duration="1h")
 3. 调用 query_ovnk_pod_metrics(duration="1h")
@@ -1111,7 +1111,7 @@
 
         <!-- 使用示例 -->
         <section id="usage" class="section">
-            <h2 data-i18n="section-usage-title">📖 使用示例</h2>
+            <h2 data-i18n="section-usage-title">📖 Usage Examples</h2>
 
             <h3>快速启动</h3>
             <div class="code-block">
@@ -1174,7 +1174,7 @@
   -H <span class="string">"Content-Type: application/json"</span> \
   -d <span class="string">'{"duration": "1h"}'</span>
 
-<span class="comment"># 查询网络I/O指标</span>
+<span class="comment"># 查询Network I/O Metrics</span>
 <span class="keyword">curl</span> -X POST <span class="string">http://localhost:8000/tools/query_network_io_metrics</span> \
   -H <span class="string">"Content-Type: application/json"</span> \
   -d <span class="string">'{"duration": "30m"}'</span>
