@@ -1287,7 +1287,9 @@
         // Internationalization (i18n) System
         // ========================================
 
-        let currentLang = localStorage.getItem('preferredLanguage') || 'en';
+        // Force English as default, ignoring any stored preferences
+        let currentLang = 'en';
+        localStorage.setItem('preferredLanguage', 'en');
 
         const translations = {
             zh: {
